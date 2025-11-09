@@ -45,7 +45,7 @@ public class LoginWindow {
     private LoginWindowViewModel vm;
 
     @FXML
-    public void validateCredentials(ActionEvent event) {
+    void validateCredentials(ActionEvent event) {
     	if (!this.vm.validateCredentials()) {
     		Alert alert = new Alert(AlertType.ERROR);
     		alert.setTitle("Failed to login");
@@ -53,6 +53,7 @@ public class LoginWindow {
     		alert.showAndWait();
     	} else {
     		this.closeWindow();
+    		this.getLandingPageWindow();
     	}
     }
     
@@ -93,38 +94,37 @@ public class LoginWindow {
     	this.vm.getPassword().bind(this.passwordTextBox.textProperty());
     }
     
-//    private void getLandingPageWindow() {
-//    	FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(Main.class.getResource(Main.LANDING_PAGE));
-//		try {
-//			loader.load();
-//			Parent parent = loader.getRoot();
-//			Scene scene = new Scene(parent);
-//			Stage setLandingPageStage = new Stage();
-//			setLandingPageStage.setTitle(Main.LANDING_PAGE_TITLE);
-//			setLandingPageStage.setScene(scene);
-//			setLandingPageStage.initModality(Modality.APPLICATION_MODAL);
-//
-//			LandingPageWindow landingPageCodebehind = (LandingPageWindow) loader.getController();
-//			landingPageCodebehind.bindToVM(this.vm);
-//
-//			setLandingPageStage.showAndWait();
-//		} catch (IOException error) {
-//			Alert alert = new Alert(AlertType.ERROR);
-//			alert.setContentText("Unable to load properties window.");
-//			alert.showAndWait();
-//		}
-//    } 
+    private void getLandingPageWindow() {
+    	FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource(Main.LANDING_PAGE));
+		try {
+			loader.load();
+			Parent parent = loader.getRoot();
+			Scene scene = new Scene(parent);
+			Stage setLandingPageStage = new Stage();
+			setLandingPageStage.setTitle(Main.LANDING_PAGE_TITLE);
+			setLandingPageStage.setScene(scene);
+			setLandingPageStage.initModality(Modality.APPLICATION_MODAL);
+
+			LandingPageWindow landingPageCodebehind = (LandingPageWindow) loader.getController();
+			landingPageCodebehind.bindToVM(this.vm);
+
+			setLandingPageStage.showAndWait();
+		} catch (IOException error) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Unable to load properties window.");
+			alert.showAndWait();
+		}
+    } 
     
     @FXML
-    public void initialize() {
+    void initialize() {
     	this.setUpBindings();
     	this.setUpEnableControls();
     	this.usernameValidation();
     	this.passwordValidation();
     	
     	this.loginButton.setOnAction((event) -> {
-    		//this.getLandingPageWindow();
     		this.validateCredentials(event);
     	});
     }
