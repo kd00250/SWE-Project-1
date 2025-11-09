@@ -14,9 +14,11 @@ import javafx.stage.Stage;
  * @version Fall 2025​
  */
 public class Main extends Application {
-
+	public static final String LANDING_PAGE_TITLE = "SWE 1 Project 1 - Landing Page";
+	public static final String LANDING_PAGE = "view/LandingPageWindow.fxml";
+	
 	private static final String WINDOW_TITLE = "SWE 1 Project 1";
-	private static final String GUI_RESOURCE = "view/MainWindow.fxml";
+	private static final String GUI_RESOURCE = "view/LoginWindow.fxml";
 	  
 	/** JavaFX entry point.​
 	  *​

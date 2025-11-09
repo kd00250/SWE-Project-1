@@ -16,6 +16,10 @@ public class UserStore {
 	 */
 	public UserStore() {
 		this.userList = new ArrayList<User>();
+		User crewmate = new User("PirateBob", "password123", "Crewmate");
+		User quartermaster = new User("Obi", "beens12", "Quartermaster");
+		this.userList.add(crewmate);
+		this.userList.add(quartermaster);
 	}
 	
 	/**
