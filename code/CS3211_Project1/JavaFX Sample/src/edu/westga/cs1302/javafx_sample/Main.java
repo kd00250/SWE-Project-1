@@ -10,12 +10,12 @@ import javafx.stage.Stage;
 
 /** Entry point for the program​
  *​
- * @author CS1302​
- * @version Fall 2024​
+ * @author CS3211​
+ * @version Fall 2025​
  */
 public class Main extends Application {
 
-	private static final String WINDOW_TITLE = "Sample JavaFX Project";
+	private static final String WINDOW_TITLE = "SWE 1 Project 1";
 	private static final String GUI_RESOURCE = "view/MainWindow.fxml";
 	  
 	/** JavaFX entry point.​
