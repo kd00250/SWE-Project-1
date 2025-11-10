@@ -16,6 +16,15 @@ class testValidateCredentials {
 		
 		assertFalse(vm.validateCredentials());
 	}
+	
+	@Test
+	public void testInvalidCredentialsCorrectUsernameIncorrectPassword() {
+		LoginWindowViewModel vm = new LoginWindowViewModel();
+		vm.getUsername().set("PirateBob");
+		vm.getPassword().set("obi");
+		
+		assertFalse(vm.validateCredentials());
+	}
 
 	@Test
 	public void testValidCredentials() {

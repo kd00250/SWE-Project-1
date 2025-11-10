@@ -25,6 +25,9 @@ public class UserStore {
 	/**
 	 * Gets the list of users
 	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
 	 * @return the list of users
 	 */
 	public ArrayList<User> getUserList() {
@@ -33,6 +36,9 @@ public class UserStore {
 	
 	/**
 	 * Gets the matching user from the userList
+	 * 
+	 * @precondition user != null
+	 * @postcondition none
 	 * 
 	 * @param user the user that is being searched for
 	 * @return the matching user from the userList
@@ -48,6 +54,23 @@ public class UserStore {
 			}
 		}
 		return match;
+	}
+	
+	/**
+	 * Adds a user to the userList
+	 * 
+	 * @precondition user != null
+	 * @postcondition none
+	 * 
+	 * @param user the user to be added
+	 * @return true/false depending on if the user was added or not
+	 */
+	public boolean addUser(User user) {
+		if (user == null) {
+			throw new IllegalArgumentException("user cannot be null");
+		}
+		
+		return this.userList.add(user);
 	}
 	
 }

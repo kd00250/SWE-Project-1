@@ -51,6 +51,9 @@ public class User {
 	/**
 	 * Gets the username of the user
 	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
 	 * @return username the username of the user
 	 */
 	public String getUsername() {
@@ -60,6 +63,9 @@ public class User {
 	/**
 	 * Gets the password of the user
 	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
 	 * @return password the password of the user
 	 */
 	public String getPassword() {
@@ -68,6 +74,9 @@ public class User {
 	
 	/**
 	 * Gets the role of the user
+	 * 
+	 * @precondition none
+	 * @postcondition none
 	 * 
 	 * @return role the role of the user
 	 */
