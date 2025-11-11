@@ -31,7 +31,7 @@ class testAddStockToSpecialStorage1 {
 		vm.getIsFlammableProperty().set(false);
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
-		vm.getExpirationDate().set("12/12/2004");
+		//vm.getExpirationDate().set("12/12/2004");
 		vm.getQuantity().set("3");
 		
 		

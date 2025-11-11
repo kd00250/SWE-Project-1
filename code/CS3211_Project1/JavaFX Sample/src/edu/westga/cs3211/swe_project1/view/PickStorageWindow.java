@@ -4,6 +4,7 @@ import edu.westga.cs3211.swe_project1.viewModel.AddStockWindowViewModel;
 import edu.westga.cs3211.swe_project1.viewModel.LoginWindowViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 /**
@@ -26,25 +27,69 @@ public class PickStorageWindow {
     private Button specialStorage2Button;
     
     private LoginWindowViewModel vm;
+    private AddStockWindowViewModel addStockVM;
 
     @FXML
     void addStockToBoxes(ActionEvent event) {
-
+    	if (!this.addStockVM.addStockToBoxes(this.addStockVM.createStock())) {
+    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
+    	} else {
+    		this.displaySuccessPopup("Successfully added stock to boxes compartment");
+    	}
     }
 
     @FXML
     void addStockToShelves(ActionEvent event) {
-
+    	if (!this.addStockVM.addStockToShelves(this.addStockVM.createStock())) {
+    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
+    	} else {
+    		this.displaySuccessPopup("Successfully added stock to shelves compartment");
+    	}
+    	
     }
 
     @FXML
     void addStockToSpecialStorage1(ActionEvent event) {
-
+    	if (!this.addStockVM.addStockToSpecialStorage1(this.addStockVM.createStock())) {
+    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
+    	} else {
+    		this.displaySuccessPopup("Successfully added stock to special storage 1 compartment");
+    	}
     }
 
     @FXML
     void addStockToSpecialStorage2(ActionEvent event) {
-
+    	if (!this.addStockVM.addStockToSpecialStorage2(this.addStockVM.createStock())) {
+    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
+    	} else {
+    		this.displaySuccessPopup("Successfully added stock to special storage 2 compartment");
+    	}
+    }
+    
+    private void displayErrorPopup(String message) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+    
+    private void displaySuccessPopup(String message) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+    
+    private void setUpControls(AddStockWindowViewModel addStockVM) {
+    	this.boxesButton.disableProperty().bind(addStockVM.getIsFlammableProperty()
+    			.or(addStockVM.getIsLiquidProperty()).or(addStockVM.getIsPerishableProperty()));
+    	
+    	this.shelvesButton.disableProperty().bind(addStockVM.getIsFlammableProperty()
+    			.or(addStockVM.getIsLiquidProperty()).or(addStockVM.getIsPerishableProperty()));
+    	
+    	this.specialStorage1Button.disableProperty().bind(addStockVM.getIsFlammableProperty().not()
+    			.and(addStockVM.getIsLiquidProperty().not()).and(addStockVM.getIsPerishableProperty().not()));
+    	
+    	this.specialStorage2Button.disableProperty().bind(addStockVM.getIsFlammableProperty().not()
+    			.and(addStockVM.getIsLiquidProperty().not()).and(addStockVM.getIsPerishableProperty().not()));
     }
     
     /**
@@ -54,7 +99,20 @@ public class PickStorageWindow {
      * @param addStockVM the addStockVM
      */
     public void bindToPickStorageVM(LoginWindowViewModel vm, AddStockWindowViewModel addStockVM) {
+    	this.addStockVM = addStockVM;
     	//this.reViewStockChangesButton.disableProperty().bind(vm.isQuartermasterProperty().not());
-    	
+    	this.setUpControls(addStockVM);
+    	this.boxesButton.setOnAction((event) -> {
+    		this.addStockToBoxes(event);
+    	});
+    	this.shelvesButton.setOnAction((event) -> {
+    		this.addStockToShelves(event);
+    	});
+    	this.specialStorage1Button.setOnAction((event) -> {
+    		this.addStockToSpecialStorage1(event);
+    	});
+    	this.specialStorage2Button.setOnAction((event) -> {
+    		this.addStockToSpecialStorage2(event);
+    	});
     }
 }

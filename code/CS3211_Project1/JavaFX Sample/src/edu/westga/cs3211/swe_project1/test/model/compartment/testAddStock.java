@@ -22,8 +22,17 @@ class testAddStock {
 	}
 	
 	@Test
+	void testAddStockFalseNoSpace() {
+		Compartment box = new Compartment("barrel", 25, false);
+		Set<SpecialQuality> qualities = new HashSet<>();
+		Stock stock = new Stock(26, qualities, "gold", "good", "12/12/2004");
+		
+		assertFalse(box.addStock(stock));
+	}
+	
+	@Test
 	void testAddStockTrue() {
-		Compartment box = new Compartment("barrel", 25, true );
+		Compartment box = new Compartment("barrel", 25, false);
 		Set<SpecialQuality> qualities = new HashSet<>();
 		Stock stock = new Stock(2, qualities, "gold", "good", "12/12/2004");
 		

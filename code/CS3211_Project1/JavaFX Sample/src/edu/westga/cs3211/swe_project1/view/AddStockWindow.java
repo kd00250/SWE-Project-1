@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -37,6 +38,15 @@ public class AddStockWindow {
 
     @FXML
     private TextField nameTextBox;
+    
+    @FXML
+    private CheckBox isFlammableCheckBox;
+
+    @FXML
+    private CheckBox isLiquidcheckBox;
+
+    @FXML
+    private CheckBox isPerishableCheckBox;
 
     @FXML
     private AnchorPane pane;
@@ -75,14 +85,27 @@ public class AddStockWindow {
 		}
     }
     
+    private void setUpBindings() {
+    	this.addStockVM = new AddStockWindowViewModel();
+    	String [] conditions = {"perfect", "usable", "unsuable"};
+    	this.conditionComboBox.getItems().addAll(conditions);
+    	this.addStockVM.getCondition().bind(this.conditionComboBox.valueProperty());
+    	this.addStockVM.getName().bind(this.nameTextBox.textProperty());
+    	this.addStockVM.getQuantity().bind(this.quantityTextBox.textProperty());
+    	this.addStockVM.getIsFlammableProperty().bind(this.isFlammableCheckBox.selectedProperty());
+    	this.addStockVM.getIsLiquidProperty().bind(this.isLiquidcheckBox.selectedProperty());
+    	this.addStockVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
+    	this.addStockVM.getExpirationDate().bind(this.expirationDateTextBox.textProperty());
+    }
+    
     /**
 	 * Provides bindings for the functionality
 	 * 
 	 * @param vm the vm
 	 */
     public void bindToAddStockVM(LoginWindowViewModel vm) {
-    	this.expirationDateTextBox.disableProperty().bind(this.addStockVM.getIsFlammableProperty().not()
-    			.or(this.addStockVM.getIsLiquidProperty().not()).or(this.addStockVM.getIsPerishableProperty().not()));
+    	this.setUpBindings();
+    	this.expirationDateTextBox.disableProperty().bind(this.isPerishableCheckBox.selectedProperty().not());
     	this.addStockButton.setOnAction((event) -> {
     		this.addStock(event);
     	});

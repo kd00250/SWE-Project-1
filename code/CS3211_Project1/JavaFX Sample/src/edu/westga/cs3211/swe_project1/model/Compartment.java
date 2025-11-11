@@ -100,7 +100,7 @@ public class Compartment {
 				throw new IllegalArgumentException("Stock cannot be null");
 			}
 
-			if (stock.getHasSpecialQualities() && !this.isSpecialQualitiesStorage) {
+			if (stock.getHasSpecialQualities() != this.isSpecialQualitiesStorage) {
 				return false; 
 			}
 

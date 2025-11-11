@@ -89,7 +89,7 @@ public class LoginWindow {
     }
     
     private void setUpBindings() {
-    	this.vm = new LoginWindowViewModel();
+    	this.vm = new LoginWindowViewModel(); 
     	this.vm.getUsername().bind(this.usernameTextBox.textProperty());
     	this.vm.getPassword().bind(this.passwordTextBox.textProperty());
     }
