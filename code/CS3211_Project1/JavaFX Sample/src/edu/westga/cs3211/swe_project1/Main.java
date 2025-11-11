@@ -14,6 +14,12 @@ import javafx.stage.Stage;
  * @version Fall 2025​
  */
 public class Main extends Application {
+	public static final String PICK_STORAGE_PAGE_TITLE = "SWE 1 Project 1 - Pick Storage Page";
+	public static final String PICK_STORAGE_PAGE = "view/PickStorageWindow.fxml";
+	
+	public static final String ADD_STOCK_PAGE_TITLE = "SWE 1 Project 1 - Add Stock Page";
+	public static final String ADD_STOCK_PAGE = "view/AddStockWindow.fxml";
+	
 	public static final String LANDING_PAGE_TITLE = "SWE 1 Project 1 - Landing Page";
 	public static final String LANDING_PAGE = "view/LandingPageWindow.fxml";
 	

@@ -30,8 +30,8 @@ public class Stock {
 	 * @param expirationDate the expiration date of the stock
 	 */
 	public Stock(int quantity, Set<SpecialQuality> specialQualities, String name, String condition, String expirationDate) {
-		if (quantity == 0) {
-			throw new IllegalArgumentException("Quantity cannot be zero");
+		if (quantity == 0) { 
+			throw new IllegalArgumentException("Quantity cannot be zero"); 
 		}
 		if (name == null) {
 			throw new IllegalArgumentException("Password cannot be null");

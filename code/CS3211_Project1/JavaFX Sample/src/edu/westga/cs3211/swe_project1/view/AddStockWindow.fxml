@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.swe_project1.view.AddStockWindow">
    <children>
       <Label layoutX="206.0" layoutY="41.0" text="Enter Stock Information">
          <font>
@@ -19,15 +19,15 @@
       <Label layoutX="64.0" layoutY="99.0" text="Name:" />
       <Label layoutX="48.0" layoutY="156.0" text="Quantity:" />
       <Label layoutX="45.0" layoutY="204.0" text="Condition:" />
-      <Label layoutX="148.0" layoutY="253.0" text="Expiration Date:" />
+      <Label layoutX="311.0" layoutY="213.0" text="Expiration Date:" />
       <TextField fx:id="nameTextBox" layoutX="106.0" layoutY="95.0" />
       <TextField fx:id="quantityTextBox" layoutX="106.0" layoutY="152.0" />
-      <TextField fx:id="expirationDateTextBox" layoutX="244.0" layoutY="249.0" />
+      <TextField fx:id="expirationDateTextBox" layoutX="417.0" layoutY="209.0" />
       <Label layoutX="306.0" layoutY="99.0" prefHeight="18.0" prefWidth="94.0" text="Special Qualities:" />
       <CheckBox layoutX="417.0" layoutY="100.0" mnemonicParsing="false" text="Liquid" />
       <CheckBox layoutX="417.0" layoutY="131.0" mnemonicParsing="false" text="Flammable" />
       <CheckBox layoutX="417.0" layoutY="165.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="84.0" text="Perishable" />
       <ComboBox fx:id="conditionComboBox" layoutX="105.0" layoutY="200.0" prefWidth="150.0" />
-      <Button fx:id="addStockButton" layoutX="256.0" layoutY="312.0" mnemonicParsing="false" onAction="#addStock" text="Add Stock" />
+      <Button fx:id="addStockButton" layoutX="258.0" layoutY="285.0" mnemonicParsing="false" onAction="#addStock" prefHeight="26.0" prefWidth="84.0" text="Add Stock" />
    </children>
 </AnchorPane>

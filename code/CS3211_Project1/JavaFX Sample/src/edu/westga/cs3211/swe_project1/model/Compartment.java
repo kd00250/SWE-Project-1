@@ -29,7 +29,7 @@ public class Compartment {
 			throw new IllegalArgumentException("Capacity cannot be null");
 		}
 		
-		this.name = name;
+		this.name = name;  
 		this.storage = new ArrayList<Stock>();
 		this.isSpecialQualitiesStorage = isSpecialQualitiesStorage;
 		this.capacity = capacity;

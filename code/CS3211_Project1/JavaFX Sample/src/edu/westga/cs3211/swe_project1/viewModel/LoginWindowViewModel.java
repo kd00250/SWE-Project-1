@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * The codebehind the loginWindow of the application
+ * The viewmodel the loginWindow of the application
  * 
  * @author CS3211
  * @version Fall 2025
