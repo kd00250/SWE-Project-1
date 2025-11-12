@@ -38,5 +38,51 @@ public class Inventory {
 	public ArrayList<Compartment> getCompartments() {
 		return this.compartments;
 	}
+	
+	/**
+	 * Gets the normal storage names
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param compartments the compartments
+	 * @return a list of normal storage compartment names
+	 */
+	public ArrayList<String> getNormalStorage(ArrayList<Compartment> compartments) {
+		if (compartments == null) {
+			throw new IllegalArgumentException("Compartments cannot be null");
+		}
+		
+		ArrayList<String> compartmentNames = new ArrayList<String>();
+		for (Compartment currentCompartment : compartments) {
+			if (!currentCompartment.getIsSpecialQualitiesStorage()) {
+				compartmentNames.add(currentCompartment.getName());
+			}
+		}
+		return compartmentNames;
+	}
+	
+	/**
+	 * Gets the special storage names
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param compartments the compartments
+	 * @return a list of special storage compartment names
+	 */
+	public ArrayList<String> getSpecialStorage(ArrayList<Compartment> compartments) {
+		if (compartments == null) {
+			throw new IllegalArgumentException("Compartments cannot be null");
+		}
+		
+		ArrayList<String> compartmentNames = new ArrayList<String>();
+		for (Compartment currentCompartment : compartments) {
+			if (currentCompartment.getIsSpecialQualitiesStorage()) {
+				compartmentNames.add(currentCompartment.getName());
+			}
+		}
+		return compartmentNames;
+	}
 
 }

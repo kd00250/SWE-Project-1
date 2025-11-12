@@ -1,8 +1,10 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.viewModel;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.Compartment;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Inventory;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
@@ -158,59 +160,102 @@ public class AddStockWindowViewModel {
 	}
 	
 	/**
-	 * Adds stock to boxes compartment
+	 * Adds stock to specified compartment
 	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
+	 * @param compartmentName the name of the compartment
 	 * @param stock the stock to be added
 	 * 
-	 * @return true/false depending on if it was added
+	 * 
+	 * 
+	 * @return true/false if the stock can be added or not
 	 */
-	public Boolean addStockToBoxes(Stock stock) {
-		return this.inventory.getCompartments().get(0).addStock(stock);
+	public Boolean addStockToCompartment(String compartmentName, Stock stock) {
+		for (Compartment currentCompartment : this.inventory.getCompartments()) {
+			if (currentCompartment.getName().equals(compartmentName)) {
+				return currentCompartment.addStock(stock);
+			}
+		}
+		return false;
 	}
 	
 	/**
-	 * Adds stock to shelves compartment
+	 * Gets the normal storage names
 	 * 
 	 * @precondition none
 	 * @postcondition none
 	 * 
-	 * @param stock the stock to be added
-	 * 
-	 * @return true/false depending on if it was added
+	 * @return a list of normal storage compartment names
 	 */
-	public Boolean addStockToShelves(Stock stock) {
-		return this.inventory.getCompartments().get(1).addStock(stock);
+	public ArrayList<String> getNormalStorage() {
+		return this.inventory.getNormalStorage(this.inventory.getCompartments());
 	}
 	
 	/**
-	 * Adds stock to special storage 1 compartment
+	 * Gets the special storage names
 	 * 
 	 * @precondition none
 	 * @postcondition none
 	 * 
-	 * @param stock the stock to be added
-	 * 
-	 * @return true/false depending on if it was added
+	 * @return a list of special storage compartment names
 	 */
-	public Boolean addStockToSpecialStorage1(Stock stock) {
-		return this.inventory.getCompartments().get(2).addStock(stock);
+	public ArrayList<String> getSpecialStorage() {
+		return this.inventory.getSpecialStorage(this.inventory.getCompartments());
 	}
 	
-	/**
-	 * Adds stock to special storage 2 compartment
-	 * 
-	 * @precondition none
-	 * @postcondition none
-	 * 
-	 *@param stock the stock to be added 
-	 * 
-	 * @return true/false depending on if it was added
-	 */
-	public Boolean addStockToSpecialStorage2(Stock stock) {
-		return this.inventory.getCompartments().get(3).addStock(stock);
-	}
+//	/**
+//	 * Adds stock to boxes compartment
+//	 * 
+//	 * @precondition none
+//	 * @postcondition none
+//	 * 
+//	 * @param stock the stock to be added
+//	 * 
+//	 * @return true/false depending on if it was added
+//	 */
+//	public Boolean addStockToBoxes(Stock stock) {
+//		return this.inventory.getCompartments().get(0).addStock(stock);
+//	}
+//	
+//	/**
+//	 * Adds stock to shelves compartment
+//	 * 
+//	 * @precondition none
+//	 * @postcondition none
+//	 * 
+//	 * @param stock the stock to be added
+//	 * 
+//	 * @return true/false depending on if it was added
+//	 */
+//	public Boolean addStockToShelves(Stock stock) {
+//		return this.inventory.getCompartments().get(1).addStock(stock);
+//	}
+//	
+//	/**
+//	 * Adds stock to special storage 1 compartment
+//	 * 
+//	 * @precondition none
+//	 * @postcondition none
+//	 * 
+//	 * @param stock the stock to be added
+//	 * 
+//	 * @return true/false depending on if it was added
+//	 */
+//	public Boolean addStockToSpecialStorage1(Stock stock) {
+//		return this.inventory.getCompartments().get(2).addStock(stock);
+//	}
+//	
+//	/**
+//	 * Adds stock to special storage 2 compartment
+//	 * 
+//	 * @precondition none
+//	 * @postcondition none
+//	 * 
+//	 *@param stock the stock to be added 
+//	 * 
+//	 * @return true/false depending on if it was added
+//	 */
+//	public Boolean addStockToSpecialStorage2(Stock stock) {
+//		return this.inventory.getCompartments().get(3).addStock(stock);
+//	}
 	
 }
