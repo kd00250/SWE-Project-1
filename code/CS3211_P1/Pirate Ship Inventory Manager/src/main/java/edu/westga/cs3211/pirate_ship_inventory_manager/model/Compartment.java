@@ -38,6 +38,9 @@ public class Compartment {
 	/**
 	 * Gets the list of stocks in the compartment
 	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
 	 * @return the list of stocks in the compartment
 	 */
 	public ArrayList<Stock> getStorage() {
@@ -46,6 +49,9 @@ public class Compartment {
 	
 	/**
 	 * Gets the name of the compartment
+	 * 
+	 * @precondition none
+	 * @postcondition none
 	 * 
 	 * @return the name of the compartment
 	 */
@@ -56,6 +62,9 @@ public class Compartment {
 	/**
 	 * Gets the capacity of the compartment
 	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
 	 * @return the capacity of the compartment
 	 */
 	public int getCapacity() {
@@ -63,7 +72,26 @@ public class Compartment {
 	}
 	
 	/**
+	 * gets the total remaining capacity
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the total remaining capacity
+	 */
+	public int getRemainingCapacity() {
+		int total = 0;
+		for (Stock currentStock : this.storage) {
+			total += currentStock.getQuantity();
+		}
+		return this.getCapacity() - total;
+	}
+	
+	/**
 	 * Gets if the compartment is special qualities storage or not
+	 * 
+	 * @precondition none
+	 * @postcondition none
 	 * 
 	 * @return true/false depending on if the compartment is special qualities storage
 	 */
@@ -73,6 +101,9 @@ public class Compartment {
 	
 	/**
 	 * Checks if there is free space for the stock
+	 *
+	 * @precondition stock != null
+	 * @postcondition none
 	 *
 	 * @param stock the stock to check space for
 	 * @return true if there is space, false otherwise
@@ -110,4 +141,6 @@ public class Compartment {
 			this.storage.add(stock);
 			return true;
 		}
+		
+		
 }

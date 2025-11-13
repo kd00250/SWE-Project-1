@@ -6,6 +6,7 @@ import java.util.Set;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Compartment;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Inventory;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import javafx.beans.property.BooleanProperty;
@@ -20,7 +21,7 @@ import javafx.beans.property.StringProperty;
  * @version Fall 2025
  */
 public class AddStockWindowViewModel {
-	private Inventory inventory;
+	private Inventory inventory; 
 	private StringProperty name;
 	private StringProperty quantity;
 	private StringProperty condition;
@@ -37,7 +38,7 @@ public class AddStockWindowViewModel {
 	 * 
 	 */
 	public AddStockWindowViewModel() {
-		this.inventory = new Inventory();
+		this.inventory = InventoryManager.getInstance().getInventory();
 		this.name = new SimpleStringProperty();
 		this.quantity = new SimpleStringProperty();
 		this.condition = new SimpleStringProperty();
@@ -138,7 +139,7 @@ public class AddStockWindowViewModel {
 	 * @postcondition none
 	 * 
 	 * @return the stock made from the user input
-	 */
+	 */ 
 	public Stock createStock() {
 		String name = this.getName().get();
 		String condition = this.getCondition().get();
@@ -158,7 +159,7 @@ public class AddStockWindowViewModel {
 		Stock stock = new Stock(quantity, specialQualities, name, condition, expirationDate);
 		return stock;
 	}
-	
+	 
 	/**
 	 * Adds stock to specified compartment
 	 * 
@@ -198,64 +199,8 @@ public class AddStockWindowViewModel {
 	 * 
 	 * @return a list of special storage compartment names
 	 */
-	public ArrayList<String> getSpecialStorage() {
-		return this.inventory.getSpecialStorage(this.inventory.getCompartments());
+	public ArrayList<String> getSpecialStorageForStock(Stock stock) {
+		return this.inventory.getSpecialStorage(this.inventory.getCompartments(), stock);
 	}
-	
-//	/**
-//	 * Adds stock to boxes compartment
-//	 * 
-//	 * @precondition none
-//	 * @postcondition none
-//	 * 
-//	 * @param stock the stock to be added
-//	 * 
-//	 * @return true/false depending on if it was added
-//	 */
-//	public Boolean addStockToBoxes(Stock stock) {
-//		return this.inventory.getCompartments().get(0).addStock(stock);
-//	}
-//	
-//	/**
-//	 * Adds stock to shelves compartment
-//	 * 
-//	 * @precondition none
-//	 * @postcondition none
-//	 * 
-//	 * @param stock the stock to be added
-//	 * 
-//	 * @return true/false depending on if it was added
-//	 */
-//	public Boolean addStockToShelves(Stock stock) {
-//		return this.inventory.getCompartments().get(1).addStock(stock);
-//	}
-//	
-//	/**
-//	 * Adds stock to special storage 1 compartment
-//	 * 
-//	 * @precondition none
-//	 * @postcondition none
-//	 * 
-//	 * @param stock the stock to be added
-//	 * 
-//	 * @return true/false depending on if it was added
-//	 */
-//	public Boolean addStockToSpecialStorage1(Stock stock) {
-//		return this.inventory.getCompartments().get(2).addStock(stock);
-//	}
-//	
-//	/**
-//	 * Adds stock to special storage 2 compartment
-//	 * 
-//	 * @precondition none
-//	 * @postcondition none
-//	 * 
-//	 *@param stock the stock to be added 
-//	 * 
-//	 * @return true/false depending on if it was added
-//	 */
-//	public Boolean addStockToSpecialStorage2(Stock stock) {
-//		return this.inventory.getCompartments().get(3).addStock(stock);
-//	}
 	
 }

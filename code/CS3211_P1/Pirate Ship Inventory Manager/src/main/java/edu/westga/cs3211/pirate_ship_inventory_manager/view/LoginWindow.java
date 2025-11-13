@@ -69,7 +69,7 @@ public class LoginWindow {
 				return;
 			} else {
 				this.usernameErrorLabel.setText("");
-			}
+			} 
 		});
 	}
     

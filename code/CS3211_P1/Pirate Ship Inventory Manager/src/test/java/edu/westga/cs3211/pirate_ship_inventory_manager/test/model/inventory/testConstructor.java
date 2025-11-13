@@ -21,13 +21,17 @@ class testConstructor {
 		assertEquals(inventory.getCompartments().get(1).getCapacity(), 10);
 		assertEquals(inventory.getCompartments().get(1).getIsSpecialQualitiesStorage(), false);
 		
-		assertEquals(inventory.getCompartments().get(2).getName(), "Special Storage 1");
+		assertEquals(inventory.getCompartments().get(2).getName(), "Flammable Storage");
 		assertEquals(inventory.getCompartments().get(2).getCapacity(), 15);
 		assertEquals(inventory.getCompartments().get(2).getIsSpecialQualitiesStorage(), true);
 		
-		assertEquals(inventory.getCompartments().get(3).getName(), "Special Storage 2");
+		assertEquals(inventory.getCompartments().get(3).getName(), "Liquid Storage");
 		assertEquals(inventory.getCompartments().get(3).getCapacity(), 15);
 		assertEquals(inventory.getCompartments().get(3).getIsSpecialQualitiesStorage(), true);
+		
+		assertEquals(inventory.getCompartments().get(4).getName(), "Perishable Storage");
+		assertEquals(inventory.getCompartments().get(4).getCapacity(), 15);
+		assertEquals(inventory.getCompartments().get(4).getIsSpecialQualitiesStorage(), true);
 	}
 
 }

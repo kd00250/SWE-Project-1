@@ -163,7 +163,7 @@ class testConstructor {
         Set<SpecialQuality> qualities = new HashSet<>();
         qualities.add(SpecialQuality.PERISHABLE);
         
-        Stock stock = new Stock(20, qualities, "Apples", "perfect", "2025/12/31");
+        Stock stock = new Stock(20, qualities, "Apples", "perfect", "12/12/2025");
         
         assertTrue(stock.getHasSpecialQualities());
         assertFalse(stock.isFlammable());
@@ -179,7 +179,7 @@ class testConstructor {
         qualities.add(SpecialQuality.LIQUID);
         qualities.add(SpecialQuality.PERISHABLE);
         
-        Stock stock = new Stock(5, qualities, "Milk", "perfect", "2025/11/15");
+        Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2025");
         
         assertTrue(stock.getHasSpecialQualities());
         assertFalse(stock.isFlammable());
@@ -196,7 +196,7 @@ class testConstructor {
         qualities.add(SpecialQuality.LIQUID);
         qualities.add(SpecialQuality.PERISHABLE);
         
-        Stock stock = new Stock(2, qualities, "juice", "usable", "2025/12/01");
+        Stock stock = new Stock(2, qualities, "juice", "usable", "12/12/2025");
         
         assertTrue(stock.getHasSpecialQualities());
         assertTrue(stock.isFlammable());

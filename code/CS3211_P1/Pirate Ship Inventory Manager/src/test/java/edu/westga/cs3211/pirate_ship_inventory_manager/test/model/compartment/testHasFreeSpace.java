@@ -15,7 +15,7 @@ class testHasFreeSpace {
 
 	@Test
 	void testHasFreeSpaceTrue() {
-		Compartment box = new Compartment("barrel", 25, true );
+		Compartment box = new Compartment("barrel", 25, false );
 		Set<SpecialQuality> qualities = new HashSet<>();
 		Stock stock = new Stock(2, qualities, "gold", "good", "12/12/2004");
 		
@@ -24,7 +24,7 @@ class testHasFreeSpace {
 	
 	@Test
 	void testHasFreeSpaceFalse() {
-		Compartment box = new Compartment("barrel", 25, true );
+		Compartment box = new Compartment("barrel", 25, false );
 		Set<SpecialQuality> qualities = new HashSet<>();
 		Stock stock = new Stock(26, qualities, "gold", "good", "12/12/2004");
 		
@@ -33,7 +33,7 @@ class testHasFreeSpace {
 	
 	@Test
 	void testHasFreeSpaceMultipleItemsTrue() {
-		Compartment box = new Compartment("barrel", 25, true );
+		Compartment box = new Compartment("barrel", 25, false );
 		Set<SpecialQuality> qualities = new HashSet<>();
 		Stock stock = new Stock(2, qualities, "gold", "good", "12/12/2004");
 		Stock stock2 = new Stock(2, qualities, "gold", "good", "12/12/2004");
@@ -41,5 +41,6 @@ class testHasFreeSpace {
 		
 		assertTrue(box.hasFreeSpace(stock2));
 	}
+	
 
 }

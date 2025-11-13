@@ -18,13 +18,15 @@ public class Inventory {
 		this.compartments = new ArrayList<Compartment>();
 		Compartment regular1 = new Compartment("Boxes", 10, false);
 		Compartment regular2 = new Compartment("Shelves", 10, false);
-		Compartment special1 = new Compartment("Special Storage 1", 15, true);
-		Compartment special2 = new Compartment("Special Storage 2", 15, true);
+		Compartment special1 = new Compartment("Flammable Storage", 15, true);
+		Compartment special2 = new Compartment("Liquid Storage", 15, true);
+		Compartment special3 = new Compartment("Perishable Storage", 15, true);
 		
 		this.compartments.add(regular1);
 		this.compartments.add(regular2);
 		this.compartments.add(special1);
 		this.compartments.add(special2);
+		this.compartments.add(special3);
 	}
 	
 	/**
@@ -63,7 +65,7 @@ public class Inventory {
 	}
 	
 	/**
-	 * Gets the special storage names
+	 * Gets the special storage names that a stock can be stored in
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -71,14 +73,23 @@ public class Inventory {
 	 * @param compartments the compartments
 	 * @return a list of special storage compartment names
 	 */
-	public ArrayList<String> getSpecialStorage(ArrayList<Compartment> compartments) {
+	public ArrayList<String> getSpecialStorage(ArrayList<Compartment> compartments, Stock stock) {
 		if (compartments == null) {
 			throw new IllegalArgumentException("Compartments cannot be null");
+		}
+		if (stock == null) {
+			throw new IllegalArgumentException("Stock cannot be null");
 		}
 		
 		ArrayList<String> compartmentNames = new ArrayList<String>();
 		for (Compartment currentCompartment : compartments) {
-			if (currentCompartment.getIsSpecialQualitiesStorage()) {
+			if (stock.isFlammable() && currentCompartment.getName().equals("Flammable Storage")) {
+				compartmentNames.add(currentCompartment.getName());
+			}
+			if (stock.isLiquid() && currentCompartment.getName().equals("Liquid Storage")) {
+				compartmentNames.add(currentCompartment.getName());
+			}
+			if (stock.isPerishable() && currentCompartment.getName().equals("Perishable Storage")) {
 				compartmentNames.add(currentCompartment.getName());
 			}
 		}

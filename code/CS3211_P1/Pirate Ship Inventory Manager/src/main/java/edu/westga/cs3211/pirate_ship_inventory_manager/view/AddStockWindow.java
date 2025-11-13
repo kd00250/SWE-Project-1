@@ -67,7 +67,7 @@ public class AddStockWindow {
 		loader.setLocation(Main.class.getResource(Main.PICK_STORAGE_PAGE));
 		try {
 			loader.load();
-			Parent parent = loader.getRoot();
+			Parent parent = loader.getRoot(); 
 			Scene scene = new Scene(parent);
 			Stage setPickStorageStage = new Stage();
 			setPickStorageStage.setTitle(Main.PICK_STORAGE_PAGE_TITLE);
@@ -89,13 +89,35 @@ public class AddStockWindow {
     	this.addStockVM = new AddStockWindowViewModel();
     	String [] conditions = {"perfect", "usable", "unsuable"};
     	this.conditionComboBox.getItems().addAll(conditions);
+    	this.conditionComboBox.setValue(conditions[0]);
     	this.addStockVM.getCondition().bind(this.conditionComboBox.valueProperty());
     	this.addStockVM.getName().bind(this.nameTextBox.textProperty());
+    	this.quantityTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    if (!newValue.matches("^$|^[1-9][0-9]*$")) {
+    	        quantityTextBox.setText(oldValue);
+    	    }
+    	});
+    	 
+    	this.expirationDateTextBox.setPromptText("dd/mm/yyyy");
+    	this.expirationDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+    	    if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
+    	        this.expirationDateTextBox.setText(oldValue);
+    	    }
+    	    if (newValue.length() > 10) {
+    	        this.expirationDateTextBox.setText(oldValue);
+    	    }
+    	});
     	this.addStockVM.getQuantity().bind(this.quantityTextBox.textProperty());
     	this.addStockVM.getIsFlammableProperty().bind(this.isFlammableCheckBox.selectedProperty());
     	this.addStockVM.getIsLiquidProperty().bind(this.isLiquidcheckBox.selectedProperty());
     	this.addStockVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
     	this.addStockVM.getExpirationDate().bind(this.expirationDateTextBox.textProperty());
+    }
+    
+    private void setUpControls() {
+    	this.expirationDateTextBox.disableProperty().bind(this.isPerishableCheckBox.selectedProperty().not());
+    	this.addStockButton.disableProperty().bind(this.nameTextBox.textProperty().isEmpty()
+    			.or(this.quantityTextBox.textProperty().isEmpty()));
     }
     
     /**
@@ -105,7 +127,7 @@ public class AddStockWindow {
 	 */
     public void bindToAddStockVM(LoginWindowViewModel vm) {
     	this.setUpBindings();
-    	this.expirationDateTextBox.disableProperty().bind(this.isPerishableCheckBox.selectedProperty().not());
+    	this.setUpControls();
     	this.addStockButton.setOnAction((event) -> {
     		this.addStock(event);
     	});
