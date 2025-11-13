@@ -59,8 +59,23 @@ public class AddStockWindow {
 
     @FXML
     void addStock(ActionEvent event) {
+    	if (this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.specialStorageHasFreeSpace(this.addStockVM.createStock())) {
+    		this.displayErrorPopup("There is no compartment currently available to store stock \n with indicated special quantity. "
+    				+ "\nPlease reassess the quantity entered and try again.");
+    	}
+    	else if (!this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.normalStorageHasFreeSpace(this.addStockVM.createStock())) {
+    		this.displayErrorPopup("There is no compartment currently available to store stock \n with indicated quantity. "
+    				+ "\nPlease reassess the quantity entered and try again.");
+    	} else {
     	this.getPickStorageWindow();
+    	}
     }
+    
+    private void displayErrorPopup(String message) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
     
     private void getPickStorageWindow() {
     	FXMLLoader loader = new FXMLLoader();
@@ -104,7 +119,7 @@ public class AddStockWindow {
     	        this.expirationDateTextBox.setText(oldValue);
     	    }
     	    if (newValue.length() > 10) {
-    	        this.expirationDateTextBox.setText(oldValue);
+    	        this.expirationDateTextBox.setText(oldValue);  
     	    }
     	});
     	this.addStockVM.getQuantity().bind(this.quantityTextBox.textProperty());
@@ -117,7 +132,8 @@ public class AddStockWindow {
     private void setUpControls() {
     	this.expirationDateTextBox.disableProperty().bind(this.isPerishableCheckBox.selectedProperty().not());
     	this.addStockButton.disableProperty().bind(this.nameTextBox.textProperty().isEmpty()
-    			.or(this.quantityTextBox.textProperty().isEmpty()));
+    			.or(this.quantityTextBox.textProperty().isEmpty()).or(this.expirationDateTextBox.disabledProperty().not()
+    	                .and(this.expirationDateTextBox.textProperty().isEmpty())));
     }
     
     /**

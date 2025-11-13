@@ -15,6 +15,7 @@ import javafx.beans.property.StringProperty;
  */
 public class LoginWindowViewModel {
 	private UserStore store;
+	private User user;
 	private StringProperty username;
 	private StringProperty password;
 	private BooleanProperty  isQuartermaster;
@@ -26,6 +27,7 @@ public class LoginWindowViewModel {
 		this.username = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
 		this.isQuartermaster = new SimpleBooleanProperty(false);
+		this.user = user;
 		this.store = new UserStore();
 	}
 	
@@ -66,6 +68,18 @@ public class LoginWindowViewModel {
 	}
 	
 	/**
+	 * Gets current Logged in user
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the logged in user
+	 */
+	public User getUser() {
+		return this.user;
+	}
+	
+	/**
 	 * Checks to see if credentials are in the system
 	 * 
 	 * @precondition none
@@ -79,9 +93,11 @@ public class LoginWindowViewModel {
 				if (currentUser.getRole().equals("Quartermaster")) {
 					this.isQuartermaster.set(true);
 				}
+				this.user = currentUser;
 				return true;
 			}
 		}
+		this.user = null;
 		return false;
 	}
 }

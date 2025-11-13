@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * The codebehind for pickStorageWindow
@@ -27,6 +29,9 @@ public class PickStorageWindow {
     @FXML
     private ComboBox<String> specialStorageComboBox;
     
+    @FXML
+    private AnchorPane pane;
+    
     private LoginWindowViewModel vm;
     private AddStockWindowViewModel addStockVM;
 
@@ -34,57 +39,22 @@ public class PickStorageWindow {
     void addToStorage(ActionEvent event) {
     	if (this.normalStorageComboBox.isDisabled()) {
     		this.addStockVM.addStockToCompartment(this.specialStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.displaySuccessPopup("Item successfully added to " + this.specialStorageComboBox.getValue());
+    		this.closeWindow();
     	} else {
     		this.addStockVM.addStockToCompartment(this.normalStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.displaySuccessPopup("Item successfully added to " + this.normalStorageComboBox.getValue());
+    		this.closeWindow();
     	}
     }
     
-
-//    @FXML
-//    void addStockToBoxes(ActionEvent event) {
-//    	if (!this.addStockVM.addStockToBoxes(this.addStockVM.createStock())) {
-//    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
-//    	} else {
-//    		this.displaySuccessPopup("Successfully added stock to boxes compartment");
-//    	}
-//    }
-//
-//    @FXML
-//    void addStockToShelves(ActionEvent event) {
-//    	if (!this.addStockVM.addStockToShelves(this.addStockVM.createStock())) {
-//    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
-//    	} else {
-//    		this.displaySuccessPopup("Successfully added stock to shelves compartment");
-//    	}
-//    	
-//    }
-//
-//    @FXML
-//    void addStockToSpecialStorage1(ActionEvent event) {
-//    	if (!this.addStockVM.addStockToSpecialStorage1(this.addStockVM.createStock())) {
-//    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
-//    	} else {
-//    		this.displaySuccessPopup("Successfully added stock to special storage 1 compartment");
-//    	}
-//    }
-//
-//    @FXML
-//    void addStockToSpecialStorage2(ActionEvent event) {
-//    	if (!this.addStockVM.addStockToSpecialStorage2(this.addStockVM.createStock())) {
-//    		this.displayErrorPopup("This compartment has reached capacity, cannot add stock.");
-//    	} else {
-//    		this.displaySuccessPopup("Successfully added stock to special storage 2 compartment");
-//    	}
-//    }
-    
-    private void displayErrorPopup(String message) {
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
+    private void closeWindow() {
+		Stage stage = (Stage) (this.pane).getScene().getWindow();
+		stage.close();
 	}
     
-    private void displaySuccessPopup(String message) { 
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private void displaySuccessPopup(String message) {  
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setContentText(message);
 		alert.showAndWait();
 	}

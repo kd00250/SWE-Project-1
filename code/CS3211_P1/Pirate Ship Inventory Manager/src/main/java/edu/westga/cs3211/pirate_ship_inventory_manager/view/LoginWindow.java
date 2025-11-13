@@ -88,7 +88,7 @@ public class LoginWindow {
     	this.loginButton.disableProperty().bind(this.usernameTextBox.textProperty().isEmpty().or(this.passwordTextBox.textProperty().isEmpty()));
     }
     
-    private void setUpBindings() {
+    private void setUpBindings() { 
     	this.vm = new LoginWindowViewModel(); 
     	this.vm.getUsername().bind(this.usernameTextBox.textProperty());
     	this.vm.getPassword().bind(this.passwordTextBox.textProperty());

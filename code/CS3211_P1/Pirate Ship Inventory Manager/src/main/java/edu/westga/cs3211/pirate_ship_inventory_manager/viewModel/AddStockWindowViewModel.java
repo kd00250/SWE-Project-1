@@ -203,4 +203,44 @@ public class AddStockWindowViewModel {
 		return this.inventory.getSpecialStorage(this.inventory.getCompartments(), stock);
 	}
 	
+	/**
+	 * Checks if the normal storage has any free space for the stock
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param stock the stock to be added
+	 * @return true/false if there is space for the stock
+	 */
+	public boolean normalStorageHasFreeSpace(Stock stock) {
+		for (Compartment currentCompartment : this.inventory.getCompartments()) {
+			if (!currentCompartment.getIsSpecialQualitiesStorage()) {
+				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
+					return false;
+				}
+			} 
+		}
+		return true;
+	}
+	
+	/**
+	 * Checks if the normal storage has any free space for the stock
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param stock the stock to be added
+	 * @return true/false if there is space for the stock
+	 */
+	public boolean specialStorageHasFreeSpace(Stock stock) {
+		for (Compartment currentCompartment : this.inventory.getCompartments()) {
+			if (currentCompartment.getIsSpecialQualitiesStorage()) {
+				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
+					return false;
+				}
+			} 
+		}
+		return true;
+	}
+	
 }
