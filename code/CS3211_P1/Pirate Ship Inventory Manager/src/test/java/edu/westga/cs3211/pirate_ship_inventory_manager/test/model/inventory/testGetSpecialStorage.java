@@ -31,6 +31,20 @@ class testGetSpecialStorage {
 	}
 	
 	@Test
+	void testGetSpecialStorageTwoNamesOther() {
+		Inventory inventory = new Inventory();
+		Set<SpecialQuality> qualities = new HashSet<>();
+		qualities.add(SpecialQuality.FLAMMABLE);
+        qualities.add(SpecialQuality.LIQUID);
+		Stock stock = new Stock(10, qualities, "Paper","perfect", "12/12/2025");
+		
+		ArrayList<String> result = inventory.getSpecialStorage(inventory.getCompartments(), stock);
+		assertEquals(result.size(), 2);
+		assertEquals(result.get(0), "Flammable Storage");
+		assertEquals(result.get(1), "Liquid Storage");
+	}
+	
+	@Test
 	void testGetSpecialStorageTwoNames() {
 		Inventory inventory = new Inventory();
 		Set<SpecialQuality> qualities = new HashSet<>();

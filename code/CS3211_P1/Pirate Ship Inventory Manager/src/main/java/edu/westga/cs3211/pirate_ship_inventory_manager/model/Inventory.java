@@ -1,6 +1,8 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The Inventory class
@@ -16,11 +18,17 @@ public class Inventory {
 	 */
 	public Inventory() {
 		this.compartments = new ArrayList<Compartment>();
-		Compartment regular1 = new Compartment("Boxes", 10, false);
-		Compartment regular2 = new Compartment("Shelves", 10, false);
-		Compartment special1 = new Compartment("Flammable Storage", 15, true);
-		Compartment special2 = new Compartment("Liquid Storage", 15, true);
-		Compartment special3 = new Compartment("Perishable Storage", 15, true);
+		Set<SpecialQuality> qualities = new HashSet<>();
+		qualities.add(SpecialQuality.LIQUID);
+        Stock stock = new Stock(1, new HashSet<>(), "Paper","perfect", null);
+        Stock stock2 = new Stock(1, qualities, "Oil","perfect", null);
+		Compartment regular1 = new Compartment("Boxes", 30, false);
+		Compartment regular2 = new Compartment("Shelves", 30, false);
+		Compartment special1 = new Compartment("Flammable Storage", 25, true);
+		Compartment special2 = new Compartment("Liquid Storage", 25, true);
+		Compartment special3 = new Compartment("Perishable Storage", 25, true);
+		regular1.addStock(stock);
+		special2.addStock(stock2);
 		
 		this.compartments.add(regular1);
 		this.compartments.add(regular2);

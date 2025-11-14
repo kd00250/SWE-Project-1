@@ -1,7 +1,9 @@
-package edu.westga.cs3211.pirate_ship_inventory_manager.test.model.LogChange;
+package edu.westga.cs3211.pirate_ship_inventory_manager.test.model.logchange;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,12 +23,14 @@ class testConstructor {
 		Compartment box = new Compartment("barrel", 25, true );
 		Set<SpecialQuality> qualities = new HashSet<>();
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2025");
-        LogChange change = new LogChange(user, stock, box);
+        LogChange change = new LogChange(user, stock, box); 
+        String expectedDate = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         
         assertEquals(change.getUser(), user);
         assertEquals(change.getCompartment(), box);
         assertEquals(change.getStock(), stock);
-        assertEquals(change.getTime(), "11/13/2025");
+        assertEquals(change.getTime(), expectedDate);
 
 	}
 	

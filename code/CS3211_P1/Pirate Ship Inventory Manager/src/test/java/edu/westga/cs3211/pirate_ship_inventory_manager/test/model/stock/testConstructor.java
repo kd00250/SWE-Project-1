@@ -117,7 +117,6 @@ class testConstructor {
 	
 	@Test
     void testConstructorWithNoSpecialQualities() {
-        // Regular item with no special qualities
         Set<SpecialQuality> qualities = new HashSet<>();
         
         Stock stock = new Stock(10, qualities, "Paper","perfect", null);
