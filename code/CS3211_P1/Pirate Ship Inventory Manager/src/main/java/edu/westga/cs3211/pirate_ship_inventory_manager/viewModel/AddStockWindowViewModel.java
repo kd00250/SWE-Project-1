@@ -163,7 +163,7 @@ public class AddStockWindowViewModel {
 	/**
 	 * Adds stock to specified compartment
 	 * 
-	 * @param compartmentName the name of the compartment
+	 * @param compartmentName the name of the compartment 
 	 * @param stock the stock to be added
 	 * 
 	 * 

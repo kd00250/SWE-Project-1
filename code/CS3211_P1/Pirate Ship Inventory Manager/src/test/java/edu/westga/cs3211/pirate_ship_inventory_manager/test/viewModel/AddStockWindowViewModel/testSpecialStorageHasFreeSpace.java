@@ -30,7 +30,7 @@ class testSpecialStorageHasFreeSpace {
 		vm.getIsFlammableProperty().set(true);
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
-		vm.getQuantity().set("16");
+		vm.getQuantity().set("26");
 	
 		
 		assertFalse(vm.specialStorageHasFreeSpace(vm.createStock()));

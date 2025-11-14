@@ -168,7 +168,7 @@ class testConstructor {
         assertFalse(stock.isFlammable());
         assertFalse(stock.isLiquid());
         assertTrue(stock.isPerishable());
-        assertEquals("2025/12/31", stock.getExpirationDate());
+        assertEquals("12/12/2025", stock.getExpirationDate());
     }
 
     @Test
@@ -184,7 +184,7 @@ class testConstructor {
         assertFalse(stock.isFlammable());
         assertTrue(stock.isLiquid());
         assertTrue(stock.isPerishable());
-        assertEquals("2025/11/15", stock.getExpirationDate());
+        assertEquals("12/12/2025", stock.getExpirationDate());
     }
 
     @Test
@@ -201,7 +201,7 @@ class testConstructor {
         assertTrue(stock.isFlammable());
         assertTrue(stock.isLiquid());
         assertTrue(stock.isPerishable());
-        assertEquals("2025/12/01", stock.getExpirationDate());
+        assertEquals("12/12/2025", stock.getExpirationDate());
     }
 
 }

@@ -76,7 +76,7 @@ class testConstructor {
 		User user = new User("bill", "nye", "Crewmate");
 		assertEquals("bill", user.getUsername());
 		assertEquals("nye", user.getPassword());
-		assertEquals("CrewMate", user.getRole());
+		assertEquals("Crewmate", user.getRole());
 	}
 
 }

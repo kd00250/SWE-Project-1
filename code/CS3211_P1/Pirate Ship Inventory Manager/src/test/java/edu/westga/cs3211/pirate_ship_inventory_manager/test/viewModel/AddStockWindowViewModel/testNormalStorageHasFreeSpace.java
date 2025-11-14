@@ -30,7 +30,7 @@ class testNormalStorageHasFreeSpace {
 		vm.getIsFlammableProperty().set(false);
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
-		vm.getQuantity().set("25");
+		vm.getQuantity().set("35");
 	
 		
 		assertFalse(vm.normalStorageHasFreeSpace(vm.createStock()));
