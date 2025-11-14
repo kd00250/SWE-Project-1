@@ -57,7 +57,7 @@ public class LandingPageWindow {
 			addStockCodebehind.bindToAddStockVM(this.vm);
 
 			setAddStockStage.showAndWait();
-		} catch (IOException error) {
+		} catch (IOException error) { 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
@@ -70,6 +70,7 @@ public class LandingPageWindow {
      * @param vm the vm
      */
     public void bindToVM(LoginWindowViewModel vm) {
+    	this.vm = vm;
     	this.reViewStockChangesButton.disableProperty().bind(vm.isQuartermasterProperty().not());
     	this.addStockButton.setOnAction((event) -> {
     		this.addStock(event);

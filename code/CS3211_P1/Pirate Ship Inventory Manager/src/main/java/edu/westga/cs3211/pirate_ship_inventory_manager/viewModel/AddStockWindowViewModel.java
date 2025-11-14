@@ -7,8 +7,12 @@ import java.util.Set;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Compartment;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Inventory;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChange;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChangesInventory;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,6 +26,7 @@ import javafx.beans.property.StringProperty;
  */
 public class AddStockWindowViewModel {
 	private Inventory inventory; 
+	private LogChangesInventory logInventory;
 	private StringProperty name;
 	private StringProperty quantity;
 	private StringProperty condition;
@@ -39,12 +44,13 @@ public class AddStockWindowViewModel {
 	 */
 	public AddStockWindowViewModel() {
 		this.inventory = InventoryManager.getInstance().getInventory();
+		this.logInventory = LogManager.getInstance().getLogChangesInventory();
 		this.name = new SimpleStringProperty();
 		this.quantity = new SimpleStringProperty();
 		this.condition = new SimpleStringProperty();
 		this.isFlammable = new SimpleBooleanProperty();
 		this.isPerishable = new SimpleBooleanProperty();
-		this.isLiquid = new SimpleBooleanProperty();
+		this.isLiquid = new SimpleBooleanProperty(); 
 		this.expirationDate = new SimpleStringProperty();
 	}
 	
@@ -163,20 +169,39 @@ public class AddStockWindowViewModel {
 	/**
 	 * Adds stock to specified compartment
 	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param user the user to be added
 	 * @param compartmentName the name of the compartment 
 	 * @param stock the stock to be added
 	 * 
-	 * 
-	 * 
 	 * @return true/false if the stock can be added or not
 	 */
-	public Boolean addStockToCompartment(String compartmentName, Stock stock) {
+	public Boolean addStockToCompartment(User user, String compartmentName, Stock stock) {
 		for (Compartment currentCompartment : this.inventory.getCompartments()) {
 			if (currentCompartment.getName().equals(compartmentName)) {
-				return currentCompartment.addStock(stock);
+				if (currentCompartment.addStock(stock)) {
+					LogChange change = new LogChange(user, stock, currentCompartment);
+					this.logInventory.addLogChange(change);
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Gets the summary message
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the summary string
+	 */
+	public String getSummaryMessage() {
+		LogChange change = this.logInventory.getLogChanges().getLast();
+		return change.toString();
 	}
 	
 	/**
@@ -187,8 +212,8 @@ public class AddStockWindowViewModel {
 	 * 
 	 * @return a list of normal storage compartment names
 	 */
-	public ArrayList<String> getNormalStorage() {
-		return this.inventory.getNormalStorage(this.inventory.getCompartments());
+	public ArrayList<String> getNormalStorage(Stock stock) {
+		return this.inventory.getNormalStorage(this.inventory.getCompartments(), stock);
 	}
 	
 	/**
@@ -215,16 +240,16 @@ public class AddStockWindowViewModel {
 	public boolean normalStorageHasFreeSpace(Stock stock) {
 		for (Compartment currentCompartment : this.inventory.getCompartments()) {
 			if (!currentCompartment.getIsSpecialQualitiesStorage()) {
-				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
-					return false;
+				if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
+					return true;
 				}
 			} 
 		}
-		return true;
+		return false;
 	}
 	
 	/**
-	 * Checks if the normal storage has any free space for the stock
+	 * Checks if the special storage has any free space for the stock
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -233,14 +258,42 @@ public class AddStockWindowViewModel {
 	 * @return true/false if there is space for the stock
 	 */
 	public boolean specialStorageHasFreeSpace(Stock stock) {
+//		int compartmentsWithNoSpace = 0;
+//		int stockQualityCount = 0;
+//		for (Compartment currentCompartment : this.inventory.getCompartments()) {
+//			if (currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable()) {
+//				stockQualityCount += 1;
+//				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
+//					compartmentsWithNoSpace += 1;
+//				}
+//			} 
+//			else if (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid()) {
+//				stockQualityCount += 1;
+//				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
+//					compartmentsWithNoSpace += 1;
+//				}
+//			} else if (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable()) {
+//				stockQualityCount += 1;
+//				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
+//					compartmentsWithNoSpace += 1;
+//				}
+//			} 
+//		}
+//		return compartmentsWithNoSpace < stockQualityCount;
 		for (Compartment currentCompartment : this.inventory.getCompartments()) {
-			if (currentCompartment.getIsSpecialQualitiesStorage()) {
-				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
-					return false;
-				}
-			} 
-		}
-		return true;
+	        // Check if this is the right compartment for this stock
+	        if ((currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable()) ||
+	            (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid()) ||
+	            (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable())) {
+	            
+	            // If this compartment has enough space, return true immediately
+	            if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
+	                return true;
+	            }
+	        }
+	    }
+	    // No appropriate compartment with enough space found
+	    return false;
 	}
 	
 }

@@ -21,7 +21,7 @@ public class Inventory {
 		Set<SpecialQuality> qualities = new HashSet<>();
 		qualities.add(SpecialQuality.LIQUID);
         Stock stock = new Stock(1, new HashSet<>(), "Paper","perfect", null);
-        Stock stock2 = new Stock(1, qualities, "Oil","perfect", null);
+        Stock stock2 = new Stock(1, qualities, "Oil","perfect", null); 
 		Compartment regular1 = new Compartment("Boxes", 30, false);
 		Compartment regular2 = new Compartment("Shelves", 30, false);
 		Compartment special1 = new Compartment("Flammable Storage", 25, true);
@@ -58,7 +58,7 @@ public class Inventory {
 	 * @param compartments the compartments
 	 * @return a list of normal storage compartment names
 	 */
-	public ArrayList<String> getNormalStorage(ArrayList<Compartment> compartments) {
+	public ArrayList<String> getNormalStorage(ArrayList<Compartment> compartments, Stock stock) {
 		if (compartments == null) {
 			throw new IllegalArgumentException("Compartments cannot be null");
 		}
@@ -66,7 +66,9 @@ public class Inventory {
 		ArrayList<String> compartmentNames = new ArrayList<String>();
 		for (Compartment currentCompartment : compartments) {
 			if (!currentCompartment.getIsSpecialQualitiesStorage()) {
+				if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
 				compartmentNames.add(currentCompartment.getName());
+				}
 			}
 		}
 		return compartmentNames;
@@ -88,17 +90,23 @@ public class Inventory {
 		if (stock == null) {
 			throw new IllegalArgumentException("Stock cannot be null");
 		}
-		
+		 
 		ArrayList<String> compartmentNames = new ArrayList<String>();
 		for (Compartment currentCompartment : compartments) {
 			if (stock.isFlammable() && currentCompartment.getName().equals("Flammable Storage")) {
+				if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
 				compartmentNames.add(currentCompartment.getName());
+				}
 			}
 			if (stock.isLiquid() && currentCompartment.getName().equals("Liquid Storage")) {
+				if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
 				compartmentNames.add(currentCompartment.getName());
+				}
 			}
 			if (stock.isPerishable() && currentCompartment.getName().equals("Perishable Storage")) {
+				if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
 				compartmentNames.add(currentCompartment.getName());
+				}
 			}
 		}
 		return compartmentNames;

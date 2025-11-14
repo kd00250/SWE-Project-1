@@ -34,4 +34,14 @@ public class InventoryManager {
     public Inventory getInventory() {
         return this.inventory;
     }
+    
+    /**
+     * Resets the singleton instance (used for testing purpose only)
+     * 
+     * @precondition none
+     * @postcondition instance is set to null, next getInstance() call creates fresh instance
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
 }

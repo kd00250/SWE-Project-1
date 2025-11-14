@@ -38,12 +38,12 @@ public class PickStorageWindow {
     @FXML
     void addToStorage(ActionEvent event) {
     	if (this.normalStorageComboBox.isDisabled()) {
-    		this.addStockVM.addStockToCompartment(this.specialStorageComboBox.getValue(), this.addStockVM.createStock());
-    		this.displaySuccessPopup("Item successfully added to " + this.specialStorageComboBox.getValue());
+    		this.addStockVM.addStockToCompartment(this.vm.getUser(), this.specialStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.displaySuccessPopup(this.addStockVM.getSummaryMessage());
     		this.closeWindow();
     	} else {
-    		this.addStockVM.addStockToCompartment(this.normalStorageComboBox.getValue(), this.addStockVM.createStock());
-    		this.displaySuccessPopup("Item successfully added to " + this.normalStorageComboBox.getValue());
+    		this.addStockVM.addStockToCompartment(this.vm.getUser(), this.normalStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.displaySuccessPopup(this.addStockVM.getSummaryMessage());
     		this.closeWindow();
     	}
     }
@@ -54,7 +54,7 @@ public class PickStorageWindow {
 	}
     
     private void displaySuccessPopup(String message) {  
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
@@ -69,7 +69,7 @@ public class PickStorageWindow {
     	this.addToStorageButton.disableProperty().bind(Bindings.isNull(this.normalStorageComboBox.valueProperty())
     			.and(Bindings.isNull(this.specialStorageComboBox.valueProperty())));
     	
-    	ObservableList<String> observableNormalCompartments = FXCollections.observableArrayList(addStockVM.getNormalStorage());
+    	ObservableList<String> observableNormalCompartments = FXCollections.observableArrayList(addStockVM.getNormalStorage(addStockVM.createStock()));
     	ObservableList<String> observableSpecialCompartments = FXCollections.observableArrayList(addStockVM.getSpecialStorageForStock(addStockVM.createStock()));
     	this.normalStorageComboBox.setItems(observableNormalCompartments); 
     	this.specialStorageComboBox.setItems(observableSpecialCompartments);
@@ -82,6 +82,7 @@ public class PickStorageWindow {
      * @param addStockVM the addStockVM
      */
     public void bindToPickStorageVM(LoginWindowViewModel vm, AddStockWindowViewModel addStockVM) {
+    	this.vm = vm;
     	this.addStockVM = addStockVM;
     	this.setUpControls(addStockVM);
    

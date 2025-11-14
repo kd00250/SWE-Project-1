@@ -68,7 +68,7 @@ public class LoginWindow {
 				this.usernameErrorLabel.setText("Username cannot be blank");
 				return;
 			} else {
-				this.usernameErrorLabel.setText("");
+				this.usernameErrorLabel.setText(""); 
 			} 
 		});
 	}

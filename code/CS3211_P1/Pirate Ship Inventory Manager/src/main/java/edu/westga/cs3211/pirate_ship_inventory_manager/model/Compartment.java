@@ -118,7 +118,7 @@ public class Compartment {
 	}
 		
 		/**
-		 * Adds stock to the inventory
+		 * Adds stock to the compartment
 		 * 
 		 * @precondition stock != null
 		 * @postcondition none

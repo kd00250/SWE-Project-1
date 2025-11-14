@@ -27,7 +27,7 @@ public class LoginWindowViewModel {
 		this.username = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
 		this.isQuartermaster = new SimpleBooleanProperty(false);
-		this.user = user;
+		//this.user = user;
 		this.store = new UserStore();
 	}
 	

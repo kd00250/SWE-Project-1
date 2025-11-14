@@ -55,7 +55,7 @@ public class AddStockWindow {
     private TextField quantityTextBox;
     
     private LoginWindowViewModel vm;
-    private AddStockWindowViewModel addStockVM;
+    private AddStockWindowViewModel addStockVM; 
 
     @FXML
     void addStock(ActionEvent event) {
@@ -142,6 +142,7 @@ public class AddStockWindow {
 	 * @param vm the vm
 	 */
     public void bindToAddStockVM(LoginWindowViewModel vm) {
+    	this.vm = vm;
     	this.setUpBindings();
     	this.setUpControls();
     	this.addStockButton.setOnAction((event) -> {
