@@ -103,7 +103,7 @@ public class AddStockWindow {
     private void setUpBindings() {
     	this.addStockVM = new AddStockWindowViewModel();
     	String [] conditions = {"perfect", "usable", "unsuable"};
-    	this.conditionComboBox.getItems().addAll(conditions);
+    	this.conditionComboBox.getItems().addAll(conditions); 
     	this.conditionComboBox.setValue(conditions[0]);
     	this.addStockVM.getCondition().bind(this.conditionComboBox.valueProperty());
     	this.addStockVM.getName().bind(this.nameTextBox.textProperty());
@@ -113,7 +113,7 @@ public class AddStockWindow {
     	    }
     	});
     	 
-    	this.expirationDateTextBox.setPromptText("dd/mm/yyyy");
+    	this.expirationDateTextBox.setPromptText("mm/dd/yyyy");
     	this.expirationDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
     	    if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
     	        this.expirationDateTextBox.setText(oldValue);

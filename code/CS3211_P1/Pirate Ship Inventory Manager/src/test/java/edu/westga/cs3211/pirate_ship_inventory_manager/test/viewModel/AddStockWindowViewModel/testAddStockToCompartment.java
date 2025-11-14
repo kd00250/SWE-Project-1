@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
 
 class testAddStockToCompartment {
@@ -206,9 +205,6 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
-		InventoryManager manager1 = InventoryManager.getInstance();
-	
 		
 		assertFalse(vm.addStockToCompartment("Perishable Storage", vm.createStock()));
 	}

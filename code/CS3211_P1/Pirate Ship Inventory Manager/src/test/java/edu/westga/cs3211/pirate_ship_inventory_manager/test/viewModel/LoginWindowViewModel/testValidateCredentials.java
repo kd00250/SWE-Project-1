@@ -34,4 +34,13 @@ class testValidateCredentials {
 		
 		assertTrue(vm.validateCredentials());
 	}
+	
+	@Test
+	public void testValidQuarterMasterCredentials() {
+		LoginWindowViewModel vm = new LoginWindowViewModel();
+		vm.getUsername().set("Obi");
+		vm.getPassword().set("beens12");
+		
+		assertTrue(vm.validateCredentials());
+	}
 }
