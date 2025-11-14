@@ -23,7 +23,7 @@ class testAddLogChange {
 
 	@Test
 	void testAddLogChangeTrue() {
-		User user = new User("bill", "nye", "CrewMate");
+		User user = new User("bill", "nye", "Crewmate");
 		Compartment box = new Compartment("barrel", 25, true );
 		Set<SpecialQuality> qualities = new HashSet<>();
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2025");

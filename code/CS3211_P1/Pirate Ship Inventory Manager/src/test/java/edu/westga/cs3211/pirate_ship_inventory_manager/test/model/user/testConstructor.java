@@ -73,7 +73,7 @@ class testConstructor {
 	
 	@Test
 	public void testValidConstructor() {
-		User user = new User("bill", "nye", "CrewMate");
+		User user = new User("bill", "nye", "Crewmate");
 		assertEquals("bill", user.getUsername());
 		assertEquals("nye", user.getPassword());
 		assertEquals("CrewMate", user.getRole());

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
 
 class testGetInstance {

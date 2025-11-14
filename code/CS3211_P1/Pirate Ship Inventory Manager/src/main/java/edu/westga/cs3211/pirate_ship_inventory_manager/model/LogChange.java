@@ -90,5 +90,16 @@ public class LogChange {
 		return this.time;
 	}
 	
+	@Override
+	public String toString() {
+		return "User: " + this.getUser().getUsername() + " (" + this.getUser().getRole() + ")\n" 
+				+ "Stock Info: \n" + "Name: " + this.getStock().getName() + "\n" + "Quantity: " + this.getStock().getQuantity() + "\n"
+				+ "Condition: " + this.getStock().getCondition() + "\n" + "Flammable: " + this.getStock().isFlammable() + "\n"
+				+ "Liquid: " + this.getStock().isLiquid() + "\n" + "Perishable: " + this.getStock().isPerishable() + "\n" 
+				+ "Expiration Date: " + this.getStock().getExpirationDate() + "\n" + "Storage Compartment: " + this.getCompartment().getName() + "\n"
+				+ "Remaining Capacity: " + this.getCompartment().getRemainingCapacity() + "\n" 
+				+ "Date Added: " + this.getTime();
+	}
+	
 }
 
