@@ -99,7 +99,6 @@ public class LogChange {
 	 * @return the string that displays a single list change
 	 */
 	public String getDisplayString() {
-		//return this.getStock().getName() + ": " + this.getStock().getQuantity() + "     " + this.getUser().getUsername();
 		String stockInfo = this.getStock().getName() + ": " + this.getStock().getQuantity();
 	    return String.format("%-40s %s", stockInfo, this.getUser().getUsername());
 	}

@@ -1,9 +1,14 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -54,8 +59,31 @@ public class ReviewStockChangesWindow {
 
     @FXML
     void filterResultsListView(ActionEvent event) {
-
+    	if (this.chooseSortComboBox.getValue().equals("Crewmate")) {
+    		 ArrayList<String> selectedCrewmates = new ArrayList<>(this.crewmateListView.getSelectionModel().getSelectedItems());
+    	        
+    	        this.changeResultsListView.getItems().setAll(
+    	            FXCollections.observableArrayList(this.reviewVM.getCrewmateFilter(selectedCrewmates)));
+    	}
+    	if (this.chooseSortComboBox.getValue().equals("Special Quantity")) {
+	        this.changeResultsListView.getItems().setAll(
+	            FXCollections.observableArrayList(this.reviewVM.getSpecialQuantityFilter(this.reviewVM.getIsFlammableProperty().getValue(), this.reviewVM.getIsLiquidProperty().getValue(), this.reviewVM.getIsPerishableProperty().getValue())));
+    	}
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDateTextBox.getText().isEmpty()) {
+	        this.changeResultsListView.getItems().setAll(
+	            FXCollections.observableArrayList(this.reviewVM.getStartDateFilter(this.startDateTextBox.textProperty().getValue())));
+    	}
+    	if (this.chooseSortComboBox.getValue().equals("Date") && !this.endDateTextBox.getText().isEmpty()) {
+	        this.changeResultsListView.getItems().setAll(
+	            FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(this.startDateTextBox.textProperty().getValue(), this.endDateTextBox.textProperty().getValue())));
+    	}
     }
+    
+    private void displayErrorPopup(String message) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
     
     private void setUpControls() {
     	this.reviewVM = new ReviewStockChangesViewModel();
@@ -129,6 +157,12 @@ public class ReviewStockChangesWindow {
         }
     }
     
+    private void setUpBinds() {
+    	this.reviewVM.getIsFlammableProperty().bind(this.isFlammableCheckBox.selectedProperty());
+    	this.reviewVM.getIsLiquidProperty().bind(this.isLiquidCheckBox.selectedProperty());
+    	this.reviewVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
+    }
+    
     /**
    	 * Provides bindings for the functionality
    	 * 
@@ -137,6 +171,10 @@ public class ReviewStockChangesWindow {
        public void bindToReviewStockChangesVM(LoginWindowViewModel vm) {
        	this.vm = vm;
        	this.setUpControls();
+       	this.setUpBinds();
+       	this.filterButton.setOnAction((event) -> {
+       		this.filterResultsListView(event);
+       	});
 //       	this.setUpBindings();
 //       	this.setUpControls();
 //       	this.addStockButton.setOnAction((event) -> {

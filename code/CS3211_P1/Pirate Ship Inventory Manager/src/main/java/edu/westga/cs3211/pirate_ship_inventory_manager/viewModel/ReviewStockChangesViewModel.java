@@ -1,11 +1,16 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.viewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChange;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChangesInventory;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.UserStore;
 import javafx.beans.property.BooleanProperty;
@@ -138,6 +143,118 @@ public class ReviewStockChangesViewModel {
 	}
 	
 	/**
+	 * Gets the filtered list of special quantity items
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param isFlammable the flammable property
+	 * @param isLiquid the liquid property
+	 * @param isPerishable the perishable property
+	 * @return the arraylist of special quantity log changes
+	 */
+	public ArrayList<String> getSpecialQuantityFilter(Boolean isFlammable, Boolean isLiquid, Boolean isPerishable) {
+		ArrayList<String> result = new ArrayList<String>();
+	    
+	    for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	        Stock stock = currentChange.getStock();
+	        
+	        if (stock.getHasSpecialQualities()) {
+	            boolean matchesFilter = false;
+	            
+	            if (isFlammable && stock.isFlammable()) {
+	                matchesFilter = true;
+	            }
+	            if (isLiquid && stock.isLiquid()) {
+	                matchesFilter = true;
+	            }
+	            if (isPerishable && stock.isPerishable()) {
+	                matchesFilter = true;
+	            }
+	            
+	            if (matchesFilter) {
+	                result.add(currentChange.getDisplayString());
+	            }
+	        }
+	    }
+	    
+	    return result;
+	}
+	
+	/**
+	 * Gets the list of log changes for the start date
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param startDate the startDate 
+	 * @return a list of log changes based on the start date
+	 */
+	public ArrayList<String> getStartDateFilter(String startDate) {
+		ArrayList<String> result = new ArrayList<String>();
+	    
+	    try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	        dateFormat.setLenient(false);
+	        Date parsedStartDate = dateFormat.parse(startDate);
+	        
+	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	            Stock stock = currentChange.getStock();
+	            
+	            if (stock.getExpirationDate() != null) {
+	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
+	                
+	                if (expirationDate.after(parsedStartDate)) {
+	                    result.add(currentChange.getDisplayString());
+	                }
+	            }
+	        }
+	    } catch (ParseException e) {
+	        System.err.println("Invalid date format: " + startDate);
+	    }
+	    
+	    return result;
+	}
+	
+	/**
+	 * Gets the start and end date filtered log changes
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param startDate the startDate 
+	 * @param endDate the endDate 
+	 * @return a list of filtered log changes
+	 */
+	public ArrayList<String> getStartAndEndDateFilter(String startDate, String endDate) {
+	    ArrayList<String> result = new ArrayList<String>();
+
+	    try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	        dateFormat.setLenient(false);
+	        Date parsedStartDate = dateFormat.parse(startDate);
+	        Date parsedEndDate = dateFormat.parse(endDate);
+
+	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	            Stock stock = currentChange.getStock();
+
+	            if (stock.getExpirationDate() != null) {
+	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
+
+	                if (expirationDate.after(parsedStartDate) && 
+	                    (expirationDate.before(parsedEndDate) || expirationDate.equals(parsedEndDate))) {
+	                    result.add(currentChange.getDisplayString());
+	                }
+	            }
+	        }
+	    } catch (ParseException e) {
+	        System.err.println("Invalid date format: " + startDate + " or " + endDate);
+	    }
+
+	    return result;
+	}
+	
+	/**
 	 * Returns the filtered list of log changes
 	 * 
 	 * @precondition none
@@ -175,6 +292,7 @@ public class ReviewStockChangesViewModel {
 		for (LogChange currentChange : this.logInventory.getLogChanges()) {
 			result.add(currentChange.getDisplayString());
 		}
+		Collections.reverse(result);
 		return result;
 	}
 	
