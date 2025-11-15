@@ -258,41 +258,16 @@ public class AddStockWindowViewModel {
 	 * @return true/false if there is space for the stock
 	 */
 	public boolean specialStorageHasFreeSpace(Stock stock) {
-//		int compartmentsWithNoSpace = 0;
-//		int stockQualityCount = 0;
-//		for (Compartment currentCompartment : this.inventory.getCompartments()) {
-//			if (currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable()) {
-//				stockQualityCount += 1;
-//				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
-//					compartmentsWithNoSpace += 1;
-//				}
-//			} 
-//			else if (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid()) {
-//				stockQualityCount += 1;
-//				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
-//					compartmentsWithNoSpace += 1;
-//				}
-//			} else if (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable()) {
-//				stockQualityCount += 1;
-//				if (currentCompartment.getRemainingCapacity() < stock.getQuantity()) {
-//					compartmentsWithNoSpace += 1;
-//				}
-//			} 
-//		}
-//		return compartmentsWithNoSpace < stockQualityCount;
 		for (Compartment currentCompartment : this.inventory.getCompartments()) {
-	        // Check if this is the right compartment for this stock
 	        if ((currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable()) ||
 	            (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid()) ||
 	            (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable())) {
 	            
-	            // If this compartment has enough space, return true immediately
 	            if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
 	                return true;
 	            }
 	        }
 	    }
-	    // No appropriate compartment with enough space found
 	    return false;
 	}
 	

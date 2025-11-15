@@ -90,6 +90,18 @@ public class LogChange {
 		return this.time;
 	}
 	
+	/**
+	 * Gets the display string for an individual change
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the string that displays a single list change
+	 */
+	public String getDisplayString() {
+		return this.getStock().getName() + ": " + this.getStock().getQuantity() + "     " + this.getUser().getUsername();
+	}
+	
 	@Override
 	public String toString() {
 		return "User: " + this.getUser().getUsername() + " (" + this.getUser().getRole() + ")\n" 

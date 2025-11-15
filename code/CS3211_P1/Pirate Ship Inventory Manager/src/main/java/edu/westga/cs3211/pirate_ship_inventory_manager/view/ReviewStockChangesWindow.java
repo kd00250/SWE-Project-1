@@ -1,6 +1,7 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,13 +19,13 @@ import javafx.scene.layout.AnchorPane;
  */
 public class ReviewStockChangesWindow {
 	@FXML
-    private ListView<?> changeResultsListView;
+    private ListView<String> changeResultsListView;
 
     @FXML
-    private ComboBox<?> chooseSortComboBox;
+    private ComboBox<String> chooseSortComboBox;
 
     @FXML
-    private ComboBox<?> crewmateComboBox;
+    private ListView<String> crewmateListView;
 
     @FXML
     private TextField endDateTextBox;
@@ -48,10 +49,81 @@ public class ReviewStockChangesWindow {
     private TextField startDateTextBox;
     
     private LoginWindowViewModel vm;
+    private ReviewStockChangesViewModel reviewVM;
 
     @FXML
     void filterResultsListView(ActionEvent event) {
 
+    }
+    
+    private void setUpControls() {
+    	this.reviewVM = new ReviewStockChangesViewModel();
+    	String[] filters = {"Special Quantity", "Crewmate", "Date"};
+    	this.chooseSortComboBox.getItems().addAll(filters);
+    	this.changeResultsListView.getItems().add("I LOVE LEAGUE!");
+    	this.chooseSortComboBox.setValue(filters[0]);
+    	
+        this.disableAllFilterControls();
+        
+        this.chooseSortComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            this.updateControlStates(newValue);
+        });
+        
+        this.startDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+        	 if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
+                 this.startDateTextBox.setText(oldValue);
+             }
+             if (newValue.length() > 10) {
+                 this.startDateTextBox.setText(oldValue);
+             }
+            boolean isComplete = newValue != null && newValue.matches("\\d{2}/\\d{2}/\\d{4}");
+            this.endDateTextBox.setDisable(!isComplete || !this.chooseSortComboBox.getValue().equals("Date"));
+        });
+        
+        this.endDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
+                this.endDateTextBox.setText(oldValue);
+            }
+            if (newValue.length() > 10) {
+                this.endDateTextBox.setText(oldValue);
+            }
+        });
+        this.updateControlStates(this.chooseSortComboBox.getValue());
+    	
+    }
+    
+    private void disableAllFilterControls() {
+        this.isFlammableCheckBox.setDisable(true);
+        this.isLiquidCheckBox.setDisable(true);
+        this.isPerishableCheckBox.setDisable(true);
+        this.crewmateListView.setDisable(true);
+        this.startDateTextBox.setDisable(true);
+        this.endDateTextBox.setDisable(true);
+    }
+
+    private void updateControlStates(String selectedFilter) {
+        this.disableAllFilterControls();
+        
+        switch (selectedFilter) {
+            case "Special Quantity":
+                this.isFlammableCheckBox.setDisable(false);
+                this.isLiquidCheckBox.setDisable(false);
+                this.isPerishableCheckBox.setDisable(false);
+                break;
+                
+            case "Crewmate":
+                this.crewmateListView.setDisable(false);
+                break;
+                
+            case "Date":
+                this.startDateTextBox.setDisable(false);
+                this.endDateTextBox.setDisable(true);
+                break;
+                
+//            default:
+//                // Keep everything disabled
+//                break;
+        }
     }
     
     /**
@@ -61,6 +133,7 @@ public class ReviewStockChangesWindow {
    	 */
        public void bindToReviewStockChangesVM(LoginWindowViewModel vm) {
        	this.vm = vm;
+       	this.setUpControls();
 //       	this.setUpBindings();
 //       	this.setUpControls();
 //       	this.addStockButton.setOnAction((event) -> {

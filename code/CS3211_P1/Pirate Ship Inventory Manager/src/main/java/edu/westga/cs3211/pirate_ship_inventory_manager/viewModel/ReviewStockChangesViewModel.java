@@ -1,5 +1,18 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.viewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChange;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChangesInventory;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.UserStore;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  * The viewmodel the reviewStockWindow of the application
  * 
@@ -7,5 +20,141 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.viewModel;
  * @version Fall 2025
  */
 public class ReviewStockChangesViewModel {
-
+	private LogChangesInventory logInventory;
+	private UserStore store;
+	private StringProperty filter;
+	private BooleanProperty isLiquid;
+	private BooleanProperty isFlammable;
+	private BooleanProperty isPerishable;
+	private StringProperty startDate;
+	private StringProperty endDate;
+//	private ObservableList<String> crewList;
+//    private ObservableList<LogChange> allLogChanges;
+//    private ObservableList<LogChange> filteredLogChanges;
+	
+	/**
+	 * Creates a new instance of reviewStockChangesViewModel
+	 */
+	public ReviewStockChangesViewModel() {
+		this.logInventory = LogManager.getInstance().getLogChangesInventory();
+		this.store = new UserStore();
+		this.filter = new SimpleStringProperty();
+		this.isLiquid = new SimpleBooleanProperty();
+		this.isFlammable = new SimpleBooleanProperty();
+		this.isPerishable = new SimpleBooleanProperty();
+		this.startDate = new SimpleStringProperty();
+		this.endDate = new SimpleStringProperty();
+//		this.crewList = FXCollections.observableArrayList();
+//        this.allLogChanges = FXCollections.observableArrayList();
+//        this.filteredLogChanges = FXCollections.observableArrayList();
+	}
+	
+	/**
+	 * gets the filter property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the filter property
+	 */
+	public StringProperty getFilter() {
+		return this.filter;
+	}
+	
+	/**
+	 * gets the isflammable property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the isflammable property
+	 */
+	public BooleanProperty getIsFlammableProperty() {
+        return this.isFlammable;
+    }
+	
+	/**
+	 * gets the isPerishable property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the isPerishable property
+	 */
+	public BooleanProperty getIsPerishableProperty() {
+        return this.isPerishable;
+    }
+	
+	/**
+	 * gets the isLiquid property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the isLiquid property
+	 */
+	public BooleanProperty getIsLiquidProperty() {
+        return this.isLiquid;
+    }
+	
+	/**
+	 * gets the startDate property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the startDate property
+	 */
+	public StringProperty getStartDate() {
+		return this.startDate;
+	}
+	
+	/**
+	 * gets the endDate property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the endDate property
+	 */
+	public StringProperty getEndDate() {
+		return this.endDate;
+	}
+	
+	/**
+	 * gets a list of crew names
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return a list of crew names
+	 */
+	public ArrayList<String> getCrewList() {
+		ArrayList<String> names = new ArrayList<String>();
+		for (User currentUser : this.store.getUserList()) {
+			names.add(currentUser.getUsername());
+		}
+		return names;
+	}
+	
+	
+	/**
+     * Filters log changes by selected crewmates
+     *
+     * @precondition none
+	 * @postcondition none
+     *
+     * @param selectedCrewmates the list of selected crewmate names
+     */
+    public ArrayList<String> filterByCrewmates(ArrayList<String> selectedCrewmates) {
+    	ArrayList<String> result = new ArrayList<String>();
+        for (String current : selectedCrewmates) {
+        	for (LogChange currentLog : this.logInventory.getLogChanges()) {
+        		if (currentLog.getUser().getUsername().equals(current)) {
+        			result.add(currentLog.getDisplayString());
+        		}
+        	}
+        }
+        return result;
+    }
 }

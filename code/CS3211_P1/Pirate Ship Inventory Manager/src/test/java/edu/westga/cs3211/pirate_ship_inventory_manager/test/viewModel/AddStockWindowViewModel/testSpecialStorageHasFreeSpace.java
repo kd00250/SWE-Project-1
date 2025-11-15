@@ -2,73 +2,85 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.test.viewModel.AddStockW
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
-import edu.westga.cs3211.pirate_ship_inventory_manager.model.Inventory;
-import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
 
 class testSpecialStorageHasFreeSpace {
+	
+	@Test
+	void testFlammableStorageHasSpace() {
+	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
+	    Set<SpecialQuality> qualities = new HashSet<>();
+	    qualities.add(SpecialQuality.FLAMMABLE);
+	    Stock stock = new Stock(5, qualities, "Gasoline", "good", "12/12/2025");
+	    
+	    assertTrue(vm.specialStorageHasFreeSpace(stock));
+	}
 
 	@Test
-	void testSpecialStorageHasFreeSpaceTrue() {
-		AddStockWindowViewModel vm = new AddStockWindowViewModel();
-		vm.getCondition().set("perfect");
-		vm.getName().set("apple");
-		vm.getIsFlammableProperty().set(true);
-		vm.getIsLiquidProperty().set(false);
-		vm.getIsPerishableProperty().set(false);
-		vm.getQuantity().set("3");
-	
-		
-		assertTrue(vm.specialStorageHasFreeSpace(vm.createStock()));
+	void testFlammableStorageNoSpace() {
+	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
+	    // Fill up flammable storage first
+	    Set<SpecialQuality> qualities = new HashSet<>();
+	    qualities.add(SpecialQuality.FLAMMABLE);
+	    Stock bigStock = new Stock(100, qualities, "Gasoline", "good", "12/12/2025"); // Assuming capacity is less than 100
+	    
+	    assertFalse(vm.specialStorageHasFreeSpace(bigStock));
 	}
-	
+
 	@Test
-	void testSpecialStorageMultipleQuanitiesHasFreeSpaceFalse() {
-		AddStockWindowViewModel vm = new AddStockWindowViewModel();
-		Inventory inventory = InventoryManager.getInstance().getInventory();
-		vm.getCondition().set("perfect");
-		vm.getName().set("apple");
-		vm.getIsFlammableProperty().set(true);
-		vm.getIsLiquidProperty().set(true); 
-		vm.getIsPerishableProperty().set(false);
-		vm.getQuantity().set("25");
-		inventory.getCompartments().get(0).addStock(vm.createStock());
-		vm.getQuantity().set("26");
-	
-		
-		assertFalse(vm.specialStorageHasFreeSpace(vm.createStock()));
+	void testLiquidStorageHasSpace() {
+	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
+	    Set<SpecialQuality> qualities = new HashSet<>();
+	    qualities.add(SpecialQuality.LIQUID);
+	    Stock stock = new Stock(5, qualities, "Water", "good", "12/12/2025");
+	    
+	    assertTrue(vm.specialStorageHasFreeSpace(stock));
 	}
-	
+
 	@Test
-	void testSpecialStorageMultipleQualitiesHasFreeSpaceTrue() {
-		AddStockWindowViewModel vm = new AddStockWindowViewModel();
-		Inventory inventory = InventoryManager.getInstance().getInventory();
-		vm.getCondition().set("perfect");
-		vm.getName().set("apple");
-		vm.getIsFlammableProperty().set(true);
-		vm.getIsLiquidProperty().set(true);
-		vm.getIsPerishableProperty().set(false);
-		vm.getQuantity().set("24");
-		inventory.getCompartments().get(1).addStock(vm.createStock());
-	
-		
-		assertTrue(vm.specialStorageHasFreeSpace(vm.createStock()));
+	void testLiquidStorageNoSpace() {
+	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
+	    Set<SpecialQuality> qualities = new HashSet<>();
+	    qualities.add(SpecialQuality.LIQUID);
+	    Stock bigStock = new Stock(100, qualities, "Water", "good", "12/12/2025");
+	    
+	    assertFalse(vm.specialStorageHasFreeSpace(bigStock));
 	}
-	
+
 	@Test
-	void testSpecialStorageMultipleQualitiesHasFreeSpaceFalse() {
-		AddStockWindowViewModel vm = new AddStockWindowViewModel();
-		vm.getCondition().set("perfect");
-		vm.getName().set("apple");
-		vm.getIsFlammableProperty().set(true);
-		vm.getIsLiquidProperty().set(true);
-		vm.getIsPerishableProperty().set(false);
-		vm.getQuantity().set("26");
-	
-		
-		assertFalse(vm.specialStorageHasFreeSpace(vm.createStock()));
+	void testPerishableStorageHasSpace() {
+	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
+	    Set<SpecialQuality> qualities = new HashSet<>();
+	    qualities.add(SpecialQuality.PERISHABLE);
+	    Stock stock = new Stock(5, qualities, "Milk", "good", "12/12/2025");
+	    
+	    assertTrue(vm.specialStorageHasFreeSpace(stock));
+	}
+
+	@Test
+	void testPerishableStorageNoSpace() {
+	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
+	    Set<SpecialQuality> qualities = new HashSet<>();
+	    qualities.add(SpecialQuality.PERISHABLE);
+	    Stock bigStock = new Stock(100, qualities, "Milk", "good", "12/12/2025");
+	    
+	    assertFalse(vm.specialStorageHasFreeSpace(bigStock));
+	}
+
+	@Test
+	void testNoSpecialStorageNeeded() {
+	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
+	    Set<SpecialQuality> qualities = new HashSet<>();
+	    Stock stock = new Stock(5, qualities, "Paper", "good", "12/12/2025");
+	    
+	    assertFalse(vm.specialStorageHasFreeSpace(stock));
 	}
 
 }
