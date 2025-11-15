@@ -38,7 +38,7 @@ public class LandingPageWindow {
 
     @FXML
     void reviewStockChanges(ActionEvent event) {
-    	//
+    	this.getReviewStockChangesWindow();
     }
     
     private void getAddStockWindow() {
@@ -64,6 +64,29 @@ public class LandingPageWindow {
 		}
     }
     
+    private void getReviewStockChangesWindow() {
+    	FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource(Main.REVIEW_STOCK_CHANGES_PAGE));
+		try {
+			loader.load();
+			Parent parent = loader.getRoot();
+			Scene scene = new Scene(parent);
+			Stage setReviewStockChangesStage = new Stage();
+			setReviewStockChangesStage.setTitle(Main.REVIEW_STOCK_CHANGES_TITLE);
+			setReviewStockChangesStage.setScene(scene);
+			setReviewStockChangesStage.initModality(Modality.APPLICATION_MODAL);
+
+			ReviewStockChangesWindow reviewStockChangesCodebehind = (ReviewStockChangesWindow) loader.getController();
+			reviewStockChangesCodebehind.bindToReviewStockChangesVM(this.vm);
+
+			setReviewStockChangesStage.showAndWait();
+		} catch (IOException error) { 
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Unable to load properties window.");
+			alert.showAndWait();
+		}
+    }
+    
     /**
      * Provides bindings for functionality
      * 
@@ -72,6 +95,9 @@ public class LandingPageWindow {
     public void bindToVM(LoginWindowViewModel vm) {
     	this.vm = vm;
     	this.reViewStockChangesButton.disableProperty().bind(vm.isQuartermasterProperty().not());
+    	this.reViewStockChangesButton.setOnAction((event) -> {
+    		this.reviewStockChanges(event);
+    	});
     	this.addStockButton.setOnAction((event) -> {
     		this.addStock(event);
     	});

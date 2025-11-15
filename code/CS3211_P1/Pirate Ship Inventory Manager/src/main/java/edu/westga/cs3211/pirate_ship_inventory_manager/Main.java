@@ -14,6 +14,9 @@ import javafx.scene.layout.Pane;
  * @version Fall 2025
  */
 public class Main extends Application {
+	
+	public static final String REVIEW_STOCK_CHANGES_TITLE = "SWE 1 Project 1 - Review Stock Changes Page";
+	public static final String REVIEW_STOCK_CHANGES_PAGE = "view/ReviewStockChangesWindow.fxml";
 
 	public static final String PICK_STORAGE_PAGE_TITLE = "SWE 1 Project 1 - Pick Storage Page";
 	public static final String PICK_STORAGE_PAGE = "view/PickStorageWindow.fxml";

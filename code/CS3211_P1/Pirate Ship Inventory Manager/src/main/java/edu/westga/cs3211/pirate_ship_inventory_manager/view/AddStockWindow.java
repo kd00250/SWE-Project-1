@@ -76,7 +76,7 @@ public class AddStockWindow {
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
-    
+      
     private void getPickStorageWindow() {
     	FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource(Main.PICK_STORAGE_PAGE));

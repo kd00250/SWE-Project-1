@@ -81,7 +81,7 @@ public class LoginWindow {
 			} else {
 				this.passwordErrorLabel.setText("");
 			}
-		});
+		});  
 	}
     
     private void setUpEnableControls() {
