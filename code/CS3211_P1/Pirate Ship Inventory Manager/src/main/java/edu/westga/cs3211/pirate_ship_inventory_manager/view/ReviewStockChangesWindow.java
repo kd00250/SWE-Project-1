@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -60,8 +61,10 @@ public class ReviewStockChangesWindow {
     	this.reviewVM = new ReviewStockChangesViewModel();
     	String[] filters = {"Special Quantity", "Crewmate", "Date"};
     	this.chooseSortComboBox.getItems().addAll(filters);
-    	this.changeResultsListView.getItems().add("I LOVE LEAGUE!");
+    	this.changeResultsListView.getItems().addAll(this.reviewVM.getLogChanges());
     	this.chooseSortComboBox.setValue(filters[0]);
+    	this.crewmateListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    	this.crewmateListView.getItems().addAll(this.reviewVM.getCrewList());
     	
         this.disableAllFilterControls();
         

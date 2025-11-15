@@ -137,6 +137,47 @@ public class ReviewStockChangesViewModel {
 		return names;
 	}
 	
+	/**
+	 * Returns the filtered list of log changes
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param names the names of the crewmates selected
+	 * @return the log changes that match the names of the crewmates
+	 */
+	public ArrayList<String> getCrewmateFilter(ArrayList<String> names) {
+		if (names == null) {
+			throw new IllegalArgumentException("Must select a name to filter with.");
+		} //TODO DISABLE THE BUTTON UNTIL A NAME IS SELECTED
+		ArrayList<String> result = new ArrayList<String>();
+		for (String currentName : names) {
+			for (LogChange currentChange : this.logInventory.getLogChanges()) {
+				if (currentChange.getUser().getUsername().equals(currentName)) {
+					result.add(currentChange.getDisplayString());
+				}
+			}
+		}
+		return result;
+	}
+	//TODO TEST!!!!!
+	
+	/**
+	 * Gets the log changes
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the list of log changes
+	 */
+	public ArrayList<String> getLogChanges() {
+		ArrayList<String> result = new ArrayList<String>();
+		for (LogChange currentChange : this.logInventory.getLogChanges()) {
+			result.add(currentChange.getDisplayString());
+		}
+		return result;
+	}
+	
 	
 	/**
      * Filters log changes by selected crewmates

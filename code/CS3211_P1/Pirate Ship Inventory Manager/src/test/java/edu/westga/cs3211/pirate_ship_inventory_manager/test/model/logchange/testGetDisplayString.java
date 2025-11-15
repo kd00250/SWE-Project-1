@@ -22,8 +22,9 @@ class testGetDisplayString {
 		Set<SpecialQuality> qualities = new HashSet<>();
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2025");
         LogChange change = new LogChange(user, stock, box); 
+        String expected = String.format("%-40s %s", "Milk: 5", "bill");
         
-        assertEquals(change.getDisplayString(), "Milk: 5     bill");
+        assertEquals(change.getDisplayString(), expected);
 	}
 
 }
