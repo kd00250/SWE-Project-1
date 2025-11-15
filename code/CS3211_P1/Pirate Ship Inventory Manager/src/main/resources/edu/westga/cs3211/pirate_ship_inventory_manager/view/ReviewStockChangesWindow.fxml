@@ -28,13 +28,18 @@
       <Label layoutX="21.0" layoutY="175.0" text="Start Date:" />
       <Label layoutX="23.0" layoutY="216.0" text="End Date:" />
       <ListView fx:id="changeResultsListView" layoutX="357.0" layoutY="299.0" prefHeight="200.0" prefWidth="220.0" />
-      <Button fx:id="filterButton" layoutX="272.0" layoutY="526.0" mnemonicParsing="false" onAction="#filterResultsListView" prefHeight="51.0" prefWidth="103.0" text="Filter">
+      <Button fx:id="filterButton" layoutX="107.0" layoutY="521.0" mnemonicParsing="false" onAction="#filterResultsListView" prefHeight="51.0" prefWidth="103.0" text="Filter">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
       <ListView fx:id="crewmateListView" layoutX="59.0" layoutY="299.0" prefHeight="178.0" prefWidth="200.0" />
       <Label layoutX="428.0" layoutY="269.0" text="Stock Changes" />
+      <Button fx:id="displayAllLogsButton" layoutX="361.0" layoutY="521.0" mnemonicParsing="false" onAction="#displayAllLogs" prefHeight="51.0" prefWidth="212.0" text="Display all Logs">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 
 

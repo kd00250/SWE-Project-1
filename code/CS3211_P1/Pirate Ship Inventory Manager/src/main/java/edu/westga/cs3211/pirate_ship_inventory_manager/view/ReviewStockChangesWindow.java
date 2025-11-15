@@ -38,6 +38,9 @@ public class ReviewStockChangesWindow {
 
     @FXML
     private Button filterButton;
+    
+    @FXML
+    private Button displayAllLogsButton;
 
     @FXML
     private CheckBox isFlammableCheckBox;
@@ -56,6 +59,12 @@ public class ReviewStockChangesWindow {
     
     private LoginWindowViewModel vm;
     private ReviewStockChangesViewModel reviewVM;
+    
+    @FXML
+    void displayAllLogs(ActionEvent event) {
+    	this.changeResultsListView.getItems().setAll(
+    			FXCollections.observableArrayList(this.reviewVM.getLogChanges()));
+    }
 
     @FXML
     void filterResultsListView(ActionEvent event) {
@@ -150,10 +159,6 @@ public class ReviewStockChangesWindow {
                 this.startDateTextBox.setDisable(false);
                 this.endDateTextBox.setDisable(true);
                 break;
-                
-//            default:
-//                // Keep everything disabled
-//                break;
         }
     }
     
@@ -172,14 +177,11 @@ public class ReviewStockChangesWindow {
        	this.vm = vm;
        	this.setUpControls();
        	this.setUpBinds();
+       	this.displayAllLogsButton.setOnAction((event) -> {
+       		this.displayAllLogs(event);
+       	});
        	this.filterButton.setOnAction((event) -> {
        		this.filterResultsListView(event);
        	});
-//       	this.setUpBindings();
-//       	this.setUpControls();
-//       	this.addStockButton.setOnAction((event) -> {
-//       		this.addStock(event);
-//       	});
-//       }
        }
 }
