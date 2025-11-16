@@ -201,7 +201,7 @@ public class ReviewStockChangesViewModel {
 	                }
 	            }
 	        }
-	    } catch (ParseException e) {
+	    } catch (ParseException ex) {
 	    	throw new IllegalArgumentException("Invalid Date format: " + startDate);
 	    }
 	    
@@ -233,13 +233,13 @@ public class ReviewStockChangesViewModel {
 	            if (stock.getExpirationDate() != null) {
 	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
 
-	                if (expirationDate.after(parsedStartDate) && 
-	                    (expirationDate.before(parsedEndDate) || expirationDate.equals(parsedEndDate))) {
+	                if (expirationDate.after(parsedStartDate) 
+	                		&& (expirationDate.before(parsedEndDate) || expirationDate.equals(parsedEndDate))) {
 	                    result.add(currentChange.getDisplayString());
 	                }
 	            }
 	        }
-	    } catch (ParseException e) {
+	    } catch (ParseException ex) {
 	    	throw new IllegalArgumentException("Invalid Date format: " + startDate + " or " + endDate);
 	    }
 
@@ -266,7 +266,6 @@ public class ReviewStockChangesViewModel {
 		}
 		return result;
 	}
-	//TODO TEST!!!!!
 	
 	/**
 	 * Gets the log changes
@@ -284,25 +283,4 @@ public class ReviewStockChangesViewModel {
 		Collections.reverse(result);
 		return result;
 	}
-	
-	
-//	/**
-//     * Filters log changes by selected crewmates
-//     *
-//     * @precondition none
-//	 * @postcondition none
-//     *
-//     * @param selectedCrewmates the list of selected crewmate names
-//     */
-//    public ArrayList<String> filterByCrewmates(ArrayList<String> selectedCrewmates) {
-//    	ArrayList<String> result = new ArrayList<String>();
-//        for (String current : selectedCrewmates) {
-//        	for (LogChange currentLog : this.logInventory.getLogChanges()) {
-//        		if (currentLog.getUser().getUsername().equals(current)) {
-//        			result.add(currentLog.getDisplayString());
-//        		}
-//        	}
-//        }
-//        return result;
-//    }
 }

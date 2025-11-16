@@ -59,7 +59,9 @@ public class AddStockWindow {
 
     @FXML
     void addStock(ActionEvent event) {
-    	if (this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.specialStorageHasFreeSpace(this.addStockVM.createStock())) {
+    	if (this.isPerishableCheckBox.selectedProperty().get() && !this.expirationDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}")) {
+    		this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
+    	} else if (this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.specialStorageHasFreeSpace(this.addStockVM.createStock())) {
     		this.displayErrorPopup("There is no compartment currently available to store stock \n with indicated special quantity. "
     				+ "\nPlease reassess the quantity entered and try again.");
     	} else if (!this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.normalStorageHasFreeSpace(this.addStockVM.createStock())) {

@@ -75,19 +75,27 @@ public class ReviewStockChangesWindow {
 	            FXCollections.observableArrayList(this.reviewVM.getSpecialQuantityFilter(this.reviewVM.getIsFlammableProperty().getValue(), this.reviewVM.getIsLiquidProperty().getValue(), this.reviewVM.getIsPerishableProperty().getValue())));
     	}
     	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDateTextBox.getText().isEmpty()) {
+    		if (!this.startDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}")) {
+    			this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
+    		} else {
 	        this.changeResultsListView.getItems().setAll(
 	            FXCollections.observableArrayList(this.reviewVM.getStartDateFilter(this.startDateTextBox.textProperty().getValue())));
+    		}
     	}
     	if (this.chooseSortComboBox.getValue().equals("Date") && !this.endDateTextBox.getText().isEmpty()) {
+    		if (!this.startDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}") || !this.endDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}")) {
+    			this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
+    		} else {
 	        this.changeResultsListView.getItems().setAll(
 	            FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(this.startDateTextBox.textProperty().getValue(), this.endDateTextBox.textProperty().getValue())));
+    		}
     	}
     }
     
-    private void displayErrorPopup(String message) {
+    private void displayErrorPopup(String message) { 
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setContentText(message);
-		alert.showAndWait();
+		alert.showAndWait(); 
 	}
     
     private void setUpControls() {
