@@ -1,0 +1,339 @@
+commit a77899bc8869f3e3dd4ff17390b7644f4a342630
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sun Nov 16 00:32:49 2025 -0500
+
+    Delete code/CS3211_Project1 directory
+    
+    Deleted extra project
+
+commit dd914bd25e94b61e95722c287b84f8c7129d4dc6
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Nov 16 00:29:53 2025 -0500
+
+    Added extra date validations
+    
+    -Added validations to check if the end date is before the start date in review stock changes view
+    -Fixed various checkstyle errors
+    -Updated readme to have credentials
+
+commit c3b653e6de4f385ce8a3ade9fa4671920391e542
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 15 22:49:22 2025 -0500
+
+    Added Validations
+    
+    -Added validations that ensure correct format of date is entered
+
+commit 29bcd99bcc8fb79afed5daacd1de3ff8735b8c24
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 15 22:12:15 2025 -0500
+
+    Added Tests
+    
+    -Added tests for reviewChangesViewModel for full test coverage
+
+commit d0db5f9f2afc720e099858bf65893ba1199c2a06
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 15 18:58:28 2025 -0500
+
+    Added display all changes button
+    
+    -Added display all changes button to review stock changes gui so that the user can view all changes after filtering
+    -Added display all changes method in view
+
+commit 26a7f13a148a807f5f359d548d7792579e48e0d9
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 15 12:38:25 2025 -0500
+
+    Added gui functionality
+    
+    -Added functionality to the reviewStockChangesViewModel
+    -Added bindings to the review Stock changes gui
+    -TODO test review stock view model logic and disable button on invalid entries
+
+commit 0dc04beeaeacedb8cb8bf634f9585ebd13403eab
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 15 00:37:34 2025 -0500
+
+    Added more bindings
+    
+    -Added Bindings to review view model and the review window to display lists crewmates and lists of log changes
+    -Editted the formate of displayMessage method in logChange class
+
+commit 413d6f11184e3c1c076c7492d657b5105b0c22da
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Nov 14 23:48:58 2025 -0500
+
+    Added tests and Bindings
+    
+    -Fixed Test to cover everything
+    -Added bindings for the reviewStockChanges view
+
+commit 8d993690c647268ecefa7658aa987dc08dc0f189
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Nov 14 19:34:24 2025 -0500
+
+    Added Review Changes Gui
+    
+    -Added ReviewStockChanges FXML file
+    -Added codeBehindClass for ReviewStockChangesWindow
+
+commit 2187ee1d9647121a782ad81b73f25c17a6b62684
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Nov 14 17:13:10 2025 -0500
+
+    Fixed Various Features
+    
+    -Added sorting storage option based on which ones have free space
+    -Added Logging when adding a stock
+    -Added error messages when trying to add invalid stock
+
+commit cd058c828a0f22e7f84d94d9a7e6c36128dd962b
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Nov 14 00:00:59 2025 -0500
+
+    Fixed Tests to give total coverage
+    
+    -Fixed some of the dates in tests that caused failure
+
+commit 32a7e85c88ac2949e62d6827b442a22934247e37
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Thu Nov 13 23:50:22 2025 -0500
+
+    Added log toString
+    
+    -Added to string to return the message to display to users when a stock is added
+
+commit 57e585d834b094d0f7f640b5f0eca8ec8fe7a336
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Thu Nov 13 22:42:24 2025 -0500
+
+    Added LogManager class
+    
+    -Added log manager class to share the instance across the system
+    -Added tests for the log manager class
+
+commit aa5289411d8d7cd9ff87dd019334b98efce7dcee
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Thu Nov 13 20:48:09 2025 -0500
+
+    Added logChange class
+    
+    -Added functionality to make log changes
+    -Added tests for the logChange class
+
+commit 603d856ae69d5c0fdc0712bdcbdf83b7d68b9a1e
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Thu Nov 13 12:23:46 2025 -0500
+
+    Added to logginViewModel
+    
+    -Added ability to get user from login
+    -Added validation to add stock window to not allow a submission if expiration date is empty
+    -Added failed messages if user tries to add to a compartment when it is full
+
+commit bee0e8e278cba1f17b13f2a080f75cf9e1d1bf2b
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Wed Nov 12 23:30:33 2025 -0500
+
+    Added validations
+    
+    -Added validation to add stock gui
+    -Added shared inventory instance so that I am able to access the inventory outside of just the addstockvm
+
+commit 6abd54ed8da252f251b32729a7c4a83e2f093719
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Wed Nov 12 10:53:58 2025 -0500
+
+    Updated pick storage
+    
+    -Updated pick storage screen and view to use dropdown boxes instead of static buttons
+
+commit 0e782685f25c4b877f78e525b72e8dacb16fb708
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Tue Nov 11 23:28:38 2025 -0500
+
+    Added shorter named directory
+
+commit dc9aef91bfa59287beaa5796c5911c1a507a253f
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Tue Nov 11 23:27:34 2025 -0500
+
+    Delete code/CS3211_P1_Pirate_Ship_Inventory_Manager_KennethDearman/Pirate Ship Inventory Manager directory
+    
+    name was too long to pull changes to local repo
+
+commit 22ec83badafabc56422f38c727dae7c4238301cf
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Tue Nov 11 23:01:54 2025 -0500
+
+    Converted Javafx project to maven
+    
+    Converted the project to maven
+
+commit 040e176f0c76cdc3367872d69cbac7c6b0f4ee4e
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Tue Nov 11 11:17:35 2025 -0500
+
+    Fixed testing for adding stock
+    
+    -Fixed testing for adding stock to different storages
+    -Completed binding for select storage and add stock controls
+    -Added tests for addstockWindowViewModel
+
+commit e58eadf58016c39727e6f360bd406656cbcf4c43
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Mon Nov 10 23:31:08 2025 -0500
+
+    Added addStockWindowViewModel
+    
+    -Added the view model for add stock
+    -Added tests for the addStockWindowViewModel
+    -Added gui for selecting compartment
+    -TODO finish testing the add to specific storages in the addStockWindowViewModel
+
+commit 5563d7200d182414b335504382392cb23304b2f8
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Mon Nov 10 19:02:19 2025 -0500
+
+    Added Inventory functionality and changes
+    
+    -Added tests for Inventory
+    -Added Compartment class
+    -Added tests for compartment functionality
+    -Added special qualities to stock class
+    -Changed the package names to cs3211
+
+commit abcaf7c6f27c1bd4e27c1a429cfa4f28d9a81ce1
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Nov 9 22:53:40 2025 -0500
+
+    Added Functionality for inventory and stocks
+    
+    -Added inventory class to hold a list of stocks
+    -Added checks to see if there is space in inventory
+    -Added stocks class to create stocks
+    -Added extra tests for better functionality
+    -Added addStock and addUser method for better functionality
+
+commit 96618584b0331cae49e7ab56dc8544f9fe48fb01
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Nov 9 17:49:51 2025 -0500
+
+    Created Landing Page
+    
+    -Added fxml file for landing page
+    -Added landingPageWindow class
+    -Added landingPageViewModel class
+    -Altered login button functionality to go to the landing page if creds are valid
+
+commit 7b80ef01fd3966e7b9ecadfc4504dc30261d471d
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Nov 9 15:30:35 2025 -0500
+
+    Added login process
+    
+    -Added login codebehind class
+    -Added functionality to validate credentials through the validateCredentials method
+    -Deleted Login and Credentials class as I no longer used them
+    -Added User and UserStore classes to better manage the User and list of User credentials in the system
+    -Added the landing page fxml file and the landingPageWindow class for next part of the project
+
+commit 70743695d1c3c86682f1a968cb4c20e4c362d5d3
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 8 23:47:48 2025 -0500
+
+    Added business logic for login
+    
+    -Added user class and tests for it
+    -Added userStore and tests for it
+    -Added login class and tests for it
+
+commit f7e8e04576a9e02ccb15a6c6729b5a8d1853a14a
+Merge: 389c6d9 096a84b
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 8 11:58:29 2025 -0500
+
+    Merge branch 'main' of https://github.com/kd00250/SWE-Project-1
+    Need to pull changes from the repo before I push my local changes
+    Needed to pull before I pushed
+
+commit 389c6d9c78091149c238d69759d33c73612a9b69
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Nov 8 11:52:37 2025 -0500
+
+    Added libraries needed for javafx
+    
+    -Added jars needed for javafx to run properly
+
+commit 096a84b56aab4d4906a311e4e5daf7fd6545f8c8
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 11:09:39 2025 -0500
+
+    Delete code/CS3211_Project1/JavaFX Sample/JavaFXSample/JavaFX Sample directory
+
+commit f7315d1ed7f862abeafe455b31aef4731fe105b0
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 10:36:23 2025 -0500
+
+    Added Template for JavaFx
+
+commit d6585ebc1705cc63b9da0d0cc31f90f983a94ecf
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 00:57:27 2025 -0500
+
+    Delete code/a
+    
+    -Removed placeholder file from code folder
+
+commit 225ffe9eb5ef74eb8303a941f85a041d1a55551f
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 00:55:47 2025 -0500
+
+    Added javafx template
+    
+    -Added java fx template
+
+commit 65381de72bfd249e7cd3ddc23d4a34a61a516798
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 00:50:00 2025 -0500
+
+    Delete documentation/a
+    
+    -Removed placeholder for documentation folder
+
+commit c680fde5f19b3fe7f304c31998c49ebf55d360a7
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 00:49:12 2025 -0500
+
+    Added documentation files
+    
+    -Added use case scenarios
+    -Added ui wireframe
+    -Added use case diagram
+    -Added product backlog
+    -Added partial class diagram
+
+commit e8b6f8327071c10bf92d670d2b4bb2b8e9f4c73d
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 00:46:34 2025 -0500
+
+    Added Documantation folder
+    
+    -Added documentation folder
+    -Added placeholder for documentation folder
+
+commit 48f7b8312a7307df70c00272efd0901f60ffae33
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 00:45:26 2025 -0500
+
+    Added Code folder
+    
+    -Added code folder
+    -Added placeholder for code folder
+
+commit 0a5aab779d24654064f8f1cf1002bff4cbb9e228
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Nov 8 00:39:50 2025 -0500
+
+    Initial commit
