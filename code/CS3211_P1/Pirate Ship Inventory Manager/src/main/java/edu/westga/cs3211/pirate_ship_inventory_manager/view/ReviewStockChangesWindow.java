@@ -1,6 +1,10 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -83,12 +87,26 @@ public class ReviewStockChangesWindow {
     		}
     	}
     	if (this.chooseSortComboBox.getValue().equals("Date") && !this.endDateTextBox.getText().isEmpty()) {
-    		if (!this.startDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}") || !this.endDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}")) {
-    			this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
-    		} else {
-	        this.changeResultsListView.getItems().setAll(
-	            FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(this.startDateTextBox.textProperty().getValue(), this.endDateTextBox.textProperty().getValue())));
-    		}
+    	    String startDate = this.startDateTextBox.getText();
+    	    String endDate = this.endDateTextBox.getText();
+    	    
+    	    try {
+    	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    	        dateFormat.setLenient(false);
+    	        Date parsedStartDate = dateFormat.parse(startDate);
+    	        Date parsedEndDate = dateFormat.parse(endDate);
+    	        
+    	        if (!startDate.matches("\\d{2}/\\d{2}/\\d{4}") || !endDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
+    	            this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
+    	        } else if (parsedEndDate.before(parsedStartDate)) {
+    	            this.displayErrorPopup("End date cannot be before start date");
+    	        } else {
+    	            this.changeResultsListView.getItems().setAll(
+    	                FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(startDate, endDate)));
+    	        }
+    	    } catch (ParseException ex) {
+    	        this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
+    	    }
     	}
     }
     
