@@ -26,8 +26,8 @@ public class LogChangesInventory {
 		this.inventory = InventoryManager.getInstance().getInventory();
 		Set<SpecialQuality> qualities = new HashSet<>();
 		qualities.add(SpecialQuality.LIQUID);
-        Stock stock1 = new Stock(1, new HashSet<>(), "Paper","perfect", null);
-        Stock stock2 = new Stock(1, qualities, "Oil","perfect", null);
+        Stock stock1 = new Stock(1, new HashSet<>(), "Paper", "perfect", null);
+        Stock stock2 = new Stock(1, qualities, "Oil", "perfect", null);
         UserStore store = new UserStore();
         LogChange change1 = new LogChange(store.getUserList().get(0), stock1, this.inventory.getCompartments().get(0));
         LogChange change2 = new LogChange(store.getUserList().get(0), stock2, this.inventory.getCompartments().get(3));

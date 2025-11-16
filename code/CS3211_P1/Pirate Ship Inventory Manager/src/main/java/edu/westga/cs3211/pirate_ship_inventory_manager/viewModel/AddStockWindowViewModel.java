@@ -210,6 +210,7 @@ public class AddStockWindowViewModel {
 	 * @precondition none
 	 * @postcondition none
 	 * 
+	 * @param stock the stock to be added
 	 * @return a list of normal storage compartment names
 	 */
 	public ArrayList<String> getNormalStorage(Stock stock) {
@@ -222,6 +223,7 @@ public class AddStockWindowViewModel {
 	 * @precondition none
 	 * @postcondition none
 	 * 
+	 * @param stock the stock to be added
 	 * @return a list of special storage compartment names
 	 */
 	public ArrayList<String> getSpecialStorageForStock(Stock stock) {
@@ -259,9 +261,9 @@ public class AddStockWindowViewModel {
 	 */
 	public boolean specialStorageHasFreeSpace(Stock stock) {
 		for (Compartment currentCompartment : this.inventory.getCompartments()) {
-	        if ((currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable()) ||
-	            (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid()) ||
-	            (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable())) {
+	        if ((currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable()) 
+	        		|| (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid()) 
+	        		|| (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable())) {
 	            
 	            if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
 	                return true;

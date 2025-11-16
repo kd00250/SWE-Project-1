@@ -141,6 +141,4 @@ public class Compartment {
 			this.storage.add(stock);
 			return true;
 		}
-		
-		
 }

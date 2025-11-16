@@ -1,6 +1,12 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.model;
 
-public class LogManager {
+/**
+ * The Log Manager Class
+ * 
+ * @author CS3211
+ * @version Fall 2025
+ */
+public final class LogManager {
 	private static LogManager instance;
     private LogChangesInventory logInventory;
     
@@ -33,5 +39,15 @@ public class LogManager {
      */
     public LogChangesInventory getLogChangesInventory() {
         return this.logInventory;
+    }
+    
+    /**
+     * Resets the singleton instance (used for testing purpose only)
+     * 
+     * @precondition none
+     * @postcondition instance is set to null, next getInstance() call creates fresh instance
+     */
+    public static void resetInstance() {
+        instance = null;
     }
 }

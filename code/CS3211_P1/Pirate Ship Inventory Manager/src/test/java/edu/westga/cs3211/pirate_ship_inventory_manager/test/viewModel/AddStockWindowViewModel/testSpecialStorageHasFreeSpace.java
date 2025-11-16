@@ -26,7 +26,6 @@ class testSpecialStorageHasFreeSpace {
 	@Test
 	void testFlammableStorageNoSpace() {
 	    AddStockWindowViewModel vm = new AddStockWindowViewModel();
-	    // Fill up flammable storage first
 	    Set<SpecialQuality> qualities = new HashSet<>();
 	    qualities.add(SpecialQuality.FLAMMABLE);
 	    Stock bigStock = new Stock(100, qualities, "Gasoline", "good", "12/12/2025"); // Assuming capacity is less than 100

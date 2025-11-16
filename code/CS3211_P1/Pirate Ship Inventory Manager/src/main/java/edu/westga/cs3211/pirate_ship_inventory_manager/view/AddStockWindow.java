@@ -62,8 +62,7 @@ public class AddStockWindow {
     	if (this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.specialStorageHasFreeSpace(this.addStockVM.createStock())) {
     		this.displayErrorPopup("There is no compartment currently available to store stock \n with indicated special quantity. "
     				+ "\nPlease reassess the quantity entered and try again.");
-    	}
-    	else if (!this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.normalStorageHasFreeSpace(this.addStockVM.createStock())) {
+    	} else if (!this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.normalStorageHasFreeSpace(this.addStockVM.createStock())) {
     		this.displayErrorPopup("There is no compartment currently available to store stock \n with indicated quantity. "
     				+ "\nPlease reassess the quantity entered and try again.");
     	} else {
@@ -109,7 +108,7 @@ public class AddStockWindow {
     	this.addStockVM.getName().bind(this.nameTextBox.textProperty());
     	this.quantityTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
     	    if (!newValue.matches("^$|^[1-9][0-9]*$")) {
-    	        quantityTextBox.setText(oldValue);
+    	        this.quantityTextBox.setText(oldValue);
     	    }
     	});
     	 

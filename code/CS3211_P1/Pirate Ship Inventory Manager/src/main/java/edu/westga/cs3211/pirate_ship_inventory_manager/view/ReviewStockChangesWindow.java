@@ -1,9 +1,6 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -57,7 +54,6 @@ public class ReviewStockChangesWindow {
     @FXML
     private TextField startDateTextBox;
     
-    private LoginWindowViewModel vm;
     private ReviewStockChangesViewModel reviewVM;
     
     @FXML
@@ -114,7 +110,7 @@ public class ReviewStockChangesWindow {
                  this.startDateTextBox.setText(oldValue);
              }
              if (newValue.length() > 10) {
-                 this.startDateTextBox.setText(oldValue);
+                 this.startDateTextBox.setText(oldValue); 
              }
             boolean isComplete = newValue != null && newValue.matches("\\d{2}/\\d{2}/\\d{4}");
             this.endDateTextBox.setDisable(!isComplete || !this.chooseSortComboBox.getValue().equals("Date"));
@@ -159,6 +155,9 @@ public class ReviewStockChangesWindow {
                 this.startDateTextBox.setDisable(false);
                 this.endDateTextBox.setDisable(true);
                 break;
+                
+            default:
+                break;
         }
     }
     
@@ -168,13 +167,11 @@ public class ReviewStockChangesWindow {
     	this.reviewVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
     }
     
-    /**
-   	 * Provides bindings for the functionality
-   	 * 
-   	 * @param vm the vm
-   	 */
-       public void bindToReviewStockChangesVM(LoginWindowViewModel vm) {
-       	this.vm = vm;
+       /**
+   	   * Provides bindings for the functionality
+   	   * 
+   	   */
+       public void bindToReviewStockChangesVM() {
        	this.setUpControls();
        	this.setUpBinds();
        	this.displayAllLogsButton.setOnAction((event) -> {

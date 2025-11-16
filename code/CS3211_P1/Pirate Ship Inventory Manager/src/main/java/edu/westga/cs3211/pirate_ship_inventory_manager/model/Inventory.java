@@ -20,8 +20,8 @@ public class Inventory {
 		this.compartments = new ArrayList<Compartment>();
 		Set<SpecialQuality> qualities = new HashSet<>();
 		qualities.add(SpecialQuality.LIQUID);
-        Stock stock = new Stock(1, new HashSet<>(), "Paper","perfect", null);
-        Stock stock2 = new Stock(1, qualities, "Oil","perfect", null); 
+        Stock stock = new Stock(1, new HashSet<>(), "Paper", "perfect", null);
+        Stock stock2 = new Stock(1, qualities, "Oil", "perfect", null); 
 		Compartment regular1 = new Compartment("Boxes", 30, false);
 		Compartment regular2 = new Compartment("Shelves", 30, false);
 		Compartment special1 = new Compartment("Flammable Storage", 25, true);
@@ -55,6 +55,7 @@ public class Inventory {
 	 * @precondition none
 	 * @postcondition none
 	 * 
+	 * @param stock the stock to be added
 	 * @param compartments the compartments
 	 * @return a list of normal storage compartment names
 	 */
@@ -80,6 +81,7 @@ public class Inventory {
 	 * @precondition none
 	 * @postcondition none
 	 * 
+	 * @param stock the stock to be added
 	 * @param compartments the compartments
 	 * @return a list of special storage compartment names
 	 */

@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChange;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChangesInventory;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
@@ -33,9 +31,6 @@ public class ReviewStockChangesViewModel {
 	private BooleanProperty isPerishable;
 	private StringProperty startDate;
 	private StringProperty endDate;
-//	private ObservableList<String> crewList;
-//    private ObservableList<LogChange> allLogChanges;
-//    private ObservableList<LogChange> filteredLogChanges;
 	
 	/**
 	 * Creates a new instance of reviewStockChangesViewModel
@@ -49,9 +44,6 @@ public class ReviewStockChangesViewModel {
 		this.isPerishable = new SimpleBooleanProperty();
 		this.startDate = new SimpleStringProperty();
 		this.endDate = new SimpleStringProperty();
-//		this.crewList = FXCollections.observableArrayList();
-//        this.allLogChanges = FXCollections.observableArrayList();
-//        this.filteredLogChanges = FXCollections.observableArrayList();
 	}
 	
 	/**
@@ -210,7 +202,7 @@ public class ReviewStockChangesViewModel {
 	            }
 	        }
 	    } catch (ParseException e) {
-	        System.err.println("Invalid date format: " + startDate);
+	    	throw new IllegalArgumentException("Invalid Date format: " + startDate);
 	    }
 	    
 	    return result;
@@ -248,7 +240,7 @@ public class ReviewStockChangesViewModel {
 	            }
 	        }
 	    } catch (ParseException e) {
-	        System.err.println("Invalid date format: " + startDate + " or " + endDate);
+	    	throw new IllegalArgumentException("Invalid Date format: " + startDate + " or " + endDate);
 	    }
 
 	    return result;
@@ -264,9 +256,6 @@ public class ReviewStockChangesViewModel {
 	 * @return the log changes that match the names of the crewmates
 	 */
 	public ArrayList<String> getCrewmateFilter(ArrayList<String> names) {
-		if (names == null) {
-			throw new IllegalArgumentException("Must select a name to filter with.");
-		} //TODO DISABLE THE BUTTON UNTIL A NAME IS SELECTED
 		ArrayList<String> result = new ArrayList<String>();
 		for (String currentName : names) {
 			for (LogChange currentChange : this.logInventory.getLogChanges()) {
@@ -297,23 +286,23 @@ public class ReviewStockChangesViewModel {
 	}
 	
 	
-	/**
-     * Filters log changes by selected crewmates
-     *
-     * @precondition none
-	 * @postcondition none
-     *
-     * @param selectedCrewmates the list of selected crewmate names
-     */
-    public ArrayList<String> filterByCrewmates(ArrayList<String> selectedCrewmates) {
-    	ArrayList<String> result = new ArrayList<String>();
-        for (String current : selectedCrewmates) {
-        	for (LogChange currentLog : this.logInventory.getLogChanges()) {
-        		if (currentLog.getUser().getUsername().equals(current)) {
-        			result.add(currentLog.getDisplayString());
-        		}
-        	}
-        }
-        return result;
-    }
+//	/**
+//     * Filters log changes by selected crewmates
+//     *
+//     * @precondition none
+//	 * @postcondition none
+//     *
+//     * @param selectedCrewmates the list of selected crewmate names
+//     */
+//    public ArrayList<String> filterByCrewmates(ArrayList<String> selectedCrewmates) {
+//    	ArrayList<String> result = new ArrayList<String>();
+//        for (String current : selectedCrewmates) {
+//        	for (LogChange currentLog : this.logInventory.getLogChanges()) {
+//        		if (currentLog.getUser().getUsername().equals(current)) {
+//        			result.add(currentLog.getDisplayString());
+//        		}
+//        	}
+//        }
+//        return result;
+//    }
 }

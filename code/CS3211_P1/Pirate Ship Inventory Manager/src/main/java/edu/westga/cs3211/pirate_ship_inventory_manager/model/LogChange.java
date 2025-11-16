@@ -13,7 +13,7 @@ public class LogChange {
 	private User user;
 	private Stock stock;
 	private Compartment compartment;
-	String time;
+	private String time;
 	
 	/**
 	 * Creates a new instance of log change

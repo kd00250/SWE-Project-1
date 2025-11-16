@@ -77,7 +77,7 @@ public class LandingPageWindow {
 			setReviewStockChangesStage.initModality(Modality.APPLICATION_MODAL);
 
 			ReviewStockChangesWindow reviewStockChangesCodebehind = (ReviewStockChangesWindow) loader.getController();
-			reviewStockChangesCodebehind.bindToReviewStockChangesVM(this.vm);
+			reviewStockChangesCodebehind.bindToReviewStockChangesVM();
 
 			setReviewStockChangesStage.showAndWait();
 		} catch (IOException error) { 

@@ -1,6 +1,12 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.model;
 
-public class InventoryManager {
+/**
+ * The Inventory manager class
+ * 
+ * @author CS3211
+ * @version Fall 2025
+ */
+public final class InventoryManager {
 	private static InventoryManager instance;
     private Inventory inventory;
     
