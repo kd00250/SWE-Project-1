@@ -1,0 +1,43 @@
+Add Stock
+Context
+CrewMate is logged in
+Ship has available capacity for more stock to be added
+Primary Flow
+1. User indicates they want to add new stock to the system
+2. System prompts user to provide stock information including name, quantity, condition (perfect,
+usable, or unusable), and any special qualities (flammable, liquid, or perishable). Additionally,
+perishable stock must provide expiration date.
+3. User provides all information
+4. System verifies there is a storage compartment with sufficient space capable of storing the stock
+a. Storage compartment must be labeled as appropriate for all special qualities.
+5. System presents all available storage compartments that can store the stock
+6. User selects which storage compartment to use for the stock
+7. System adds the stock to the selected storage compartment
+8. System logs the change in stock including the following details.
+a. Identifier of the CrewMate that added the stock
+b. All provided information for the stock
+c. Identifier of storage compartment updated
+d. Available storage capacity for the compartment after adding the stock
+e. Time the stock was added to the storage compartment
+9. System displays confirmation message of stock addition to user including all information logged
+for the change in stock
+
+Alternative Flows
+
+No Storage Compartment Available with Sufficient Space for Stock
+
+A4. System identifies that no storage compartment exists with sufficient space capable of storing the
+stock.
+A5. System notifies user that no storage compartment has sufficient space available to store
+indicated quantity.
+A6. System presents a list of storage compartments with available space capable of storing the stock.
+A7. System prompts the user to revise the quantity being added to be within capacity limit of at least
+one storage compartment.
+A8. Return to primary flow step 2 with prior provided stock information prefilled.
+
+No Storage Compartment Available to Store Stock with Indicated Special Quality
+
+A4. System identifies that no storage compartment exists which is capable of storing stock with the
+indicated special qualities.
+A5. System notifies the user that inventory has no storage compartment available for special
+qualities indicated.

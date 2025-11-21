@@ -1,0 +1,18 @@
+See Food 
+
+Context: 
+Cook is logged in 
+
+Primary Flow 
+    1. Cook request to view available food 
+    2. System checks for all food items in the system 
+    3. System presents cook with a list of all food in the system, presented in largest to smallest quantity 
+    4. Cook views list of food 
+
+Alternative Flows 
+
+System has no food 
+
+A2. Display alert that there is no food in inventory 
+A3. The cook acknowledges that there is no food. 
+A4. Return to primary flow step 1. 

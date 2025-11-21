@@ -1,0 +1,33 @@
+View Stock Changes
+
+Context
+Quartermaster is logged in
+
+Primary Flow
+1. Quartermaster requests to view stock changes
+2. System presents quartermaster with a list of all stock changes, presented in reverse
+chronological order (most recent first)
+3. Quartermaster views list of stock changes
+
+Alternative Flows
+
+Quartermaster Filters Stock Changes by Special Quality
+A3. Quatermaster selects one or more special qualities
+A4. System removes all stock changes from list for changes to stock that do not the selected special
+qualities
+A5. Return to primary flow step 3
+
+Quartermaster Filters Stock Changes by CrewMate
+A3. Quatermaster selects one or more CrewMates who are included in the list of stock changes
+A4. System removes all stock changes from list for changes not made by the selected CrewMate(s)
+A5. Return to primary flow step 3
+
+Quartermaster Filters Stock Changes by Valid Time Range
+A3. Quatermaster selects a range of time (start and/or end where end is after start if provided)
+A4. System removes all stock changes from list for changes not made during the selected time range
+A5. Return to primary flow step 3
+
+Quartermaster Filters Stock Changes by Invalid Time Range
+A3. Quatermaster selects a range of time (start and end where end is before or equal to start)
+A4. System notifies Quartermaster that time range is not valid, end time must be after start time.
+A5. Return to alternative flow step A3 with prior provided start and end time prefilled

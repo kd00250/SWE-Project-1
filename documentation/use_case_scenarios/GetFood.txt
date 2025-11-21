@@ -1,0 +1,21 @@
+Get Food 
+
+Context: 
+Cook is logged in 
+
+Primary flow 
+    1. Cook request to get food from the storage system 
+    2. System presents a list of food currently in storage. 
+    3. The cook selects a named food with a number of units to remove. 
+    4. Cook submits request to take the given amount of food out of storage. 
+    5. The system confirms that there is enough selected food in the system. 
+    6. System gives confirmation message that they have received their food. 
+    7. Cook gets food from the system. 
+
+Alternative Flow 
+
+Requested quantity is greater than amount in the system 
+
+	A5. System displays a prompt warning user that the requested amount is too large. 
+	A6. Cook is allowed to edit the input quantity. 
+	A7. Return to primary flow step 4. 

@@ -1,0 +1,27 @@
+Login
+Context
+CrewMate is not logged in
+
+Primary Flow
+1. System prompts user to enter login credentials (username and password)
+2. User provides all valid credentials
+3. User submits login request
+4. System verifies credentials
+5. System presents user with the landing page for the system
+
+Alternative Flows
+
+Missing Username/Password
+
+A2. User provides incomplete credentials (i.e., no information, only username, or only password)
+A3. User is unable to submit login request and System prompts user to provide username
+A4. Return to Primary Flow step 2
+
+Invalid Credentials
+
+A2. User provides invalid credentials (i.e., username does not exist in system or password is not
+correct for provided username)
+A3. User submits login request
+A4. System identifies invalid credentials
+A5. System prompts user that credentials provided are invalid
+A6. Return to Primary Flow step 1
