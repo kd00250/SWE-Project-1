@@ -141,4 +141,47 @@ public class Compartment {
 			this.storage.add(stock);
 			return true;
 		}
+		
+		/**
+		 * removes the desired quantity from the compartment
+		 * 
+		 * @precondition stock != null || quantityToRemove > 0
+		 * @postcondition none
+		 * 
+		 * @param stock the stock to be removed
+		 * @param quantityToRemove quantity of the stock to be removed
+		 * @return true/false depending on if the stock was removed
+		 * 
+		 */
+		public boolean removeStock(Stock stock, int quantityToRemove) {
+			if (stock == null) {
+				throw new IllegalArgumentException("Stock cannot be null");
+			}
+			if (quantityToRemove <= 0) {
+				throw new IllegalArgumentException("Quantity must be greater than 0");
+			}
+			
+			Stock stockToRemove = null;
+			for (Stock currentStock : this.getStorage()) {
+				if (currentStock.getName().equals(stock.getName())) {
+					stockToRemove = currentStock;
+				}
+			}
+			
+			if (stockToRemove == null) {
+				return false;
+			}
+			
+			if (stockToRemove.getQuantity() < quantityToRemove) {
+				return false;
+			}
+			
+			if (quantityToRemove == stockToRemove.getQuantity()) {
+				this.storage.remove(stockToRemove);
+			} else {
+				stockToRemove.setQuantity(stockToRemove.getQuantity() - quantityToRemove);
+			}
+			
+			return true;	
+		}
 }
