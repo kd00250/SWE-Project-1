@@ -14,6 +14,21 @@ public class LogChange {
 	private Stock stock;
 	private Compartment compartment;
 	private String time;
+	private ChangeAction action;
+	
+	/**
+	 * Creates a new instance of log change (defaults to ADDED action)
+	 * 
+	 * @precondition user != null || stock != null || compartment != null
+	 * @postcondition none
+	 * 
+	 * @param user the user that added the stock
+	 * @param stock the stock that was added 
+	 * @param compartment the compartment that the stock was added too
+	 */
+	public LogChange(User user, Stock stock, Compartment compartment) {
+		this(user,  stock,  compartment, ChangeAction.ADDED);
+	}
 	
 	/**
 	 * Creates a new instance of log change
@@ -24,8 +39,9 @@ public class LogChange {
 	 * @param user the user that added the stock
 	 * @param stock the stock that was added 
 	 * @param compartment the compartment that the stock was added too
+	 * @param action the action of the log change 
 	 */
-	public LogChange(User user, Stock stock, Compartment compartment) {
+	public LogChange(User user, Stock stock, Compartment compartment, ChangeAction action) {
 		if (user == null) {
 			throw new IllegalArgumentException("User cannot be null");
 		}
@@ -40,6 +56,19 @@ public class LogChange {
 		this.stock = stock;
 		this.compartment = compartment;
 		this.time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.action = action;
+	}
+	
+	/**
+	 * Gets the action of the log change
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the change action
+	 */
+	public ChangeAction getAction() {
+		return this.action;
 	}
 	
 	/**
@@ -99,7 +128,7 @@ public class LogChange {
 	 * @return the string that displays a single list change
 	 */
 	public String getDisplayString() {
-		String stockInfo = this.getStock().getName() + ": " + this.getStock().getQuantity();
+		String stockInfo = "(" + this.getAction() + ") " + this.getStock().getName() + ": " + this.getStock().getQuantity();
 	    return String.format("%-40s %s", stockInfo, this.getUser().getUsername());
 	}
 	

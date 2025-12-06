@@ -153,4 +153,19 @@ public class Stock {
 	public String getExpirationDate() {
 		return this.expirationDate;
 	}
+	
+	/**
+	 * Sets the quantity of the stock
+	 * 
+	 * @precondition quantity > 0
+	 * @postcondition none
+	 * 
+	 * @param quantity the new quantity of the stock
+	 */
+	public void setQuantity(int quantity) {
+		if (quantity < 0) {
+			throw new IllegalArgumentException("Quantity cannot be negative");
+		}
+		this.quantity = quantity;
+	}
 }

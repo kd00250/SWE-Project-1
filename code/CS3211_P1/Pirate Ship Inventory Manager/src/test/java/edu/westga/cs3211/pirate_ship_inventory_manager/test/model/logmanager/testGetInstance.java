@@ -2,12 +2,18 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.test.model.logmanager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
 
 class testGetInstance {
 
+	@BeforeEach
+    void setUp() {
+        LogManager.resetInstance();
+    }
+	
 	@Test
 	public void testGetInstanceReturnsNonNull() {
 		LogManager manager = LogManager.getInstance();
