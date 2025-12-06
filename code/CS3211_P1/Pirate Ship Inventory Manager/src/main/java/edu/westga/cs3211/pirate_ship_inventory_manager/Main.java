@@ -15,6 +15,9 @@ import javafx.scene.layout.Pane;
  */
 public class Main extends Application {
 	
+	public static final String VIEW_INVENTORY_TITLE = "SWE 1 Project 1 - View Inventory Page";
+	public static final String VIEW_INVENTORY_PAGE = "view/InventoryPageWindow.fxml";
+	
 	public static final String REVIEW_STOCK_CHANGES_TITLE = "SWE 1 Project 1 - Review Stock Changes Page";
 	public static final String REVIEW_STOCK_CHANGES_PAGE = "view/ReviewStockChangesWindow.fxml";
 
