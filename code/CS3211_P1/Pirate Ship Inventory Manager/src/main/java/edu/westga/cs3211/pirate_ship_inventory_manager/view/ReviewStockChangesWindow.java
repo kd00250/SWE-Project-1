@@ -1,10 +1,8 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -13,9 +11,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -33,9 +31,9 @@ public class ReviewStockChangesWindow {
 
     @FXML
     private ListView<String> crewmateListView;
-
+    
     @FXML
-    private TextField endDateTextBox;
+    private DatePicker endDatePicker;
 
     @FXML
     private Button filterButton;
@@ -56,7 +54,7 @@ public class ReviewStockChangesWindow {
     private AnchorPane pane;
 
     @FXML
-    private TextField startDateTextBox;
+    private DatePicker startDatePicker;
     
     private ReviewStockChangesViewModel reviewVM;
     
@@ -78,37 +76,29 @@ public class ReviewStockChangesWindow {
 	        this.changeResultsListView.getItems().setAll(
 	            FXCollections.observableArrayList(this.reviewVM.getSpecialQuantityFilter(this.reviewVM.getIsFlammableProperty().getValue(), this.reviewVM.getIsLiquidProperty().getValue(), this.reviewVM.getIsPerishableProperty().getValue())));
     	}
-    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDateTextBox.getText().isEmpty()) {
-    		if (!this.startDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}")) {
-    			this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
-    		} else {
-	        this.changeResultsListView.getItems().setAll(
-	            FXCollections.observableArrayList(this.reviewVM.getStartDateFilter(this.startDateTextBox.textProperty().getValue())));
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() == null) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartDateFilter(startDateString)));
     		}
     	}
-    	if (this.chooseSortComboBox.getValue().equals("Date") && !this.endDateTextBox.getText().isEmpty()) {
-    	    String startDate = this.startDateTextBox.getText();
-    	    String endDate = this.endDateTextBox.getText();
-    	    
-    	    try {
-    	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    	        dateFormat.setLenient(false);
-    	        Date parsedStartDate = dateFormat.parse(startDate);
-    	        Date parsedEndDate = dateFormat.parse(endDate);
-    	        
-    	        if (!startDate.matches("\\d{2}/\\d{2}/\\d{4}") || !endDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
-    	            this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
-    	        } else if (parsedEndDate.before(parsedStartDate)) {
-    	            this.displayErrorPopup("End date cannot be before start date");
-    	        } else {
-    	            this.changeResultsListView.getItems().setAll(
-    	                FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(startDate, endDate)));
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() != null) {
+    	    LocalDate startDate = this.startDatePicker.getValue();
+    	    LocalDate endDate = this.endDatePicker.getValue();
+    	    if (endDate.isBefore(startDate)) {
+    	          this.displayErrorPopup("End date cannot be before start date");
+    	    } else {
+    	          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    	          String startDateString = startDate.format(formatter);
+    	          String endDateString = endDate.format(formatter);
+    	          this.changeResultsListView.getItems().setAll(
+    	              FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(startDateString, endDateString)));
     	        }
-    	    } catch (ParseException ex) {
-    	        this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
-    	    }
     	}
-    }
+    }   
     
     private void displayErrorPopup(String message) { 
 		Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -124,6 +114,8 @@ public class ReviewStockChangesWindow {
     	this.chooseSortComboBox.setValue(filters[0]);
     	this.crewmateListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     	this.crewmateListView.getItems().addAll(this.reviewVM.getCrewList());
+    	this.startDatePicker.setEditable(false);
+    	this.endDatePicker.setEditable(false);
     	
         this.disableAllFilterControls();
         
@@ -131,25 +123,15 @@ public class ReviewStockChangesWindow {
             this.updateControlStates(newValue);
         });
         
-        this.startDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
-        	 if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
-                 this.startDateTextBox.setText(oldValue);
-             }
-             if (newValue.length() > 10) {
-                 this.startDateTextBox.setText(oldValue); 
-             }
-            boolean isComplete = newValue != null && newValue.matches("\\d{2}/\\d{2}/\\d{4}");
-            this.endDateTextBox.setDisable(!isComplete || !this.chooseSortComboBox.getValue().equals("Date"));
+        this.startDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+        	boolean hasStartDate = newValue != null;
+        	this.endDatePicker.setDisable(!hasStartDate || !this.chooseSortComboBox.getValue().equals("Date"));
+        	
+        	if (newValue == null) {
+                this.endDatePicker.setValue(null);
+            }
         });
         
-        this.endDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
-                this.endDateTextBox.setText(oldValue);
-            }
-            if (newValue.length() > 10) {
-                this.endDateTextBox.setText(oldValue);
-            }
-        });
         this.updateControlStates(this.chooseSortComboBox.getValue());
     	
     }
@@ -159,8 +141,8 @@ public class ReviewStockChangesWindow {
         this.isLiquidCheckBox.setDisable(true);
         this.isPerishableCheckBox.setDisable(true);
         this.crewmateListView.setDisable(true);
-        this.startDateTextBox.setDisable(true);
-        this.endDateTextBox.setDisable(true);
+        this.startDatePicker.setDisable(true);
+        this.endDatePicker.setDisable(true);
     }
 
     private void updateControlStates(String selectedFilter) {
@@ -178,12 +160,18 @@ public class ReviewStockChangesWindow {
                 break;
                 
             case "Date":
-                this.startDateTextBox.setDisable(false);
-                this.endDateTextBox.setDisable(true);
+            	this.startDatePicker.setDisable(false);
+            	this.endDatePicker.setDisable(true);
+
                 break;
                 
             default:
                 break;
+        }
+        
+        if (!selectedFilter.equals("Date")) {
+        	this.startDatePicker.setValue(null);
+        	this.endDatePicker.setValue(null);
         }
     }
     
