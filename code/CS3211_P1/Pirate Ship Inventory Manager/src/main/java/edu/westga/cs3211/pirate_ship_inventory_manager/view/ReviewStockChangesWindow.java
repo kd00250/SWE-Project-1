@@ -33,6 +33,9 @@ public class ReviewStockChangesWindow {
     private ListView<String> crewmateListView;
     
     @FXML
+    private ComboBox<String> timeComboBox;
+    
+    @FXML
     private DatePicker endDatePicker;
 
     @FXML
@@ -109,6 +112,8 @@ public class ReviewStockChangesWindow {
     private void setUpControls() {
     	this.reviewVM = new ReviewStockChangesViewModel();
     	String[] filters = {"Special Quantity", "Crewmate", "Date"};
+    	String[] timeFilters = {"Last hour", "Last day", "Last 7 days", "Last 30 days"};
+    	this.timeComboBox.getItems().addAll(timeFilters);
     	this.chooseSortComboBox.getItems().addAll(filters);
     	this.changeResultsListView.getItems().addAll(this.reviewVM.getLogChanges());
     	this.chooseSortComboBox.setValue(filters[0]);
