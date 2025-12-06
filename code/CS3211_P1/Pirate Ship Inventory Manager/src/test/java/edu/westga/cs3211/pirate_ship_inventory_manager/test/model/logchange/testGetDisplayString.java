@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.ChangeAction;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Compartment;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChange;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
@@ -22,7 +23,21 @@ class testGetDisplayString {
 		Set<SpecialQuality> qualities = new HashSet<>();
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2025");
         LogChange change = new LogChange(user, stock, box); 
-        String expected = String.format("%-40s %s", "Milk: 5", "bill");
+        String expected = String.format("%-40s %s", "(ADDED) Milk: 5", "bill");
+        
+        assertEquals(change.getDisplayString(), expected);
+	}
+	
+	@Test
+	void testGetValidDisplayStringREMOVED() {
+		User user = new User("bill", "nye", "Crewmate");
+		Compartment box = new Compartment("barrel", 25, false);
+		Set<SpecialQuality> qualities = new HashSet<>();
+        Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2025");
+        box.addStock(stock);
+        box.removeStock(stock, 2);
+        LogChange change = new LogChange(user, stock, box, ChangeAction.REMOVED); 
+        String expected = String.format("%-40s %s", "(REMOVED) Milk: 3", "bill");
         
         assertEquals(change.getDisplayString(), expected);
 	}
