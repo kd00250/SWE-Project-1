@@ -139,6 +139,26 @@ public class ReviewStockChangesWindow {
 		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartDateFilterForTime(startDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
     		}
     	}
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() == null && (this.hoursStartTextBox.getText().isEmpty() && this.minutesStartTextBox.getText().isEmpty() && this.secondsStartTextBox.getText().isEmpty()) && (!this.hoursEndTextBox.getText().isEmpty() || !this.minutesEndTextBox.getText().isEmpty() || !this.secondsEndTextBox.getText().isEmpty())) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChangesForEndTime(this.reviewVM.getStartDateFilterForTime(startDateString), this.reviewVM.getHoursEndDate().get(), this.reviewVM.getMinutesEndDate().get(), this.reviewVM.getSecondsEndDate().get())));
+    		}
+    	}
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() != null && (this.hoursStartTextBox.getText().isEmpty() && this.minutesStartTextBox.getText().isEmpty() && this.secondsStartTextBox.getText().isEmpty()) && (!this.hoursEndTextBox.getText().isEmpty() || !this.minutesEndTextBox.getText().isEmpty() || !this.secondsEndTextBox.getText().isEmpty())) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		LocalDate endDate = this.endDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String endDateString = endDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChangesForEndTime(this.reviewVM.getStartAndEndDateFilterForTime(startDateString, endDateString), this.reviewVM.getHoursEndDate().get(), this.reviewVM.getMinutesEndDate().get(), this.reviewVM.getSecondsEndDate().get())));
+    		}
+    	}
     	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() != null && (!this.hoursStartTextBox.getText().isEmpty() || !this.minutesStartTextBox.getText().isEmpty() || !this.secondsStartTextBox.getText().isEmpty()) && (this.hoursEndTextBox.getText().isEmpty() && this.minutesEndTextBox.getText().isEmpty() && this.secondsEndTextBox.getText().isEmpty())) {
     		LocalDate startDate = this.startDatePicker.getValue();
     		LocalDate endDate = this.endDatePicker.getValue();

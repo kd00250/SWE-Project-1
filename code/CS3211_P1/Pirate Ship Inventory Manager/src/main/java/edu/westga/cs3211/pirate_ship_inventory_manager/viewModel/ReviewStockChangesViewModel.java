@@ -468,6 +468,59 @@ public class ReviewStockChangesViewModel {
 	    return result;
 	}
 	
+	/**
+	 * filters the changes by the time specified
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param changes the changes from the date
+	 * @param hours the hours entered
+	 * @param minutes the minutes entered
+	 * @param seconds the seconds entered
+	 * @return arraylist of changes
+	 */
+	public ArrayList<String> getStartTimeChangesForEndTime(ArrayList<LogChange> changes, String hours, String minutes, String seconds) {
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+	        int endHours;
+	        if (hours.isEmpty()) {
+	            endHours = 0;
+	        } else {
+	            endHours = Integer.parseInt(hours);
+	        }
+	        int endMinutes;
+	        if (minutes.isEmpty()) {
+	            endMinutes = 0;
+	        } else {
+	            endMinutes = Integer.parseInt(minutes);
+	        }
+	        int endSeconds;
+	        if (seconds.isEmpty()) {
+	            endSeconds = 0;
+	        } else {
+	            endSeconds = Integer.parseInt(seconds);
+	        }
+	        int endTimeInSeconds = (endHours * 3600) + (endMinutes * 60) + endSeconds;
+	        for (LogChange currentChange : changes) {
+	            String timeString = currentChange.getTime(); 
+
+	            int changeHours = Integer.parseInt(timeString.substring(0, 2));
+	            int changeMinutes = Integer.parseInt(timeString.substring(3, 5));
+	            int changeSeconds = Integer.parseInt(timeString.substring(6, 8));
+	            
+	            int changeTimeInSeconds = (changeHours * 3600) + (changeMinutes * 60) + changeSeconds;
+	            
+	            if (changeTimeInSeconds <= endTimeInSeconds) {
+	                result.add(currentChange.getDisplayString());
+	            }
+	        }
+	    } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
+	        throw new IllegalArgumentException("Invalid time format");
+	    }
+	    return result;
+	}
+	
 	private int parseTimeComponent(String value, int defaultValue) {
 	    if (value.isEmpty()) {
 	        return defaultValue;
