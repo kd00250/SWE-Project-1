@@ -431,6 +431,36 @@ public class ReviewStockChangesViewModel {
 	}
 	
 	/**
+	 * Gets the logchanges that are after or equal to the start date
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param startDate the start date
+	 * @return a list of log changes
+	 */
+	public ArrayList<LogChange> getStartDateFilterForTime(String startDate) {
+		ArrayList<LogChange> result = new ArrayList<LogChange>();
+	    
+	    try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	        dateFormat.setLenient(false);
+	        Date parsedStartDate = dateFormat.parse(startDate);
+	        
+	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	        	Date date = dateFormat.parse(currentChange.getDate());
+	            if (date.after(parsedStartDate) || date.equals(parsedStartDate)) {
+	            	result.add(currentChange);
+	            }
+	        }
+	    } catch (ParseException ex) {
+	    	throw new IllegalArgumentException("Invalid Date format: " + startDate);
+	    }
+	    
+	    return result;
+	}
+	
+	/**
 	 * filters the changes by the time specified
 	 * 
 	 * @precondition none
@@ -442,7 +472,7 @@ public class ReviewStockChangesViewModel {
 	 * @param seconds the seconds entered
 	 * @return arraylist of changes
 	 */
-	public ArrayList<String> getStartTimeChanges(ArrayList<String> changes, String hours, String minutes, String seconds) {
+	public ArrayList<String> getStartTimeChanges(ArrayList<LogChange> changes, String hours, String minutes, String seconds) {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
 	        int startHours;
@@ -464,7 +494,7 @@ public class ReviewStockChangesViewModel {
 	            startSeconds = Integer.parseInt(seconds);
 	        }
 	        int startTimeInSeconds = (startHours * 3600) + (startMinutes * 60) + startSeconds;
-	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	        for (LogChange currentChange : changes) {
 	            String timeString = currentChange.getTime(); 
 
 	            int changeHours = Integer.parseInt(timeString.substring(0, 2));
@@ -501,17 +531,22 @@ public class ReviewStockChangesViewModel {
 	 * @postcondition none
 	 * 
 	 * @param changes the changes to be returned
-	 * @param startHours the start hours
-	 * @param startMinutes the start minutes
-	 * @param startSeconds the start seconds
-	 * @param endHours the end hours
-	 * @param endMinutes the end minutes
-	 * @param endSeconds the end seconds
+	 * @param startTimeValues the start time
+	 * @param endTimeValues the end time
 	 * @return the list of changes after the start date and between the time range
 	 */
-	public ArrayList<String> getStartAndEndTimeChanges(ArrayList<String> changes, String startHours, String startMinutes, String startSeconds, String endHours, String endMinutes, String endSeconds) {
-	    ArrayList<String> result = new ArrayList<String>();
+	public ArrayList<String> getStartAndEndTimeChanges(ArrayList<LogChange> changes, String startTimeValues, String endTimeValues) {
+		ArrayList<String> result = new ArrayList<String>();
 	    try {
+	    	String[] startParts = startTimeValues.split(",", -1);
+	        String startHours = startParts[0];
+	        String startMinutes = startParts[1];
+	        String startSeconds = startParts[2];
+	        
+	        String[] endParts = endTimeValues.split(",", -1);
+	        String endHours = endParts[0];
+	        String endMinutes = endParts[1];
+	        String endSeconds = endParts[2];
 	        int startHoursInt = this.parseTimeComponent(startHours, 0);
 	        int startMinutesInt = this.parseTimeComponent(startMinutes, 0);
 	        int startSecondsInt = this.parseTimeComponent(startSeconds, 0);
@@ -522,7 +557,7 @@ public class ReviewStockChangesViewModel {
 	        int endSecondsInt = this.parseTimeComponent(endSeconds, 59);
 	        int endTimeInSeconds = this.convertToSeconds(endHoursInt, endMinutesInt, endSecondsInt);
 	       
-	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	        for (LogChange currentChange : changes) {
 	            String timeString = currentChange.getTime();
 	            
 	            int changeHours = Integer.parseInt(timeString.substring(0, 2));

@@ -40,8 +40,8 @@ class testGetStartTimeChanges {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), vm.getHoursStartDate().get(), "", "").get(0), change.getDisplayString());
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), vm.getHoursStartDate().get(), "", "").size(), 1);
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), vm.getHoursStartDate().get(), "", "").get(0), change.getDisplayString());
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), vm.getHoursStartDate().get(), "", "").size(), 1);
 	}
 	
 	@Test
@@ -59,8 +59,8 @@ class testGetStartTimeChanges {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "", vm.getMinutesStartDate().get(), "").get(0), change.getDisplayString());
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "", vm.getMinutesStartDate().get(), "").size(), 1);
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "", vm.getMinutesStartDate().get(), "").get(0), change.getDisplayString());
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "", vm.getMinutesStartDate().get(), "").size(), 1);
 	}
 	
 	@Test
@@ -78,8 +78,8 @@ class testGetStartTimeChanges {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "", "", vm.getSecondsStartDate().get()).get(0), change.getDisplayString());
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "", "", vm.getSecondsStartDate().get()).size(), 1);
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "", "", vm.getSecondsStartDate().get()).get(0), change.getDisplayString());
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "", "", vm.getSecondsStartDate().get()).size(), 1);
 	}
 	
 	@Test
@@ -99,8 +99,8 @@ class testGetStartTimeChanges {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
 
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), vm.getHoursStartDate().get(), vm.getMinutesStartDate().get(), vm.getSecondsStartDate().get()).get(0), change.getDisplayString());
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), vm.getHoursStartDate().get(), vm.getMinutesStartDate().get(), vm.getSecondsStartDate().get()).size(), 1);
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), vm.getHoursStartDate().get(), vm.getMinutesStartDate().get(), vm.getSecondsStartDate().get()).get(0), change.getDisplayString());
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), vm.getHoursStartDate().get(), vm.getMinutesStartDate().get(), vm.getSecondsStartDate().get()).size(), 1);
 	}
 	
 	@Test
@@ -115,10 +115,10 @@ class testGetStartTimeChanges {
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
         change.setTime("10:01:30");
         inventory.getLogChanges().clear();
-        inventory.addLogChange(change);
+        inventory.addLogChange(change); 
 
-        assertTrue(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "11", "", "").isEmpty());
-        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "11", "", "").size(), 0);
+        assertTrue(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "11", "", "").isEmpty());
+        assertEquals(vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "11", "", "").size(), 0);
 	}
 	
 	@Test
@@ -137,7 +137,7 @@ class testGetStartTimeChanges {
 	    inventory.addLogChange(change);
 	    
 	    assertThrows(IllegalArgumentException.class, () -> {
-	        vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "abc", "00", "00");
+	        vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "abc", "00", "00");
 	    });
 	}
 	
@@ -157,7 +157,7 @@ class testGetStartTimeChanges {
 	    inventory.addLogChange(change);
 	    
 	    assertThrows(IllegalArgumentException.class, () -> {
-	        vm.getStartTimeChanges(vm.getStartDateFilter(vm.getStartDate().get()), "10", "00", "00");
+	        vm.getStartTimeChanges(vm.getStartDateFilterForTime(vm.getStartDate().get()), "10", "00", "00");
 	    });
 	}
 

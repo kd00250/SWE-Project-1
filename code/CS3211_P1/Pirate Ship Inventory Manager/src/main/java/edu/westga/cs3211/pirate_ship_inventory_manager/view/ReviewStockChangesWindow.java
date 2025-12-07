@@ -136,7 +136,18 @@ public class ReviewStockChangesWindow {
     			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     			String startDateString = startDate.format(formatter);
 		        this.changeResultsListView.getItems().setAll(
-		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartDateFilter(startDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartDateFilterForTime(startDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
+    		}
+    	}
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() == null && (!this.hoursStartTextBox.getText().isEmpty() || !this.minutesStartTextBox.getText().isEmpty() || !this.secondsStartTextBox.getText().isEmpty()) && (!this.hoursEndTextBox.getText().isEmpty() || !this.minutesEndTextBox.getText().isEmpty() || !this.secondsEndTextBox.getText().isEmpty())) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String startTimeValues = this.reviewVM.getHoursStartDate().get() + "," + this.reviewVM.getMinutesStartDate().get() + "," + this.reviewVM.getSecondsStartDate().get();
+    			String endTimeValues = this.reviewVM.getHoursEndDate().get() + "," + this.reviewVM.getMinutesEndDate().get() + "," + this.reviewVM.getSecondsEndDate().get();
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartAndEndTimeChanges(this.reviewVM.getStartDateFilterForTime(startDateString), startTimeValues, endTimeValues)));
     		}
     	}
     }
