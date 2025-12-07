@@ -24,7 +24,7 @@ import javafx.beans.property.StringProperty;
  * @author CS3211
  * @version Fall 2025
  */
-public class AddStockWindowViewModel {
+public class AddStockWindowViewModel extends SessionViewModel {
 	private Inventory inventory; 
 	private LogChangesInventory logInventory;
 	private StringProperty name;

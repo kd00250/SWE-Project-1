@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -24,7 +25,7 @@ import javafx.scene.layout.AnchorPane;
  * @author CS 1302
  * @version Fall 2024
  */
-public class ReviewStockChangesWindow {
+public class ReviewStockChangesWindow implements SessionSetter {
 	@FXML
     private ListView<String> changeResultsListView;
 
@@ -207,4 +208,10 @@ public class ReviewStockChangesWindow {
        		this.filterResultsListView(event);
        	});
        }
+
+	   @Override
+	   public void setSession(CurrentSession context) {
+		this.reviewVM.setCurrentSession(context);
+		
+	   }
 }

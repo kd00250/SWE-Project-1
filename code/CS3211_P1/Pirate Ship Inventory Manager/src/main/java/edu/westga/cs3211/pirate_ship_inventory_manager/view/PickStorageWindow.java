@@ -1,5 +1,6 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import javafx.beans.binding.Bindings;
@@ -19,7 +20,7 @@ import javafx.stage.Stage;
  * @author CS 1302
  * @version Fall 2024
  */
-public class PickStorageWindow {
+public class PickStorageWindow implements SessionSetter {
 	@FXML
     private Button addToStorageButton;
 
@@ -87,4 +88,10 @@ public class PickStorageWindow {
     	this.setUpControls(addStockVM);
    
     }
+
+	@Override
+	public void setSession(CurrentSession context) {
+		// TODO Auto-generated method stub
+		
+	}
 }

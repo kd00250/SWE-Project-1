@@ -3,6 +3,7 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 import java.io.IOException;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -107,7 +108,7 @@ public class LoginWindow {
 			setLandingPageStage.initModality(Modality.APPLICATION_MODAL);
 
 			LandingPageWindow landingPageCodebehind = (LandingPageWindow) loader.getController();
-			landingPageCodebehind.bindToVM(this.vm);
+			landingPageCodebehind.setSession(new CurrentSession(this.vm.getUser()));
 
 			setLandingPageStage.showAndWait();
 		} catch (IOException error) {

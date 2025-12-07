@@ -2,8 +2,14 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
 import java.io.IOException;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LandingPageWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +27,7 @@ import javafx.stage.Stage;
  * @author CS3211
  * @version Fall 2025
  */
-public class LandingPageWindow {
+public class LandingPageWindow implements SessionSetter {
 
 	@FXML
     private Button addStockButton;
@@ -29,8 +35,7 @@ public class LandingPageWindow {
     @FXML
     private Button reViewStockChangesButton;
     
-    private LoginWindowViewModel vm;
-    
+    private LandingPageWindowViewModel landingVM;
     @FXML
     void addStock(ActionEvent event) {
     	this.getAddStockWindow();
@@ -39,6 +44,15 @@ public class LandingPageWindow {
     @FXML
     void reviewStockChanges(ActionEvent event) {
     	this.getReviewStockChangesWindow();
+    }
+    
+    @FXML
+    public void initialize() {
+    	this.landingVM = new LandingPageWindowViewModel();
+    }
+    
+    public LandingPageWindow() {
+    	this.landingVM = new LandingPageWindowViewModel();
     }
     
     private void getAddStockWindow() {
@@ -54,7 +68,7 @@ public class LandingPageWindow {
 			setAddStockStage.initModality(Modality.APPLICATION_MODAL);
 
 			AddStockWindow addStockCodebehind = (AddStockWindow) loader.getController();
-			addStockCodebehind.bindToAddStockVM(this.vm);
+			addStockCodebehind.setSession(this.landingVM.getCurrentSession().getValue());
 
 			setAddStockStage.showAndWait();
 		} catch (IOException error) { 
@@ -87,19 +101,21 @@ public class LandingPageWindow {
 		}
     }
     
-    /**
-     * Provides bindings for functionality
-     * 
-     * @param vm the vm
-     */
-    public void bindToVM(LoginWindowViewModel vm) {
-    	this.vm = vm;
-    	this.reViewStockChangesButton.disableProperty().bind(vm.isQuartermasterProperty().not());
+	@Override
+	public void setSession(CurrentSession context) {
+		System.out.println(context);
+		this.landingVM.setCurrentSession(context);
+		this.bindToContext();
+	}
+	
+	private void bindToContext() {
+		this.reViewStockChangesButton.disableProperty().bind(this.landingVM.roleProperty().isEqualTo(LoginWindowViewModel.QUARTERMASTER_ROLE));
     	this.reViewStockChangesButton.setOnAction((event) -> {
     		this.reviewStockChanges(event);
     	});
     	this.addStockButton.setOnAction((event) -> {
     		this.addStock(event);
     	});
-    }
+	}
+	
 }

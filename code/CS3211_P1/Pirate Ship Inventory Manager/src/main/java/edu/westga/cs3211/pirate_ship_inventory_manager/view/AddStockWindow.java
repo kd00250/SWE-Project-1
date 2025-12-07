@@ -5,6 +5,7 @@ import java.io.IOException;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +27,7 @@ import javafx.stage.Stage;
  * @author CS3211
  * @version Fall 2025
  */
-public class AddStockWindow {
+public class AddStockWindow implements SessionSetter{
 	@FXML
     private Button addStockButton;
 
@@ -150,4 +151,10 @@ public class AddStockWindow {
     		this.addStock(event);
     	});
     }
+
+	@Override
+	public void setSession(CurrentSession context) {
+		// TODO Auto-generated method stub
+		
+	}
 }
