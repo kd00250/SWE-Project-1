@@ -62,6 +62,10 @@ public class ReviewStockChangesWindow implements SessionSetter {
     private ReviewStockChangesViewModel reviewVM;
     
     @FXML
+    void initialize() {
+    	this.reviewVM = new ReviewStockChangesViewModel();
+    }
+    @FXML
     void displayAllLogs(ActionEvent event) {
     	this.changeResultsListView.getItems().setAll(
     			FXCollections.observableArrayList(this.reviewVM.getLogChanges()));
