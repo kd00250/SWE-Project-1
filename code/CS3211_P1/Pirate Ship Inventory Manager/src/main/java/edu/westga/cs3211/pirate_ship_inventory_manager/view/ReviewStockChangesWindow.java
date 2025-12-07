@@ -14,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -33,13 +34,31 @@ public class ReviewStockChangesWindow {
     private ListView<String> crewmateListView;
     
     @FXML
-    private ComboBox<String> timeComboBox;
+    private DatePicker endDatePicker;
     
     @FXML
-    private DatePicker endDatePicker;
+    private TextField hoursEndTextBox;
+
+    @FXML
+    private TextField hoursStartTextBox;
+    
+    @FXML
+    private TextField minutesEndTextBox;
+
+    @FXML
+    private TextField minutesStartTextBox;
+    
+    @FXML
+    private TextField secondsEndTextBox;
+
+    @FXML
+    private TextField secondsStartTextBox;
 
     @FXML
     private Button filterButton;
+    
+    @FXML
+    private Button clearDateButton;
     
     @FXML
     private Button displayAllLogsButton;
@@ -65,6 +84,12 @@ public class ReviewStockChangesWindow {
     void displayAllLogs(ActionEvent event) {
     	this.changeResultsListView.getItems().setAll(
     			FXCollections.observableArrayList(this.reviewVM.getLogChanges()));
+    }
+    
+    @FXML
+    void clearDates(ActionEvent event) {
+    	this.startDatePicker.setValue(null);
+    	this.endDatePicker.setValue(null);
     }
 
     @FXML
@@ -112,13 +137,13 @@ public class ReviewStockChangesWindow {
     private void setUpControls() {
     	this.reviewVM = new ReviewStockChangesViewModel();
     	String[] filters = {"Special Quantity", "Crewmate", "Date"};
-    	String[] timeFilters = {"Last hour", "Last day", "Last 7 days", "Last 30 days"};
-    	this.timeComboBox.getItems().addAll(timeFilters);
     	this.chooseSortComboBox.getItems().addAll(filters);
     	this.changeResultsListView.getItems().addAll(this.reviewVM.getLogChanges());
     	this.chooseSortComboBox.setValue(filters[0]);
     	this.crewmateListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     	this.crewmateListView.getItems().addAll(this.reviewVM.getCrewList());
+    	this.setupStartTimeBoxes();
+    	this.setupEndTimeBoxes();
     	this.startDatePicker.setEditable(false);
     	this.endDatePicker.setEditable(false);
     	
@@ -135,10 +160,111 @@ public class ReviewStockChangesWindow {
         	if (newValue == null) {
                 this.endDatePicker.setValue(null);
             }
-        });
-        
+        }); 
         this.updateControlStates(this.chooseSortComboBox.getValue());
     	
+    }
+    
+    private void setupStartTimeBoxes() {
+    	this.hoursStartTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.hoursStartTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 24) {
+                        this.hoursStartTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.hoursStartTextBox.setText(oldValue);
+                }
+            }
+        }); 
+        this.minutesStartTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.minutesStartTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.minutesStartTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.minutesStartTextBox.setText(oldValue);
+                }
+            }
+        }); 
+        this.secondsStartTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.secondsStartTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.secondsStartTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.secondsStartTextBox.setText(oldValue);
+                }
+            }
+        });
+    }
+    
+    private void setupEndTimeBoxes() {
+    	this.hoursEndTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.hoursEndTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 24) {
+                        this.hoursEndTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.hoursEndTextBox.setText(oldValue);
+                }
+            }
+        });
+        this.minutesEndTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.minutesEndTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.minutesEndTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.minutesEndTextBox.setText(oldValue);
+                }
+            }
+        });
+        this.secondsEndTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.secondsEndTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.secondsEndTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.secondsEndTextBox.setText(oldValue);
+                }
+            }
+        });
     }
     
     private void disableAllFilterControls() {

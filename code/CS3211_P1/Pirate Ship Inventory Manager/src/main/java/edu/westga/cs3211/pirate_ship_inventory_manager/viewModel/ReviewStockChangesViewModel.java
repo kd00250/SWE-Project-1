@@ -227,7 +227,7 @@ public class ReviewStockChangesViewModel {
 	        
 	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
 	        	Date date = dateFormat.parse(currentChange.getDate());
-	            if (date.after(parsedStartDate)) {
+	            if (date.after(parsedStartDate) || date.equals(parsedStartDate)) {
 	            	result.add(currentChange.getDisplayString());
 	            }
 	        }
@@ -307,6 +307,7 @@ public class ReviewStockChangesViewModel {
 
 	    return result;
 	}
+	
 	
 	/**
 	 * Returns the filtered list of log changes
