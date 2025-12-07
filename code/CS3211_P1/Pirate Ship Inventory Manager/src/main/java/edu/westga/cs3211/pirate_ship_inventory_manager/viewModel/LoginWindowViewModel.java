@@ -14,6 +14,7 @@ import javafx.beans.property.StringProperty;
  * @version Fall 2025
  */
 public class LoginWindowViewModel {
+	public static final String QUARTERMASTER_ROLE = "Quartermaster";
 	private UserStore store;
 	private User user;
 	private StringProperty username;
@@ -90,7 +91,7 @@ public class LoginWindowViewModel {
 	public boolean validateCredentials() {
 		for (User currentUser : this.store.getUserList()) {
 			if (currentUser.getUsername().equals(this.getUsername().get()) && currentUser.getPassword().equals(this.getPassword().get())) {
-				if (currentUser.getRole().equals("Quartermaster")) {
+				if (currentUser.getRole().equals(LoginWindowViewModel.QUARTERMASTER_ROLE)) {
 					this.isQuartermaster.set(true);
 				}
 				this.user = currentUser;

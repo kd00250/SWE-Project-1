@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,36 +30,35 @@ import javafx.stage.Stage;
  * @author CS3211
  * @version Fall 2025
  */
-public class AddStockWindow {
+public class AddStockWindow implements SessionSetter {
 	@FXML
-    private Button addStockButton;
+	private Button addStockButton;
 
-    @FXML
-    private ComboBox<String> conditionComboBox;
+	@FXML
+	private ComboBox<String> conditionComboBox;
 
     @FXML
     private DatePicker expirationDatePicker;
 
-    @FXML
-    private TextField nameTextBox;
-    
-    @FXML
-    private CheckBox isFlammableCheckBox;
+	@FXML
+	private TextField nameTextBox;
 
-    @FXML
-    private CheckBox isLiquidcheckBox;
+	@FXML
+	private CheckBox isFlammableCheckBox;
 
-    @FXML
-    private CheckBox isPerishableCheckBox;
+	@FXML
+	private CheckBox isLiquidcheckBox;
+
+	@FXML
+	private CheckBox isPerishableCheckBox;
 
     @FXML
     private AnchorPane pane;
 
-    @FXML
-    private TextField quantityTextBox;
-    
-    private LoginWindowViewModel vm;
-    private AddStockWindowViewModel addStockVM; 
+	@FXML
+	private TextField quantityTextBox;
+
+	private AddStockWindowViewModel addStockVM;
 
     @FXML
     void addStock(ActionEvent event) {
@@ -74,18 +73,23 @@ public class AddStockWindow {
     	}
     }
     
+	@FXML
+	void initialize() {
+		this.addStockVM = new AddStockWindowViewModel();
+	}
+
     private void displayErrorPopup(String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
-      
-    private void getPickStorageWindow() {
-    	FXMLLoader loader = new FXMLLoader();
+
+	private void getPickStorageWindow() {
+		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource(Main.PICK_STORAGE_PAGE));
 		try {
 			loader.load();
-			Parent parent = loader.getRoot(); 
+			Parent parent = loader.getRoot();
 			Scene scene = new Scene(parent);
 			Stage setPickStorageStage = new Stage();
 			setPickStorageStage.setTitle(Main.PICK_STORAGE_PAGE_TITLE);
@@ -93,7 +97,7 @@ public class AddStockWindow {
 			setPickStorageStage.initModality(Modality.APPLICATION_MODAL);
 
 			PickStorageWindow pickStorageCodebehind = (PickStorageWindow) loader.getController();
-			pickStorageCodebehind.bindToPickStorageVM(this.vm, this.addStockVM);
+			pickStorageCodebehind.bindToPickStorageVM(this.addStockVM.getCurrentSession().getValue(), this.addStockVM);
 
 			setPickStorageStage.showAndWait();
 		} catch (IOException error) {
