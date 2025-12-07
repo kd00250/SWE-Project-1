@@ -274,6 +274,12 @@ public class ReviewStockChangesWindow {
         this.crewmateListView.setDisable(true);
         this.startDatePicker.setDisable(true);
         this.endDatePicker.setDisable(true);
+        this.hoursStartTextBox.setDisable(true);
+        this.minutesStartTextBox.setDisable(true);
+        this.secondsStartTextBox.setDisable(true);
+        this.hoursEndTextBox.setDisable(true);
+        this.minutesEndTextBox.setDisable(true);
+        this.secondsEndTextBox.setDisable(true);
     }
 
     private void updateControlStates(String selectedFilter) {
