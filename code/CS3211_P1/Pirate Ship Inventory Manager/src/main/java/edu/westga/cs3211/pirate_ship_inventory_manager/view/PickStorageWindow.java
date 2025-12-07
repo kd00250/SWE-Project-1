@@ -52,7 +52,7 @@ public class PickStorageWindow implements SessionSetter {
     }
     
     @FXML
-    public void initialize() {
+    void initialize() {
     	this.pickStorageViewmodel = new PickStorageWindowViewModel();
     }
     
@@ -84,10 +84,9 @@ public class PickStorageWindow implements SessionSetter {
     }
     
     /**
-     * provides the bindings for the view models
-     * 
-     * @param vm the login vm
-     * @param addStockVM the addStockVM
+     * Binds components to the storage viewmodel.
+     * @param context the context
+     * @param addStockVM the add stock viewmodel
      */
     public void bindToPickStorageVM(CurrentSession context, AddStockWindowViewModel addStockVM) {
     	this.setSession(context);
