@@ -156,17 +156,31 @@ public class AddStockWindow implements SessionSetter {
     	                .and(this.expirationDatePicker.valueProperty().isNull())));
     }
     
-    /**
-	 * Provides bindings for the functionality
-	 * 
-	 * @param vm the vm
-	 */
-    public void bindToAddStockVM(LoginWindowViewModel vm) {
-    	this.vm = vm;
-    	this.setUpBindings();
-    	this.setUpControls();
-    	this.addStockButton.setOnAction((event) -> {
-    		this.addStock(event);
-    	});
-    }
+    private void initializeView() {
+		this.setUpBindings();
+		this.setUpControls();
+		this.addStockButton.setOnAction((event) -> {
+			this.addStock(event);
+		});
+	}
+
+	@Override
+	public void setSession(CurrentSession context) {
+		this.addStockVM.setCurrentSession(context);
+		this.initializeView();
+	}
+    
+//    /**
+//	 * Provides bindings for the functionality
+//	 * 
+//	 * @param vm the vm
+//	 */
+//    public void bindToAddStockVM(LoginWindowViewModel vm) {
+//    	this.vm = vm;
+//    	this.setUpBindings();
+//    	this.setUpControls();
+//    	this.addStockButton.setOnAction((event) -> {
+//    		this.addStock(event);
+//    	});
+//    }
 }
