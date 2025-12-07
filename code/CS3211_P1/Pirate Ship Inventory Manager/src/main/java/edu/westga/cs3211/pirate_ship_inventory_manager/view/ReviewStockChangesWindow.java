@@ -104,7 +104,7 @@ public class ReviewStockChangesWindow {
 	        this.changeResultsListView.getItems().setAll(
 	            FXCollections.observableArrayList(this.reviewVM.getSpecialQuantityFilter(this.reviewVM.getIsFlammableProperty().getValue(), this.reviewVM.getIsLiquidProperty().getValue(), this.reviewVM.getIsPerishableProperty().getValue())));
     	}
-    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() == null) {
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() == null && this.hoursStartTextBox.getText().isEmpty() && this.minutesStartTextBox.getText().isEmpty() && this.secondsStartTextBox.getText().isEmpty()) {
     		LocalDate startDate = this.startDatePicker.getValue();
     		if (startDate != null) {
     			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -113,7 +113,7 @@ public class ReviewStockChangesWindow {
 		            FXCollections.observableArrayList(this.reviewVM.getStartDateFilter(startDateString)));
     		}
     	}
-    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() != null) {
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() != null && this.hoursStartTextBox.getText().isEmpty() && this.minutesStartTextBox.getText().isEmpty() && this.secondsStartTextBox.getText().isEmpty() && this.hoursEndTextBox.getText().isEmpty() && this.minutesEndTextBox.getText().isEmpty() && this.secondsEndTextBox.getText().isEmpty()) {
     	    LocalDate startDate = this.startDatePicker.getValue();
     	    LocalDate endDate = this.endDatePicker.getValue();
     	    if (endDate.isBefore(startDate)) {
@@ -126,7 +126,46 @@ public class ReviewStockChangesWindow {
     	              FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(startDateString, endDateString)));
     	        }
     	}
-    }   
+    	this.timeFiltersCall();
+    }
+    
+    private void timeFiltersCall() {
+    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() == null && (!this.hoursStartTextBox.getText().isEmpty() || !this.minutesStartTextBox.getText().isEmpty() || !this.secondsStartTextBox.getText().isEmpty()) && (this.hoursEndTextBox.getText().isEmpty() && this.minutesEndTextBox.getText().isEmpty() && this.secondsEndTextBox.getText().isEmpty())) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartDateFilter(startDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
+    		}
+    	}
+    }
+    
+    private void setUpTimeFilters() {
+    	this.startDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                this.hoursStartTextBox.setDisable(false);
+                this.minutesStartTextBox.setDisable(false);
+                this.secondsStartTextBox.setDisable(false);
+                this.hoursEndTextBox.setDisable(false);
+                this.minutesEndTextBox.setDisable(false);
+                this.secondsEndTextBox.setDisable(false);
+            } else {
+                this.hoursStartTextBox.setDisable(true);
+                this.minutesStartTextBox.setDisable(true);
+                this.secondsStartTextBox.setDisable(true);
+                this.hoursStartTextBox.clear();
+                this.minutesStartTextBox.clear();
+                this.secondsStartTextBox.clear();
+                this.hoursEndTextBox.setDisable(true);
+                this.minutesEndTextBox.setDisable(true);
+                this.secondsEndTextBox.setDisable(true);
+                this.hoursEndTextBox.clear();
+                this.minutesEndTextBox.clear();
+                this.secondsEndTextBox.clear();
+            }
+        });
+    }
     
     private void displayErrorPopup(String message) { 
 		Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -146,6 +185,7 @@ public class ReviewStockChangesWindow {
     	this.setupEndTimeBoxes();
     	this.startDatePicker.setEditable(false);
     	this.endDatePicker.setEditable(false);
+    	this.setUpTimeFilters();
     	
         this.disableAllFilterControls();
         
@@ -316,6 +356,12 @@ public class ReviewStockChangesWindow {
     	this.reviewVM.getIsFlammableProperty().bind(this.isFlammableCheckBox.selectedProperty());
     	this.reviewVM.getIsLiquidProperty().bind(this.isLiquidCheckBox.selectedProperty());
     	this.reviewVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
+    	this.reviewVM.getHoursStartDate().bind(this.hoursStartTextBox.textProperty());
+    	this.reviewVM.getMinutesStartDate().bind(this.minutesStartTextBox.textProperty());
+    	this.reviewVM.getSecondsStartDate().bind(this.secondsStartTextBox.textProperty());
+    	this.reviewVM.getHoursEndDate().bind(this.hoursEndTextBox.textProperty());
+    	this.reviewVM.getMinutesEndDate().bind(this.minutesEndTextBox.textProperty());
+    	this.reviewVM.getSecondsEndDate().bind(this.secondsEndTextBox.textProperty());
     }
     
        /**
