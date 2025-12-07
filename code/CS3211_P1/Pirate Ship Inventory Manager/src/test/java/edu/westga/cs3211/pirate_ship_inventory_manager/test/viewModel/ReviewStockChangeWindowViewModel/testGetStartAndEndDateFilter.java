@@ -36,6 +36,26 @@ class testGetStartAndEndDateFilter {
         Inventory stockInventory = InventoryManager.getInstance().getInventory();
         LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
+        inventory.getLogChanges().clear();
+        inventory.addLogChange(change);
+        
+        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).get(0), change.getDisplayString());
+        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 1);
+	}
+	
+	@Test
+	void testGetStartAndEndFilterEqualsStartDate() {
+		ReviewStockChangesViewModel vm = new ReviewStockChangesViewModel();
+		vm.getStartDate().set("12/11/2024");
+		vm.getEndDate().set("12/12/2029");
+		User user = new User("bill", "nye", "Crewmate");
+		Set<SpecialQuality> qualities = new HashSet<>();
+        Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2025");
+        Inventory stockInventory = InventoryManager.getInstance().getInventory();
+        LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
+        change.setDate("12/11/2024");
+        LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
+        inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
         assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).get(0), change.getDisplayString());
@@ -52,7 +72,9 @@ class testGetStartAndEndDateFilter {
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2029");
         Inventory stockInventory = InventoryManager.getInstance().getInventory();
         LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
+        change.setDate("12/12/2029");
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
+        inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
         assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).get(0), change.getDisplayString());
@@ -60,7 +82,7 @@ class testGetStartAndEndDateFilter {
 	}
 	
 	@Test
-	void testGetStartAndEndFilterInvalidDate() {
+	void testGetStartAndEndFilterBeforeStartDate() {
 		ReviewStockChangesViewModel vm = new ReviewStockChangesViewModel();
 		vm.getStartDate().set("12/11/2029");
 		vm.getEndDate().set("12/12/2029");
@@ -69,6 +91,24 @@ class testGetStartAndEndDateFilter {
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/13/2029");
         Inventory stockInventory = InventoryManager.getInstance().getInventory();
         LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
+        LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
+        inventory.addLogChange(change);
+        
+        assertTrue(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());
+        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 0);
+	}
+	
+	@Test
+	void testGetStartAndEndFilterAfterEndDate() {
+		ReviewStockChangesViewModel vm = new ReviewStockChangesViewModel();
+		vm.getStartDate().set("12/11/2029");
+		vm.getEndDate().set("12/12/2029");
+		User user = new User("bill", "nye", "Crewmate");
+		Set<SpecialQuality> qualities = new HashSet<>();
+        Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/13/2029");
+        Inventory stockInventory = InventoryManager.getInstance().getInventory();
+        LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
+        change.setDate("12/13/2029");
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
         inventory.addLogChange(change);
         
@@ -86,7 +126,9 @@ class testGetStartAndEndDateFilter {
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2004");
         Inventory stockInventory = InventoryManager.getInstance().getInventory();
         LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
+        change.setDate("12/12/2004");
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
+        inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
         assertTrue(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());

@@ -173,6 +173,41 @@ public class ReviewStockChangesViewModel {
 	    return result;
 	}
 	
+//	/**
+//	 * Gets the list of log changes for the start date
+//	 * 
+//	 * @precondition none
+//	 * @postcondition none
+//	 * 
+//	 * @param startDate the startDate 
+//	 * @return a list of log changes based on the start date
+//	 */
+//	public ArrayList<String> getStartDateFilter(String startDate) {
+//		ArrayList<String> result = new ArrayList<String>();
+//	    
+//	    try {
+//	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//	        dateFormat.setLenient(false);
+//	        Date parsedStartDate = dateFormat.parse(startDate);
+//	        
+//	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+//	            Stock stock = currentChange.getStock();
+//	            
+//	            if (stock.getExpirationDate() != null) {
+//	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
+//	                
+//	                if (expirationDate.after(parsedStartDate)) {
+//	                    result.add(currentChange.getDisplayString());
+//	                }
+//	            }
+//	        }
+//	    } catch (ParseException ex) {
+//	    	throw new IllegalArgumentException("Invalid Date format: " + startDate);
+//	    }
+//	    
+//	    return result;
+//	}
+	
 	/**
 	 * Gets the list of log changes for the start date
 	 * 
@@ -191,14 +226,9 @@ public class ReviewStockChangesViewModel {
 	        Date parsedStartDate = dateFormat.parse(startDate);
 	        
 	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
-	            Stock stock = currentChange.getStock();
-	            
-	            if (stock.getExpirationDate() != null) {
-	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
-	                
-	                if (expirationDate.after(parsedStartDate)) {
-	                    result.add(currentChange.getDisplayString());
-	                }
+	        	Date date = dateFormat.parse(currentChange.getDate());
+	            if (date.after(parsedStartDate)) {
+	            	result.add(currentChange.getDisplayString());
 	            }
 	        }
 	    } catch (ParseException ex) {
@@ -207,6 +237,44 @@ public class ReviewStockChangesViewModel {
 	    
 	    return result;
 	}
+	
+//	/**
+//	 * Gets the start and end date filtered log changes
+//	 * 
+//	 * @precondition none
+//	 * @postcondition none
+//	 * 
+//	 * @param startDate the startDate 
+//	 * @param endDate the endDate 
+//	 * @return a list of filtered log changes
+//	 */
+//	public ArrayList<String> getStartAndEndDateFilter(String startDate, String endDate) {
+//	    ArrayList<String> result = new ArrayList<String>();
+//
+//	    try {
+//	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//	        dateFormat.setLenient(false);
+//	        Date parsedStartDate = dateFormat.parse(startDate);
+//	        Date parsedEndDate = dateFormat.parse(endDate);
+//
+//	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+//	            Stock stock = currentChange.getStock();
+//
+//	            if (stock.getExpirationDate() != null) {
+//	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
+//
+//	                if (expirationDate.after(parsedStartDate) 
+//	                		&& (expirationDate.before(parsedEndDate) || expirationDate.equals(parsedEndDate))) {
+//	                    result.add(currentChange.getDisplayString());
+//	                }
+//	            }
+//	        }
+//	    } catch (ParseException ex) {
+//	    	throw new IllegalArgumentException("Invalid Date format: " + startDate + " or " + endDate);
+//	    }
+//
+//	    return result;
+//	}
 	
 	/**
 	 * Gets the start and end date filtered log changes
@@ -228,16 +296,10 @@ public class ReviewStockChangesViewModel {
 	        Date parsedEndDate = dateFormat.parse(endDate);
 
 	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
-	            Stock stock = currentChange.getStock();
-
-	            if (stock.getExpirationDate() != null) {
-	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
-
-	                if (expirationDate.after(parsedStartDate) 
-	                		&& (expirationDate.before(parsedEndDate) || expirationDate.equals(parsedEndDate))) {
-	                    result.add(currentChange.getDisplayString());
-	                }
-	            }
+	        	Date date = dateFormat.parse(currentChange.getDate());
+	        	if ((date.after(parsedStartDate) || date.equals(parsedStartDate))  && (date.before(parsedEndDate) || date.equals(parsedEndDate))) {
+	        		result.add(currentChange.getDisplayString());
+	        	}
 	        }
 	    } catch (ParseException ex) {
 	    	throw new IllegalArgumentException("Invalid Date format: " + startDate + " or " + endDate);
