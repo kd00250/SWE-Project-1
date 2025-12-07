@@ -22,7 +22,7 @@ import javafx.beans.property.StringProperty;
  * @author CS3211
  * @version Fall 2025
  */
-public class ReviewStockChangesViewModel {
+public class ReviewStockChangesViewModel extends SessionViewModel {
 	private LogChangesInventory logInventory;
 	private UserStore store;
 	private StringProperty filter;
@@ -42,6 +42,7 @@ public class ReviewStockChangesViewModel {
 	 * Creates a new instance of reviewStockChangesViewModel
 	 */
 	public ReviewStockChangesViewModel() {
+		super();
 		this.logInventory = LogManager.getInstance().getLogChangesInventory();
 		this.store = new UserStore();
 		this.filter = new SimpleStringProperty();

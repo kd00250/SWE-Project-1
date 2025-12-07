@@ -2,8 +2,10 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
 import java.io.IOException;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LandingPageWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,27 +23,27 @@ import javafx.stage.Stage;
  * @author CS3211
  * @version Fall 2025
  */
-public class LandingPageWindow {
+public class LandingPageWindow implements SessionSetter {
 
 	@FXML
-    private Button addStockButton;
+	private Button addStockButton;
 
-    @FXML
-    private Button reViewStockChangesButton;
+	@FXML
+	private Button reViewStockChangesButton;
     
     @FXML
     private Button viewInventoryButton;
-    
-    private LoginWindowViewModel vm;
-    
-    @FXML
-    void addStock(ActionEvent event) {
-    	this.getAddStockWindow();
-    }
 
-    @FXML
-    void reviewStockChanges(ActionEvent event) {
-    	this.getReviewStockChangesWindow();
+	private LandingPageWindowViewModel landingVM;
+
+	@FXML
+	void addStock(ActionEvent event) {
+		this.getAddStockWindow();
+	}
+
+	@FXML
+	void reviewStockChanges(ActionEvent event) {
+		this.getReviewStockChangesWindow();
     }
     
     @FXML
@@ -70,10 +72,15 @@ public class LandingPageWindow {
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
 		}
-    }
-    
-    private void getAddStockWindow() {
-    	FXMLLoader loader = new FXMLLoader();
+	}
+
+	@FXML
+	void initialize() {
+		this.landingVM = new LandingPageWindowViewModel();
+	}
+
+	private void getAddStockWindow() {
+		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource(Main.ADD_STOCK_PAGE));
 		try {
 			loader.load();
@@ -85,18 +92,18 @@ public class LandingPageWindow {
 			setAddStockStage.initModality(Modality.APPLICATION_MODAL);
 
 			AddStockWindow addStockCodebehind = (AddStockWindow) loader.getController();
-			addStockCodebehind.bindToAddStockVM(this.vm);
+			addStockCodebehind.setSession(this.landingVM.getCurrentSession().getValue());
 
 			setAddStockStage.showAndWait();
-		} catch (IOException error) { 
+		} catch (IOException error) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
 		}
-    }
-    
-    private void getReviewStockChangesWindow() {
-    	FXMLLoader loader = new FXMLLoader();
+	}
+
+	private void getReviewStockChangesWindow() {
+		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource(Main.REVIEW_STOCK_CHANGES_PAGE));
 		try {
 			loader.load();
@@ -108,32 +115,34 @@ public class LandingPageWindow {
 			setReviewStockChangesStage.initModality(Modality.APPLICATION_MODAL);
 
 			ReviewStockChangesWindow reviewStockChangesCodebehind = (ReviewStockChangesWindow) loader.getController();
-			reviewStockChangesCodebehind.bindToReviewStockChangesVM();
+			reviewStockChangesCodebehind.setSession(this.landingVM.getCurrentSession().getValue());
 
 			setReviewStockChangesStage.showAndWait();
-		} catch (IOException error) { 
+		} catch (IOException error) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
 		}
-    }
-    
-    /**
-     * Provides bindings for functionality
-     * 
-     * @param vm the vm
-     */
-    public void bindToVM(LoginWindowViewModel vm) {
-    	this.vm = vm;
-    	this.reViewStockChangesButton.disableProperty().bind(vm.isQuartermasterProperty().not());
-    	this.reViewStockChangesButton.setOnAction((event) -> {
-    		this.reviewStockChanges(event);
-    	});
-    	this.addStockButton.setOnAction((event) -> {
-    		this.addStock(event);
-    	});
+	}
+
+	@Override
+	public void setSession(CurrentSession context) {
+		this.landingVM.setCurrentSession(context);
+		this.bindToContext();
+	}
+
+	private void bindToContext() {
+		this.reViewStockChangesButton.disableProperty()
+				.bind(this.landingVM.roleProperty().isNotEqualTo(LoginWindowViewModel.QUARTERMASTER_ROLE));
+		this.reViewStockChangesButton.setOnAction((event) -> {
+			this.reviewStockChanges(event);
+		});
+		this.addStockButton.setOnAction((event) -> {
+			this.addStock(event);
+		});
     	this.viewInventoryButton.setOnAction((event) -> {
     		this.viewInventory(event);
     	});
-    }
+	}
+
 }

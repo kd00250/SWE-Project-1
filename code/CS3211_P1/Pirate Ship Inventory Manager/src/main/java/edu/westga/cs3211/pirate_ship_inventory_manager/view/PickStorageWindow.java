@@ -1,7 +1,9 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PickStorageWindowViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +21,7 @@ import javafx.stage.Stage;
  * @author CS 1302
  * @version Fall 2024
  */
-public class PickStorageWindow {
+public class PickStorageWindow implements SessionSetter {
 	@FXML
     private Button addToStorageButton;
 
@@ -32,20 +34,26 @@ public class PickStorageWindow {
     @FXML
     private AnchorPane pane;
     
-    private LoginWindowViewModel vm;
+    private PickStorageWindowViewModel pickStorageViewmodel;
     private AddStockWindowViewModel addStockVM;
 
     @FXML
     void addToStorage(ActionEvent event) {
+    	User currentUser = this.pickStorageViewmodel.getCurrentSession().getValue().getUser();
     	if (this.normalStorageComboBox.isDisabled()) {
-    		this.addStockVM.addStockToCompartment(this.vm.getUser(), this.specialStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.addStockVM.addStockToCompartment(currentUser, this.specialStorageComboBox.getValue(), this.addStockVM.createStock());
     		this.displaySuccessPopup(this.addStockVM.getSummaryMessage());
     		this.closeWindow();
     	} else {
-    		this.addStockVM.addStockToCompartment(this.vm.getUser(), this.normalStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.addStockVM.addStockToCompartment(currentUser, this.normalStorageComboBox.getValue(), this.addStockVM.createStock());
     		this.displaySuccessPopup(this.addStockVM.getSummaryMessage());
     		this.closeWindow();
     	}
+    }
+    
+    @FXML
+    void initialize() {
+    	this.pickStorageViewmodel = new PickStorageWindowViewModel();
     }
     
     private void closeWindow() {
@@ -72,19 +80,21 @@ public class PickStorageWindow {
     	ObservableList<String> observableNormalCompartments = FXCollections.observableArrayList(addStockVM.getNormalStorage(addStockVM.createStock()));
     	ObservableList<String> observableSpecialCompartments = FXCollections.observableArrayList(addStockVM.getSpecialStorageForStock(addStockVM.createStock()));
     	this.normalStorageComboBox.setItems(observableNormalCompartments); 
-    	this.specialStorageComboBox.setItems(observableSpecialCompartments);
+    	this.specialStorageComboBox.setItems(observableSpecialCompartments); 
     }
     
     /**
-     * provides the bindings for the view models
-     * 
-     * @param vm the login vm
-     * @param addStockVM the addStockVM
+     * Binds components to the storage viewmodel.
+     * @param addStockVM the add stock viewmodel
      */
-    public void bindToPickStorageVM(LoginWindowViewModel vm, AddStockWindowViewModel addStockVM) {
-    	this.vm = vm;
+    public void bindToPickStorageVM(AddStockWindowViewModel addStockVM) {
+    	this.setSession(addStockVM.getCurrentSession().getValue());
     	this.addStockVM = addStockVM;
     	this.setUpControls(addStockVM);
-   
     }
+
+	@Override
+	public void setSession(CurrentSession context) {
+		this.pickStorageViewmodel.setCurrentSession(context);
+	}
 }

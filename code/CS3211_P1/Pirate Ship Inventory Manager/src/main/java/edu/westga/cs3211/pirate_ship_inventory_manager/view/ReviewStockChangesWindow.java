@@ -3,6 +3,8 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -23,7 +25,52 @@ import javafx.scene.layout.AnchorPane;
  * @author CS 1302
  * @version Fall 2024
  */
-public class ReviewStockChangesWindow {
+public class ReviewStockChangesWindow implements SessionSetter {
+	@FXML
+	private ListView<String> changeResultsListView;
+
+	@FXML
+	private ComboBox<String> chooseSortComboBox;
+
+	@FXML
+	private ListView<String> crewmateListView;
+
+	@FXML
+	private DatePicker endDatePicker;
+
+	@FXML
+	private Button filterButton;
+
+	@FXML
+	private Button displayAllLogsButton;
+
+	@FXML
+	private CheckBox isFlammableCheckBox;
+
+	@FXML
+	private CheckBox isLiquidCheckBox;
+
+	@FXML
+	private CheckBox isPerishableCheckBox;
+
+	@FXML
+	private AnchorPane pane;
+
+	@FXML
+	private DatePicker startDatePicker;
+
+	private ReviewStockChangesViewModel reviewVM;
+
+	@FXML
+	void initialize() {
+		this.reviewVM = new ReviewStockChangesViewModel();
+	}
+
+	@FXML
+	void displayAllLogs(ActionEvent event) {
+		this.changeResultsListView.getItems().setAll(FXCollections.observableArrayList(this.reviewVM.getLogChanges()));
+	}
+
 	@FXML
     private ListView<String> changeResultsListView;
 
@@ -225,7 +272,25 @@ public class ReviewStockChangesWindow {
     private void displayErrorPopup(String message) { 
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setContentText(message);
-		alert.showAndWait(); 
+		alert.showAndWait();
+	}
+  
+	private void initializeView() {
+		this.setUpControls();
+		this.setUpBinds();
+		this.displayAllLogsButton.setOnAction((event) -> {
+			this.displayAllLogs(event);
+		});
+		this.filterButton.setOnAction((event) -> {
+			this.filterResultsListView(event);
+		});
+
+	}
+
+	@Override
+	public void setSession(CurrentSession context) {
+		this.reviewVM.setCurrentSession(context);
+		this.initializeView();
 	}
     
     private void setUpControls() {
