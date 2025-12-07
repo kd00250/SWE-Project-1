@@ -27,51 +27,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public class ReviewStockChangesWindow implements SessionSetter {
 	@FXML
-	private ListView<String> changeResultsListView;
-
-	@FXML
-	private ComboBox<String> chooseSortComboBox;
-
-	@FXML
-	private ListView<String> crewmateListView;
-
-	@FXML
-	private DatePicker endDatePicker;
-
-	@FXML
-	private Button filterButton;
-
-	@FXML
-	private Button displayAllLogsButton;
-
-	@FXML
-	private CheckBox isFlammableCheckBox;
-
-	@FXML
-	private CheckBox isLiquidCheckBox;
-
-	@FXML
-	private CheckBox isPerishableCheckBox;
-
-	@FXML
-	private AnchorPane pane;
-
-	@FXML
-	private DatePicker startDatePicker;
-
-	private ReviewStockChangesViewModel reviewVM;
-
-	@FXML
-	void initialize() {
-		this.reviewVM = new ReviewStockChangesViewModel();
-	}
-
-	@FXML
-	void displayAllLogs(ActionEvent event) {
-		this.changeResultsListView.getItems().setAll(FXCollections.observableArrayList(this.reviewVM.getLogChanges()));
-	}
-
-	@FXML
     private ListView<String> changeResultsListView;
 
     @FXML
@@ -138,6 +93,11 @@ public class ReviewStockChangesWindow implements SessionSetter {
     	this.startDatePicker.setValue(null);
     	this.endDatePicker.setValue(null);
     }
+    
+    @FXML
+    void initalize() {
+    	this.reviewVM = new ReviewStockChangesViewModel();
+    }
 
     @FXML
     void filterResultsListView(ActionEvent event) {
@@ -201,7 +161,7 @@ public class ReviewStockChangesWindow implements SessionSetter {
     		if (startDate != null) {
     			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     			String startDateString = startDate.format(formatter);
-    			String endDateString = endDate.format(formatter);
+    			String endDateString = endDate.format(formatter); 
 		        this.changeResultsListView.getItems().setAll(
 		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChangesForEndTime(this.reviewVM.getStartAndEndDateFilterForTime(startDateString, endDateString), this.reviewVM.getHoursEndDate().get(), this.reviewVM.getMinutesEndDate().get(), this.reviewVM.getSecondsEndDate().get())));
     		}
@@ -272,29 +232,10 @@ public class ReviewStockChangesWindow implements SessionSetter {
     private void displayErrorPopup(String message) { 
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setContentText(message);
-		alert.showAndWait();
-	}
-  
-	private void initializeView() {
-		this.setUpControls();
-		this.setUpBinds();
-		this.displayAllLogsButton.setOnAction((event) -> {
-			this.displayAllLogs(event);
-		});
-		this.filterButton.setOnAction((event) -> {
-			this.filterResultsListView(event);
-		});
-
-	}
-
-	@Override
-	public void setSession(CurrentSession context) {
-		this.reviewVM.setCurrentSession(context);
-		this.initializeView();
+		alert.showAndWait(); 
 	}
     
     private void setUpControls() {
-    	this.reviewVM = new ReviewStockChangesViewModel();
     	String[] filters = {"Special Quantity", "Crewmate", "Date"};
     	this.chooseSortComboBox.getItems().addAll(filters);
     	this.changeResultsListView.getItems().addAll(this.reviewVM.getLogChanges());
@@ -488,7 +429,7 @@ public class ReviewStockChangesWindow implements SessionSetter {
    	   * Provides bindings for the functionality
    	   * 
    	   */
-       public void bindToReviewStockChangesVM() {
+       private void initalizeControls() {
        	this.setUpControls();
        	this.setUpBinds();
        	this.displayAllLogsButton.setOnAction((event) -> {
@@ -498,4 +439,10 @@ public class ReviewStockChangesWindow implements SessionSetter {
        		this.filterResultsListView(event);
        	});
        }
+
+	   @Override
+	   public void setSession(CurrentSession context) {
+		   this.reviewVM.setCurrentSession(context);
+		   this.initalizeControls();
+	   }
 }
