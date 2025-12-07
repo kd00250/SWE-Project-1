@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChangesInventory;
@@ -12,6 +13,11 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChan
 
 class testGetCrewmatesFilter {
 
+	@BeforeEach
+    void setUp() {
+        LogManager.resetInstance();
+    }
+	
 	@Test
 	void testGetCrewmateFilterPirateBob() {
 		ReviewStockChangesViewModel vm = new ReviewStockChangesViewModel();

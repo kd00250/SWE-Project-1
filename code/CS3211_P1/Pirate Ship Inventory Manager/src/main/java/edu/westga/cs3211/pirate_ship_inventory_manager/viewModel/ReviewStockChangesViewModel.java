@@ -91,7 +91,7 @@ public class ReviewStockChangesViewModel {
 	 * @return the seconds start date property
 	 */
 	public StringProperty getSecondsStartDate() {
-		return this.minutesStartDate;
+		return this.secondsStartDate;
 	}
 	
 	/**
