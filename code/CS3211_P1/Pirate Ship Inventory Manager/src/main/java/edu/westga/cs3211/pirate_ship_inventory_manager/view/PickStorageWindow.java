@@ -80,16 +80,15 @@ public class PickStorageWindow implements SessionSetter {
     	ObservableList<String> observableNormalCompartments = FXCollections.observableArrayList(addStockVM.getNormalStorage(addStockVM.createStock()));
     	ObservableList<String> observableSpecialCompartments = FXCollections.observableArrayList(addStockVM.getSpecialStorageForStock(addStockVM.createStock()));
     	this.normalStorageComboBox.setItems(observableNormalCompartments); 
-    	this.specialStorageComboBox.setItems(observableSpecialCompartments);
+    	this.specialStorageComboBox.setItems(observableSpecialCompartments); 
     }
     
     /**
      * Binds components to the storage viewmodel.
-     * @param context the context
      * @param addStockVM the add stock viewmodel
      */
-    public void bindToPickStorageVM(CurrentSession context, AddStockWindowViewModel addStockVM) {
-    	this.setSession(context);
+    public void bindToPickStorageVM(AddStockWindowViewModel addStockVM) {
+    	this.setSession(addStockVM.getCurrentSession().getValue());
     	this.addStockVM = addStockVM;
     	this.setUpControls(addStockVM);
     }
