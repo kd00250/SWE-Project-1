@@ -136,6 +136,18 @@ public class LogChange {
 	}
 	
 	/**
+	 * sets the time (for testing purposes only)
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param time the time that the log is added
+	 */
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
+	/**
 	 * sets the date (for testing purposes only)
 	 * 
 	 * @precondition none
