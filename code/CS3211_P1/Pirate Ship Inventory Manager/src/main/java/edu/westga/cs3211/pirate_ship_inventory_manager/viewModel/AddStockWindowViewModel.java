@@ -272,5 +272,6 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	    }
 	    return false;
 	}
+
 	
 }

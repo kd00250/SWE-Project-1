@@ -1,8 +1,9 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PickStorageWindowViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,20 +34,26 @@ public class PickStorageWindow implements SessionSetter {
     @FXML
     private AnchorPane pane;
     
-    private LoginWindowViewModel vm;
+    private PickStorageWindowViewModel pickStorageViewmodel;
     private AddStockWindowViewModel addStockVM;
 
     @FXML
     void addToStorage(ActionEvent event) {
+    	User currentUser = this.pickStorageViewmodel.getCurrentSession().getValue().getUser();
     	if (this.normalStorageComboBox.isDisabled()) {
-    		this.addStockVM.addStockToCompartment(this.vm.getUser(), this.specialStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.addStockVM.addStockToCompartment(currentUser, this.specialStorageComboBox.getValue(), this.addStockVM.createStock());
     		this.displaySuccessPopup(this.addStockVM.getSummaryMessage());
     		this.closeWindow();
     	} else {
-    		this.addStockVM.addStockToCompartment(this.vm.getUser(), this.normalStorageComboBox.getValue(), this.addStockVM.createStock());
+    		this.addStockVM.addStockToCompartment(currentUser, this.normalStorageComboBox.getValue(), this.addStockVM.createStock());
     		this.displaySuccessPopup(this.addStockVM.getSummaryMessage());
     		this.closeWindow();
     	}
+    }
+    
+    @FXML
+    public void initialize() {
+    	this.pickStorageViewmodel = new PickStorageWindowViewModel();
     }
     
     private void closeWindow() {
@@ -82,16 +89,14 @@ public class PickStorageWindow implements SessionSetter {
      * @param vm the login vm
      * @param addStockVM the addStockVM
      */
-    public void bindToPickStorageVM(LoginWindowViewModel vm, AddStockWindowViewModel addStockVM) {
-    	this.vm = vm;
+    public void bindToPickStorageVM(CurrentSession context, AddStockWindowViewModel addStockVM) {
+    	this.setSession(context);
     	this.addStockVM = addStockVM;
     	this.setUpControls(addStockVM);
-   
     }
 
 	@Override
 	public void setSession(CurrentSession context) {
-		// TODO Auto-generated method stub
-		
+		this.pickStorageViewmodel.setCurrentSession(context);
 	}
 }

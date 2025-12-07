@@ -91,7 +91,7 @@ public class LandingPageWindow implements SessionSetter {
 			setReviewStockChangesStage.initModality(Modality.APPLICATION_MODAL);
 
 			ReviewStockChangesWindow reviewStockChangesCodebehind = (ReviewStockChangesWindow) loader.getController();
-			reviewStockChangesCodebehind.bindToReviewStockChangesVM();
+			reviewStockChangesCodebehind.setSession(this.landingVM.getCurrentSession().getValue());
 
 			setReviewStockChangesStage.showAndWait();
 		} catch (IOException error) { 
@@ -103,7 +103,6 @@ public class LandingPageWindow implements SessionSetter {
     
 	@Override
 	public void setSession(CurrentSession context) {
-		System.out.println(context);
 		this.landingVM.setCurrentSession(context);
 		this.bindToContext();
 	}

@@ -18,4 +18,5 @@ public abstract class SessionViewModel {
 	public void setCurrentSession(CurrentSession session) {
 		this.session.set(session);
 	}
+	
 }
