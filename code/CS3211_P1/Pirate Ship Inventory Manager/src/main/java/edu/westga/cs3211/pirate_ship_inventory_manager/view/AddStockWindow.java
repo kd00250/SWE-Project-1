@@ -97,7 +97,7 @@ public class AddStockWindow implements SessionSetter {
 			setPickStorageStage.initModality(Modality.APPLICATION_MODAL);
 
 			PickStorageWindow pickStorageCodebehind = (PickStorageWindow) loader.getController();
-			pickStorageCodebehind.bindToPickStorageVM(this.addStockVM.getCurrentSession().getValue(), this.addStockVM);
+			pickStorageCodebehind.bindToPickStorageVM(this.addStockVM);
 
 			setPickStorageStage.showAndWait();
 		} catch (IOException error) {
@@ -108,7 +108,6 @@ public class AddStockWindow implements SessionSetter {
     }
     
     private void setUpBindings() {
-    	this.addStockVM = new AddStockWindowViewModel();
     	String [] conditions = {"perfect", "usable", "unsuable"};
     	this.conditionComboBox.getItems().addAll(conditions); 
     	this.conditionComboBox.setValue(conditions[0]);
@@ -169,18 +168,4 @@ public class AddStockWindow implements SessionSetter {
 		this.addStockVM.setCurrentSession(context);
 		this.initializeView();
 	}
-    
-//    /**
-//	 * Provides bindings for the functionality
-//	 * 
-//	 * @param vm the vm
-//	 */
-//    public void bindToAddStockVM(LoginWindowViewModel vm) {
-//    	this.vm = vm;
-//    	this.setUpBindings();
-//    	this.setUpControls();
-//    	this.addStockButton.setOnAction((event) -> {
-//    		this.addStock(event);
-//    	});
-//    }
 }
