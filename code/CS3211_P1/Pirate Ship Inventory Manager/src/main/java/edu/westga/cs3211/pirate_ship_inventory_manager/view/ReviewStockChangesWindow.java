@@ -95,7 +95,7 @@ public class ReviewStockChangesWindow implements SessionSetter {
     }
     
     @FXML
-    void initalize() {
+    void initialize() {
     	this.reviewVM = new ReviewStockChangesViewModel();
     }
 
@@ -134,6 +134,7 @@ public class ReviewStockChangesWindow implements SessionSetter {
     	        }
     	}
     	this.timeFiltersCall();
+    	this.moreTimeFilters();
     }
     
     private void timeFiltersCall() {
@@ -177,6 +178,9 @@ public class ReviewStockChangesWindow implements SessionSetter {
 		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartAndEndDateFilterForTime(startDateString, endDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
     		}
     	}
+    }
+    
+    private void moreTimeFilters() {
     	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDatePicker.getValue() == null && (!this.hoursStartTextBox.getText().isEmpty() || !this.minutesStartTextBox.getText().isEmpty() || !this.secondsStartTextBox.getText().isEmpty()) && (!this.hoursEndTextBox.getText().isEmpty() || !this.minutesEndTextBox.getText().isEmpty() || !this.secondsEndTextBox.getText().isEmpty())) {
     		LocalDate startDate = this.startDatePicker.getValue();
     		if (startDate != null) {
