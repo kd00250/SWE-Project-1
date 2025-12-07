@@ -16,6 +16,9 @@ public abstract class SessionViewModel {
 	}
 	
 	public void setCurrentSession(CurrentSession session) {
+		if (session == null) {
+			throw new IllegalArgumentException("Session cannot be null");
+		}
 		this.session.set(session);
 	}
 	

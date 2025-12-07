@@ -113,6 +113,11 @@ public class ReviewStockChangesWindow implements SessionSetter {
 			}
 		}
 	}
+	
+	@FXML
+	public void initialize() {
+		this.reviewVM = new ReviewStockChangesViewModel();
+	}
 
 	private void displayErrorPopup(String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -121,7 +126,7 @@ public class ReviewStockChangesWindow implements SessionSetter {
 	}
 
 	private void setUpControls() {
-		this.reviewVM = new ReviewStockChangesViewModel();
+
 		String[] filters = { "Special Quantity", "Crewmate", "Date" };
 		this.chooseSortComboBox.getItems().addAll(filters);
 		this.changeResultsListView.getItems().addAll(this.reviewVM.getLogChanges());

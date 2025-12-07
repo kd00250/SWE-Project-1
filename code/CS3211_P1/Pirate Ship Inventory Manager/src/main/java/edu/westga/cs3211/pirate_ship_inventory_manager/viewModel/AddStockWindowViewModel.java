@@ -25,7 +25,7 @@ import javafx.beans.property.StringProperty;
  * @version Fall 2025
  */
 public class AddStockWindowViewModel extends SessionViewModel {
-	private Inventory inventory; 
+	private Inventory inventory;
 	private LogChangesInventory logInventory;
 	private StringProperty name;
 	private StringProperty quantity;
@@ -34,7 +34,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	private BooleanProperty isFlammable;
 	private BooleanProperty isPerishable;
 	private BooleanProperty isLiquid;
-	
+
 	/**
 	 * Creates a new instance of AddStockViewModel
 	 * 
@@ -50,10 +50,10 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		this.condition = new SimpleStringProperty();
 		this.isFlammable = new SimpleBooleanProperty();
 		this.isPerishable = new SimpleBooleanProperty();
-		this.isLiquid = new SimpleBooleanProperty(); 
+		this.isLiquid = new SimpleBooleanProperty();
 		this.expirationDate = new SimpleStringProperty();
 	}
-	
+
 	/**
 	 * gets the isflammable property
 	 * 
@@ -63,9 +63,9 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	 * @return the isflammable property
 	 */
 	public BooleanProperty getIsFlammableProperty() {
-        return this.isFlammable;
-    }
-	
+		return this.isFlammable;
+	}
+
 	/**
 	 * gets the isPerishable property
 	 * 
@@ -75,9 +75,9 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	 * @return the isPerishable property
 	 */
 	public BooleanProperty getIsPerishableProperty() {
-        return this.isPerishable;
-    }
-	
+		return this.isPerishable;
+	}
+
 	/**
 	 * gets the isLiquid property
 	 * 
@@ -87,11 +87,11 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	 * @return the isLiquid property
 	 */
 	public BooleanProperty getIsLiquidProperty() {
-        return this.isLiquid;
-    }
-	
+		return this.isLiquid;
+	}
+
 	/**
-	 * gets the name 
+	 * gets the name
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -101,9 +101,9 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public StringProperty getName() {
 		return this.name;
 	}
-	
+
 	/**
-	 * gets the condition 
+	 * gets the condition
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -113,9 +113,9 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public StringProperty getCondition() {
 		return this.condition;
 	}
-	
+
 	/**
-	 * gets the quantity 
+	 * gets the quantity
 	 * 
 	 * @precondition none
 	 * @postcondition none
@@ -125,7 +125,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public StringProperty getQuantity() {
 		return this.quantity;
 	}
-	
+
 	/**
 	 * gets the expiration date
 	 * 
@@ -137,7 +137,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public StringProperty getExpirationDate() {
 		return this.expirationDate;
 	}
-	
+
 	/**
 	 * Creates stock from the user input
 	 * 
@@ -145,7 +145,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	 * @postcondition none
 	 * 
 	 * @return the stock made from the user input
-	 */ 
+	 */
 	public Stock createStock() {
 		String name = this.getName().get();
 		String condition = this.getCondition().get();
@@ -161,20 +161,20 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		if (this.getIsPerishableProperty().get()) {
 			specialQualities.add(SpecialQuality.PERISHABLE);
 		}
-		
+
 		Stock stock = new Stock(quantity, specialQualities, name, condition, expirationDate);
 		return stock;
 	}
-	 
+
 	/**
 	 * Adds stock to specified compartment
 	 * 
 	 * @precondition none
 	 * @postcondition none
 	 * 
-	 * @param user the user to be added
-	 * @param compartmentName the name of the compartment 
-	 * @param stock the stock to be added
+	 * @param user            the user to be added
+	 * @param compartmentName the name of the compartment
+	 * @param stock           the stock to be added
 	 * 
 	 * @return true/false if the stock can be added or not
 	 */
@@ -190,7 +190,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Gets the summary message
 	 * 
@@ -203,7 +203,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		LogChange change = this.logInventory.getLogChanges().getLast();
 		return change.toString();
 	}
-	
+
 	/**
 	 * Gets the normal storage names
 	 * 
@@ -216,7 +216,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public ArrayList<String> getNormalStorage(Stock stock) {
 		return this.inventory.getNormalStorage(this.inventory.getCompartments(), stock);
 	}
-	
+
 	/**
 	 * Gets the special storage names
 	 * 
@@ -229,7 +229,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public ArrayList<String> getSpecialStorageForStock(Stock stock) {
 		return this.inventory.getSpecialStorage(this.inventory.getCompartments(), stock);
 	}
-	
+
 	/**
 	 * Checks if the normal storage has any free space for the stock
 	 * 
@@ -245,11 +245,11 @@ public class AddStockWindowViewModel extends SessionViewModel {
 				if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
 					return true;
 				}
-			} 
+			}
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks if the special storage has any free space for the stock
 	 * 
@@ -261,17 +261,16 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	 */
 	public boolean specialStorageHasFreeSpace(Stock stock) {
 		for (Compartment currentCompartment : this.inventory.getCompartments()) {
-	        if ((currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable()) 
-	        		|| (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid()) 
-	        		|| (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable())) {
-	            
-	            if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
-	                return true;
-	            }
-	        }
-	    }
-	    return false;
+			if ((currentCompartment.getName().equals("Flammable Storage") && stock.isFlammable())
+					|| (currentCompartment.getName().equals("Liquid Storage") && stock.isLiquid())
+					|| (currentCompartment.getName().equals("Perishable Storage") && stock.isPerishable())) {
+
+				if (currentCompartment.getRemainingCapacity() >= stock.getQuantity()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
-	
 }
