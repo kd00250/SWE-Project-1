@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="343.0" minWidth="255.0" prefHeight="376.0" prefWidth="356.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.pirate_ship_inventory_manager.view.LandingPageWindow">
+<AnchorPane minHeight="343.0" minWidth="255.0" prefHeight="410.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.pirate_ship_inventory_manager.view.LandingPageWindow">
    <children>
       <Button fx:id="addStockButton" layoutX="104.0" layoutY="88.0" mnemonicParsing="false" onAction="#addStock" prefHeight="62.0" prefWidth="148.0" text="Add Stock">
          <font>
@@ -12,6 +12,11 @@
          </font>
       </Button>
       <Button fx:id="reViewStockChangesButton" layoutX="44.0" layoutY="208.0" mnemonicParsing="false" onAction="#reviewStockChanges" text="Review Stock Changes">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="viewInventoryButton" layoutX="78.0" layoutY="317.0" mnemonicParsing="false" onAction="#viewInventory" prefHeight="51.0" prefWidth="202.0" text="View Inventory">
          <font>
             <Font size="24.0" />
          </font>
