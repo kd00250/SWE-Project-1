@@ -115,7 +115,7 @@ public class LandingPageWindow implements SessionSetter {
 			setReviewStockChangesStage.initModality(Modality.APPLICATION_MODAL);
 
 			ReviewStockChangesWindow reviewStockChangesCodebehind = (ReviewStockChangesWindow) loader.getController();
-			reviewStockChangesCodebehind.setSession(this.landingVM.getCurrentSession().getValue());
+			reviewStockChangesCodebehind.setSession(this.landingVM.getCurrentSession().getValue());   
 
 			setReviewStockChangesStage.showAndWait();
 		} catch (IOException error) {

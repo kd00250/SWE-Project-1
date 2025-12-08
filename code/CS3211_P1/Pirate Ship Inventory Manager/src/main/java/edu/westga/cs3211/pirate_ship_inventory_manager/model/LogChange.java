@@ -13,6 +13,8 @@ public class LogChange {
 	private User user;
 	private Stock stock;
 	private Compartment compartment;
+	//private String time;
+	private String date;
 	private String time;
 	private ChangeAction action;
 	
@@ -55,7 +57,9 @@ public class LogChange {
 		this.user = user;
 		this.stock = stock;
 		this.compartment = compartment;
-		this.time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		//this.time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		this.time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		this.action = action;
 	}
 	
@@ -115,8 +119,44 @@ public class LogChange {
 	 * 
 	 * @return the time
 	 */
+	public String getDate() {
+		return this.date;
+	}
+	
+	/**
+	 * gets the time 
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the time
+	 */
 	public String getTime() {
 		return this.time;
+	}
+	
+	/**
+	 * sets the time (for testing purposes only)
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param time the time that the log is added
+	 */
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
+	/**
+	 * sets the date (for testing purposes only)
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param date the date that the log
+	 */
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
 	/**
@@ -140,7 +180,7 @@ public class LogChange {
 				+ "Liquid: " + this.getStock().isLiquid() + "\n" + "Perishable: " + this.getStock().isPerishable() + "\n" 
 				+ "Expiration Date: " + this.getStock().getExpirationDate() + "\n" + "Storage Compartment: " + this.getCompartment().getName() + "\n"
 				+ "Remaining Capacity: " + this.getCompartment().getRemainingCapacity() + "\n" 
-				+ "Date Added: " + this.getTime();
+				+ "Date Added: " + this.getDate();
 	}
 	
 }

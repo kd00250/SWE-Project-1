@@ -18,7 +18,7 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 
-class testGetStartAndEndDateFilter {
+class testGetStartAndEndDateFilterForTime {
 
 	@BeforeEach
     void setUp() {
@@ -39,8 +39,8 @@ class testGetStartAndEndDateFilter {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).get(0), change.getDisplayString());
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 1);
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).get(0).getDisplayString(), change.getDisplayString());
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).size(), 1);
 	}
 	
 	@Test
@@ -58,8 +58,8 @@ class testGetStartAndEndDateFilter {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).get(0), change.getDisplayString());
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 1);
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).get(0).getDisplayString(), change.getDisplayString());
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).size(), 1);
 	}
 	
 	@Test
@@ -77,8 +77,8 @@ class testGetStartAndEndDateFilter {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).get(0), change.getDisplayString());
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 1);
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).get(0).getDisplayString(), change.getDisplayString());
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).size(), 1);
 	}
 	
 	@Test
@@ -94,8 +94,8 @@ class testGetStartAndEndDateFilter {
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
         inventory.addLogChange(change);
         
-        assertTrue(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 0);
+        assertTrue(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).size(), 0);
 	}
 	
 	@Test
@@ -112,8 +112,8 @@ class testGetStartAndEndDateFilter {
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
         inventory.addLogChange(change);
         
-        assertTrue(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 0);
+        assertTrue(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).size(), 0);
 	}
 	
 	@Test
@@ -131,8 +131,8 @@ class testGetStartAndEndDateFilter {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertTrue(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());
-        assertEquals(vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get()).size(), 0);
+        assertTrue(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).isEmpty());
+        assertEquals(vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get()).size(), 0);
 	}
 	
 	@Test
@@ -149,7 +149,7 @@ class testGetStartAndEndDateFilter {
         inventory.addLogChange(change);
         
         assertThrows(IllegalArgumentException.class, () -> {
-			vm.getStartAndEndDateFilter(vm.getStartDate().get(), vm.getEndDate().get());
+			vm.getStartAndEndDateFilterForTime(vm.getStartDate().get(), vm.getEndDate().get());
 		});
 	}
 
