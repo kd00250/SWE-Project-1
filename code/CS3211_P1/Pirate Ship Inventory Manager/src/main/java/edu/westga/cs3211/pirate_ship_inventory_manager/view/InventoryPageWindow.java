@@ -1,7 +1,5 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
-import java.util.ArrayList;
-
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
@@ -48,6 +46,7 @@ public class InventoryPageWindow implements SessionSetter {
 	@FXML
 	void initialize() {
 		this.inventoryVM = new InventoryPageWindowViewModel();
+		this.bindControls();
 	}
 	
 	@FXML
@@ -71,7 +70,7 @@ public class InventoryPageWindow implements SessionSetter {
 	
 	@FXML
 	void checkInventory(ActionEvent event) {
-				// TODO Check Inventory if StockType Exists
+		System.out.println(this.inventoryVM.isStockTypeInInventory());
     }
 	
 	@FXML
@@ -89,6 +88,10 @@ public class InventoryPageWindow implements SessionSetter {
 	public void setSession(CurrentSession context) {
 		this.inventoryVM.setCurrentSession(context);
 		this.initializeControls();
+	}
+	
+	private void bindControls() {
+		this.inventoryVM.getStockTypeProperty().bind(this.stockTypeComboBox.valueProperty());
 	}
 	
 	private void initializeControls() {

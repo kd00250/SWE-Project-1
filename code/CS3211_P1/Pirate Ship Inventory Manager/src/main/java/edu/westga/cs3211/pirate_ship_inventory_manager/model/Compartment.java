@@ -198,4 +198,22 @@ public class Compartment {
 			}
 			return this.storage.stream().filter(stock -> stock.getType() == type).collect(Collectors.toList());
 		}
+		
+		/**
+		 * Checks if container contains StockType
+		 * 
+		 * @precondition none
+		 * @postcondition none
+		 * 
+		 * @param type the StockType
+		 * @return True if contains Stock of StockType, false otherwise.
+		 */
+		public boolean doesContainStockOfType(StockType type) {
+			for (var currStock : this.storage) {
+				if (currStock.getType().equals(type)) {
+					return true;
+				}
+			}
+			return false;
+		}
 }
