@@ -14,7 +14,9 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -34,6 +36,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	private BooleanProperty isFlammable;
 	private BooleanProperty isPerishable;
 	private BooleanProperty isLiquid;
+	private IntegerProperty stockQuantity;
 
 	/**
 	 * Creates a new instance of AddStockViewModel
@@ -52,6 +55,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		this.isPerishable = new SimpleBooleanProperty();
 		this.isLiquid = new SimpleBooleanProperty();
 		this.expirationDate = new SimpleStringProperty();
+		this.stockQuantity = new SimpleIntegerProperty();
 	}
 
 	/**
@@ -136,6 +140,30 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	 */
 	public StringProperty getExpirationDate() {
 		return this.expirationDate;
+	}
+	
+	/**
+	 * gets the stock quantity
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the stock quantity
+	 */
+	public IntegerProperty getStockQuantity() {
+		return this.stockQuantity;
+	}
+
+	/**
+	 * Verifies the stock quantity to be within valid range.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return true if Stock quantity is > 0 && quantity <= Integer.MAX_NUMBER, false otherwise.
+	 */
+	public boolean isValidStockQuantity() {
+		return (this.stockQuantity.get() > 0);
 	}
 
 	/**
