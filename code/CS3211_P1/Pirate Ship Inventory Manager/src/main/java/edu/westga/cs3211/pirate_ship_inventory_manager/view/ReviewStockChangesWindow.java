@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PageResources;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

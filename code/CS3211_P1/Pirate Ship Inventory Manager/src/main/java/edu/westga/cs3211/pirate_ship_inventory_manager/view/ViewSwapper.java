@@ -7,7 +7,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * The view swapper class.
+ * @author CS3211
+ * @version Fall 2025
+ */
 public final class ViewSwapper {
+	
+	/**
+	 * Loads a page from a given fxmlPath from the stage given with a set title.
+	 * @param <T> the controller type
+	 * @param fxmlPath the fxml path
+	 * @param stage the stage
+	 * @param title the page title
+	 * @return the controller of the fxml page that was loaded.
+	 * @throws IOException 
+	 */
 	public static <T> T loadPageFromStage(String fxmlPath, Stage stage, String title) throws IOException {
 		if (fxmlPath == null) {
 			throw new IllegalArgumentException("FXML path must be non null");
@@ -20,11 +35,11 @@ public final class ViewSwapper {
 		if (stage == null) {
 			throw new IllegalArgumentException("Stage cannot be null");
 		}
-		
-		if(title == null) {
+
+		if (title == null) {
 			throw new IllegalArgumentException("Title cannot be null");
 		}
-		
+
 		if (title.isEmpty()) {
 			throw new IllegalArgumentException("Title cannot be empty");
 		}

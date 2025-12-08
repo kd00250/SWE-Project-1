@@ -1,5 +1,10 @@
-package edu.westga.cs3211.pirate_ship_inventory_manager.viewModel;
+package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
+/**
+ * Defines the page resources class.
+ * @author CS3211
+ * @version Fall 2025
+ */
 public final class PageResources {
 	public static final String VIEW_INVENTORY_TITLE = "SWE 1 Project 1 - View Inventory Page";
 	public static final String VIEW_INVENTORY_PAGE = "InventoryPageWindow.fxml";

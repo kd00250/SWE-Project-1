@@ -1,9 +1,7 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
-
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LandingPageWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PageResources;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,15 +21,15 @@ public class LandingPageWindow implements SessionSetter {
 
 	@FXML
 	private Button addStockButton;
-	
+
 	@FXML
 	private AnchorPane pane;
 
 	@FXML
 	private Button reViewStockChangesButton;
-    
-    @FXML
-    private Button viewInventoryButton;
+
+	@FXML
+	private Button viewInventoryButton;
 
 	private LandingPageWindowViewModel landingVM;
 
@@ -43,28 +41,28 @@ public class LandingPageWindow implements SessionSetter {
 	@FXML
 	private void reviewStockChanges(ActionEvent event) {
 		this.getReviewStockChangesWindow();
-    }
-    
-    @FXML
-    private void viewInventory(ActionEvent event) {
-    	this.getInventoryPageWindow();
-    }
-    
-    @FXML
-    private void onLogoutClick(ActionEvent event) {
-    	this.getLoginPageWindow();
-    }
-    
-    private void getInventoryPageWindow() {
+	}
+
+	@FXML
+	private void viewInventory(ActionEvent event) {
+		this.getInventoryPageWindow();
+	}
+
+	@FXML
+	private void onLogoutClick(ActionEvent event) {
+		this.getLoginPageWindow();
+	}
+
+	private void getInventoryPageWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			//add swap here like below.
+			// add swap here like below.
 			ViewSwapper.loadPageFromStage(PageResources.VIEW_INVENTORY_PAGE, stage, PageResources.VIEW_INVENTORY_TITLE);
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load inventory page.");
 			alert.showAndWait();
-		    exception.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 
@@ -76,29 +74,31 @@ public class LandingPageWindow implements SessionSetter {
 	private void getAddStockWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			AddStockWindow addStockController = ViewSwapper.loadPageFromStage(PageResources.ADD_STOCK_PAGE, stage, PageResources.ADD_STOCK_PAGE_TITLE);
+			AddStockWindow addStockController = ViewSwapper.loadPageFromStage(PageResources.ADD_STOCK_PAGE, stage,
+					PageResources.ADD_STOCK_PAGE_TITLE);
 			addStockController.setSession(this.landingVM.getCurrentSession().getValue());
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load add stock page.");
 			alert.showAndWait();
-		    exception.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 
 	private void getReviewStockChangesWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			ReviewStockChangesWindow reviewStockController = ViewSwapper.loadPageFromStage(PageResources.REVIEW_STOCK_CHANGES_PAGE, stage, PageResources.REVIEW_STOCK_CHANGES_TITLE);
+			ReviewStockChangesWindow reviewStockController = ViewSwapper.loadPageFromStage(
+					PageResources.REVIEW_STOCK_CHANGES_PAGE, stage, PageResources.REVIEW_STOCK_CHANGES_TITLE);
 			reviewStockController.setSession(this.landingVM.getCurrentSession().getValue());
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load stock changes window");
 			alert.showAndWait();
-		    exception.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
-	
+
 	private void getLoginPageWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
@@ -107,7 +107,7 @@ public class LandingPageWindow implements SessionSetter {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load login page");
 			alert.showAndWait();
-		    exception.printStackTrace();
+			exception.printStackTrace();
 		}
 	}
 
@@ -126,9 +126,9 @@ public class LandingPageWindow implements SessionSetter {
 		this.addStockButton.setOnAction((event) -> {
 			this.addStock(event);
 		});
-    	this.viewInventoryButton.setOnAction((event) -> {
-    		this.viewInventory(event);
-    	});
+		this.viewInventoryButton.setOnAction((event) -> {
+			this.viewInventory(event);
+		});
 	}
 
 }

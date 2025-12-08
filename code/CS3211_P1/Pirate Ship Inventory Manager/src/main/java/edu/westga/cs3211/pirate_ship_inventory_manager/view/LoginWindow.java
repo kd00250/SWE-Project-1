@@ -2,7 +2,6 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PageResources;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

@@ -2,7 +2,7 @@ package edu.westga.cs3211.pirate_ship_inventory_manager;
 
 import java.io.IOException;
 
-import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PageResources;
+import edu.westga.cs3211.pirate_ship_inventory_manager.view.PageResources;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
