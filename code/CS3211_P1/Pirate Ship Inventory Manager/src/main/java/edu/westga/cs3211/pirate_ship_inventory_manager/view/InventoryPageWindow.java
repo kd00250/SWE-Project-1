@@ -3,6 +3,7 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.InventoryPageWindowViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -34,6 +35,8 @@ public class InventoryPageWindow implements SessionSetter {
 	@FXML
 	private Button takeStockButton;
 	
+	private InventoryPageWindowViewModel inventoryVM;
+	
 	@FXML
 	void checkInventory(ActionEvent event) {
 				// TODO Check Inventory if StockType Exists
@@ -52,8 +55,12 @@ public class InventoryPageWindow implements SessionSetter {
 	
 	@Override
 	public void setSession(CurrentSession context) {
-		// TODO Auto-generated method stub
+		this.inventoryVM.setCurrentSession(context);
+		this.initializeControls();
+	}
 	
+	private void initializeControls() {
+		return;
 	}
 
 }
