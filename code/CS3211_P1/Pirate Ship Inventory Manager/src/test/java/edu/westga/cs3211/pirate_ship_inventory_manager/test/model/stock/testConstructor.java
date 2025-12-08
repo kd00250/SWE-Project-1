@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 
 class testConstructor {
 
@@ -202,6 +203,32 @@ class testConstructor {
         assertTrue(stock.isLiquid());
         assertTrue(stock.isPerishable());
         assertEquals("12/12/2025", stock.getExpirationDate());
+    }
+    
+    @Test
+    void testContructorWithNullStockType() {
+        Set<SpecialQuality> qualities = new HashSet<>();
+        qualities.add(SpecialQuality.FLAMMABLE);
+    	assertThrows(IllegalArgumentException.class, () -> {
+    		new Stock(2, qualities, "juice", "usable", "12/12/2025", null);
+    	});
+    }
+    
+    @Test
+    void testConstrutorWithValidStockType() {
+        Set<SpecialQuality> qualities = new HashSet<>();
+        qualities.add(SpecialQuality.FLAMMABLE);
+        qualities.add(SpecialQuality.LIQUID);
+        qualities.add(SpecialQuality.PERISHABLE);
+     
+        Stock stock = new Stock(2, qualities, "juice", "usable", "12/12/2025", StockType.FOOD);
+        
+        assertTrue(stock.getHasSpecialQualities());
+        assertTrue(stock.isFlammable());
+        assertTrue(stock.isLiquid());
+        assertTrue(stock.isPerishable());
+        assertEquals("12/12/2025", stock.getExpirationDate());
+        assertEquals(StockType.FOOD, stock.getType());
     }
 
 }
