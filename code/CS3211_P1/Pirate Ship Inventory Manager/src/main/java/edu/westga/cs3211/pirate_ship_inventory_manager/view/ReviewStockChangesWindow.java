@@ -17,7 +17,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * The codebehind for ReviewStockChangesWindow
@@ -83,6 +85,11 @@ public class ReviewStockChangesWindow implements SessionSetter {
     private ReviewStockChangesViewModel reviewVM;
     
     @FXML
+    private void onHomeClick(ActionEvent event) {
+    	this.getLandingPage();
+    }
+    
+    @FXML
     void displayAllLogs(ActionEvent event) {
     	this.changeResultsListView.getItems().setAll(
     			FXCollections.observableArrayList(this.reviewVM.getLogChanges()));
@@ -135,6 +142,19 @@ public class ReviewStockChangesWindow implements SessionSetter {
     	}
     	this.timeFiltersCall();
     	this.moreTimeFilters();
+    }
+    
+    private void getLandingPage() {
+		try {
+			Stage stage = (Stage) this.pane.getScene().getWindow();
+			LandingPageWindow landingController = ViewSwapper.loadPageFromStage(PageResources.LANDING_PAGE, stage, PageResources.LANDING_PAGE_TITLE);
+			landingController.setSession(this.reviewVM.getCurrentSession().getValue());
+		} catch (Exception exception) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Unable to load landing page.");
+			alert.showAndWait();
+		    exception.printStackTrace();
+		}
     }
     
     private void timeFiltersCall() {
