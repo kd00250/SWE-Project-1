@@ -178,6 +178,18 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public boolean isQuantityValid() {
 		return (this.stockQuantity.get() > 0);
 	}
+	
+	/**
+	 * Checks if the name is blank
+	 *  
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return true if name is blank
+	 */
+	public boolean isNameBlank() {
+		return this.getName().get().isBlank();
+	}
 
 	/**
 	 * Creates stock from the user input

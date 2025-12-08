@@ -177,7 +177,8 @@ public class AddStockWindow implements SessionSetter {
 		this.addStockButton.disableProperty()
 				.bind(this.nameTextBox.textProperty().isEmpty().or(this.quantityTextBox.textProperty().isEmpty())
 						.or(this.expirationDatePicker.disabledProperty().not().or(
-		    					Bindings.createBooleanBinding(() -> !this.addStockVM.isQuantityValid(), this.addStockVM.getStockQuantity()))
+		    					Bindings.createBooleanBinding(() -> !this.addStockVM.isQuantityValid(), this.addStockVM.getStockQuantity())).or(
+		    							Bindings.createBooleanBinding(() -> this.addStockVM.isNameBlank(), this.addStockVM.getName()))
 		    	                .and(this.expirationDatePicker.valueProperty().isNull())));
 	}
 
