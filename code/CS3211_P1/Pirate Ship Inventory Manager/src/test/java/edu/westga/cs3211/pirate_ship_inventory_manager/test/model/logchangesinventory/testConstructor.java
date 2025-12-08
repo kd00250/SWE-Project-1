@@ -39,7 +39,7 @@ class testConstructor {
 		assertEquals(lci.getLogChanges().get(0).getStock().getExpirationDate(), stock1.getExpirationDate());
 		assertFalse(lci.getLogChanges().get(0).getStock().getHasSpecialQualities());
 		assertEquals(lci.getLogChanges().get(0).getCompartment().getName(), inventory.getCompartments().get(0).getName());
-		assertEquals(lci.getLogChanges().get(0).getTime(), expectedDate);
+		assertEquals(lci.getLogChanges().get(0).getDate(), expectedDate);
 		
 		assertEquals(lci.getLogChanges().get(1).getUser().getUsername(), store.getUserList().get(0).getUsername());
 		assertEquals(lci.getLogChanges().get(1).getUser().getPassword(), store.getUserList().get(0).getPassword());
@@ -50,7 +50,7 @@ class testConstructor {
 		assertEquals(lci.getLogChanges().get(1).getStock().getExpirationDate(), stock2.getExpirationDate());
 		assertTrue(lci.getLogChanges().get(1).getStock().getHasSpecialQualities());
 		assertEquals(lci.getLogChanges().get(1).getCompartment().getName(), inventory.getCompartments().get(3).getName());
-		assertEquals(lci.getLogChanges().get(1).getTime(), expectedDate);
+		assertEquals(lci.getLogChanges().get(1).getDate(), expectedDate);
 	}
 
 }

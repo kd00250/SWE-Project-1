@@ -31,6 +31,12 @@ public class ReviewStockChangesViewModel extends SessionViewModel {
 	private BooleanProperty isPerishable;
 	private StringProperty startDate;
 	private StringProperty endDate;
+	private StringProperty hoursStartDate;
+	private StringProperty minutesStartDate;
+	private StringProperty secondsStartDate;
+	private StringProperty hoursEndDate;
+	private StringProperty minutesEndDate;
+	private StringProperty secondsEndDate;
 	
 	/**
 	 * Creates a new instance of reviewStockChangesViewModel
@@ -45,6 +51,84 @@ public class ReviewStockChangesViewModel extends SessionViewModel {
 		this.isPerishable = new SimpleBooleanProperty();
 		this.startDate = new SimpleStringProperty();
 		this.endDate = new SimpleStringProperty();
+		this.hoursStartDate = new SimpleStringProperty();
+		this.minutesStartDate = new SimpleStringProperty();
+		this.secondsStartDate = new SimpleStringProperty();
+		this.hoursEndDate = new SimpleStringProperty();
+		this.minutesEndDate = new SimpleStringProperty();
+		this.secondsEndDate = new SimpleStringProperty();
+	}
+	
+	/**
+	 * gets the hours end date property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the hours end date property
+	 */
+	public StringProperty getHoursStartDate() {
+		return this.hoursStartDate;
+	}
+	
+	/**
+	 * gets the minutes start date property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the minutes start date property
+	 */
+	public StringProperty getMinutesStartDate() {
+		return this.minutesStartDate;
+	}
+	
+	/**
+	 * gets the seconds start date property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the seconds start date property
+	 */
+	public StringProperty getSecondsStartDate() {
+		return this.secondsStartDate;
+	}
+	
+	/**
+	 * gets the hours end date property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the hours end date property
+	 */
+	public StringProperty getHoursEndDate() {
+		return this.hoursEndDate;
+	}
+	
+	/**
+	 * gets the minutes end date property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the minutes end date property
+	 */
+	public StringProperty getMinutesEndDate() {
+		return this.minutesEndDate;
+	}
+	
+	/**
+	 * gets the seconds end date property
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the seconds end date property
+	 */
+	public StringProperty getSecondsEndDate() {
+		return this.secondsEndDate;
 	}
 	
 	/**
@@ -192,14 +276,9 @@ public class ReviewStockChangesViewModel extends SessionViewModel {
 	        Date parsedStartDate = dateFormat.parse(startDate);
 	        
 	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
-	            Stock stock = currentChange.getStock();
-	            
-	            if (stock.getExpirationDate() != null) {
-	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
-	                
-	                if (expirationDate.after(parsedStartDate)) {
-	                    result.add(currentChange.getDisplayString());
-	                }
+	        	Date date = dateFormat.parse(currentChange.getDate());
+	            if (date.after(parsedStartDate) || date.equals(parsedStartDate)) {
+	            	result.add(currentChange.getDisplayString());
 	            }
 	        }
 	    } catch (ParseException ex) {
@@ -229,16 +308,10 @@ public class ReviewStockChangesViewModel extends SessionViewModel {
 	        Date parsedEndDate = dateFormat.parse(endDate);
 
 	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
-	            Stock stock = currentChange.getStock();
-
-	            if (stock.getExpirationDate() != null) {
-	                Date expirationDate = dateFormat.parse(stock.getExpirationDate());
-
-	                if (expirationDate.after(parsedStartDate) 
-	                		&& (expirationDate.before(parsedEndDate) || expirationDate.equals(parsedEndDate))) {
-	                    result.add(currentChange.getDisplayString());
-	                }
-	            }
+	        	Date date = dateFormat.parse(currentChange.getDate());
+	        	if ((date.after(parsedStartDate) || date.equals(parsedStartDate))  && (date.before(parsedEndDate) || date.equals(parsedEndDate))) {
+	        		result.add(currentChange.getDisplayString());
+	        	}
 	        }
 	    } catch (ParseException ex) {
 	    	throw new IllegalArgumentException("Invalid Date format: " + startDate + " or " + endDate);
@@ -283,5 +356,232 @@ public class ReviewStockChangesViewModel extends SessionViewModel {
 		}
 		Collections.reverse(result);
 		return result;
+	}
+	
+	/**
+	 * Gets the logchanges that are after or equal to the start date
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param startDate the start date
+	 * @return a list of log changes
+	 */
+	public ArrayList<LogChange> getStartDateFilterForTime(String startDate) {
+		ArrayList<LogChange> result = new ArrayList<LogChange>();
+	    
+	    try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	        dateFormat.setLenient(false);
+	        Date parsedStartDate = dateFormat.parse(startDate);
+	        
+	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	        	Date date = dateFormat.parse(currentChange.getDate());
+	            if (date.after(parsedStartDate) || date.equals(parsedStartDate)) {
+	            	result.add(currentChange);
+	            }
+	        }
+	    } catch (ParseException ex) {
+	    	throw new IllegalArgumentException("Invalid Date format: " + startDate);
+	    }
+	    
+	    return result;
+	}
+	
+	/**
+	 * Gets logchanges for date ranges
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @return arraylist of log changes
+	 */
+	public ArrayList<LogChange> getStartAndEndDateFilterForTime(String startDate, String endDate) {
+	    ArrayList<LogChange> result = new ArrayList<LogChange>();
+
+	    try {
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	        dateFormat.setLenient(false);
+	        Date parsedStartDate = dateFormat.parse(startDate);
+	        Date parsedEndDate = dateFormat.parse(endDate);
+
+	        for (LogChange currentChange : this.logInventory.getLogChanges()) {
+	        	Date date = dateFormat.parse(currentChange.getDate());
+	        	if ((date.after(parsedStartDate) || date.equals(parsedStartDate))  && (date.before(parsedEndDate) || date.equals(parsedEndDate))) {
+	        		result.add(currentChange);
+	        	}
+	        }
+	    } catch (ParseException ex) {
+	    	throw new IllegalArgumentException("Invalid Date format: " + startDate + " or " + endDate);
+	    }
+
+	    return result;
+	}
+	
+	/**
+	 * filters the changes by the time specified
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param changes the changes from the date
+	 * @param hours the hours entered
+	 * @param minutes the minutes entered
+	 * @param seconds the seconds entered
+	 * @return arraylist of changes
+	 */
+	public ArrayList<String> getStartTimeChanges(ArrayList<LogChange> changes, String hours, String minutes, String seconds) {
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+	        int startHours;
+	        if (hours.isEmpty()) {
+	            startHours = 0;
+	        } else {
+	            startHours = Integer.parseInt(hours);
+	        }
+	        int startMinutes;
+	        if (minutes.isEmpty()) {
+	            startMinutes = 0;
+	        } else {
+	            startMinutes = Integer.parseInt(minutes);
+	        }
+	        int startSeconds;
+	        if (seconds.isEmpty()) {
+	            startSeconds = 0;
+	        } else {
+	            startSeconds = Integer.parseInt(seconds);
+	        }
+	        int startTimeInSeconds = (startHours * 3600) + (startMinutes * 60) + startSeconds;
+	        for (LogChange currentChange : changes) {
+	            String timeString = currentChange.getTime(); 
+
+	            int changeHours = Integer.parseInt(timeString.substring(0, 2));
+	            int changeMinutes = Integer.parseInt(timeString.substring(3, 5));
+	            int changeSeconds = Integer.parseInt(timeString.substring(6, 8));
+	            
+	            int changeTimeInSeconds = (changeHours * 3600) + (changeMinutes * 60) + changeSeconds;
+	            
+	            if (changeTimeInSeconds >= startTimeInSeconds) {
+	                result.add(currentChange.getDisplayString());
+	            }
+	        }
+	    } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
+	        throw new IllegalArgumentException("Invalid time format");
+	    }
+	    return result;
+	}
+	
+	/**
+	 * filters the changes by the time specified
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param changes the changes from the date
+	 * @param hours the hours entered
+	 * @param minutes the minutes entered
+	 * @param seconds the seconds entered
+	 * @return arraylist of changes
+	 */
+	public ArrayList<String> getStartTimeChangesForEndTime(ArrayList<LogChange> changes, String hours, String minutes, String seconds) {
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+	        int endHours;
+	        if (hours.isEmpty()) {
+	            endHours = 0;
+	        } else {
+	            endHours = Integer.parseInt(hours);
+	        }
+	        int endMinutes;
+	        if (minutes.isEmpty()) {
+	            endMinutes = 0;
+	        } else {
+	            endMinutes = Integer.parseInt(minutes);
+	        }
+	        int endSeconds;
+	        if (seconds.isEmpty()) {
+	            endSeconds = 0;
+	        } else {
+	            endSeconds = Integer.parseInt(seconds);
+	        }
+	        int endTimeInSeconds = (endHours * 3600) + (endMinutes * 60) + endSeconds;
+	        for (LogChange currentChange : changes) {
+	            String timeString = currentChange.getTime(); 
+
+	            int changeHours = Integer.parseInt(timeString.substring(0, 2));
+	            int changeMinutes = Integer.parseInt(timeString.substring(3, 5));
+	            int changeSeconds = Integer.parseInt(timeString.substring(6, 8));
+	            
+	            int changeTimeInSeconds = (changeHours * 3600) + (changeMinutes * 60) + changeSeconds;
+	            
+	            if (changeTimeInSeconds <= endTimeInSeconds) {
+	                result.add(currentChange.getDisplayString());
+	            }
+	        }
+	    } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
+	        throw new IllegalArgumentException("Invalid time format");
+	    }
+	    return result;
+	}
+	
+	private int parseTimeComponent(String value, int defaultValue) {
+	    if (value.isEmpty()) {
+	        return defaultValue;
+	    }
+	    return Integer.parseInt(value);
+	}
+
+	private int convertToSeconds(int hours, int minutes, int seconds) {
+	    return (hours * 3600) + (minutes * 60) + seconds;
+	}
+	
+	/**
+	 * gets the list of changes at the start date and between the entered time range
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param changes the changes to be returned
+	 * @param startTimeValues the start time
+	 * @param endTimeValues the end time
+	 * @return the list of changes after the start date and between the time range
+	 */
+	public ArrayList<String> getStartAndEndTimeChanges(ArrayList<LogChange> changes, String startTimeValues, String endTimeValues) {
+		ArrayList<String> result = new ArrayList<String>();
+	    try {
+	    	String[] startParts = startTimeValues.split(",", -1);
+	        String startHours = startParts[0];
+	        String startMinutes = startParts[1];
+	        String startSeconds = startParts[2];
+	        
+	        String[] endParts = endTimeValues.split(",", -1);
+	        String endHours = endParts[0];
+	        String endMinutes = endParts[1];
+	        String endSeconds = endParts[2];
+	        int startHoursInt = this.parseTimeComponent(startHours, 0);
+	        int startMinutesInt = this.parseTimeComponent(startMinutes, 0);
+	        int startSecondsInt = this.parseTimeComponent(startSeconds, 0);
+	        int startTimeInSeconds = this.convertToSeconds(startHoursInt, startMinutesInt, startSecondsInt);
+
+	        int endHoursInt = this.parseTimeComponent(endHours, 23);
+	        int endMinutesInt = this.parseTimeComponent(endMinutes, 59);
+	        int endSecondsInt = this.parseTimeComponent(endSeconds, 59);
+	        int endTimeInSeconds = this.convertToSeconds(endHoursInt, endMinutesInt, endSecondsInt);
+	       
+	        for (LogChange currentChange : changes) {
+	            String timeString = currentChange.getTime();
+	            
+	            int changeHours = Integer.parseInt(timeString.substring(0, 2));
+	            int changeMinutes = Integer.parseInt(timeString.substring(3, 5));
+	            int changeSeconds = Integer.parseInt(timeString.substring(6, 8));
+	            
+	            int changeTimeInSeconds = this.convertToSeconds(changeHours, changeMinutes, changeSeconds);
+	            
+	            if (changeTimeInSeconds >= startTimeInSeconds && changeTimeInSeconds <= endTimeInSeconds) {
+	                result.add(currentChange.getDisplayString());
+	            }
+	        }
+	    } catch (NumberFormatException | StringIndexOutOfBoundsException ex) {
+	        throw new IllegalArgumentException("Invalid time format");
+	    }
+	    return result;
 	}
 }

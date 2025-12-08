@@ -18,7 +18,7 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 
-class testGetStartDateFilter {
+class testGetStartDateFilterForTime {
 
 	@BeforeEach
     void setUp() {
@@ -38,8 +38,8 @@ class testGetStartDateFilter {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).get(0), change.getDisplayString());
-        assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).size(), 1);
+        assertEquals(vm.getStartDateFilterForTime(vm.getStartDate().get()).get(0).getDisplayString(), change.getDisplayString());
+        assertEquals(vm.getStartDateFilterForTime(vm.getStartDate().get()).size(), 1);
 	}
 	
 	@Test
@@ -54,8 +54,8 @@ class testGetStartDateFilter {
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
         inventory.addLogChange(change);
         
-        assertTrue(vm.getStartDateFilter(vm.getStartDate().get()).isEmpty());
-        assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).size(), 0);
+        assertTrue(vm.getStartDateFilterForTime(vm.getStartDate().get()).isEmpty());
+        assertEquals(vm.getStartDateFilterForTime(vm.getStartDate().get()).size(), 0);
 	}
 	
 	@Test
@@ -72,8 +72,8 @@ class testGetStartDateFilter {
         inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
-        assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).get(0), change.getDisplayString());
-        assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).size(), 1);
+        assertEquals(vm.getStartDateFilterForTime(vm.getStartDate().get()).get(0).getDisplayString(), change.getDisplayString());
+        assertEquals(vm.getStartDateFilterForTime(vm.getStartDate().get()).size(), 1);
 	}
 	
 	@Test
@@ -89,7 +89,7 @@ class testGetStartDateFilter {
         inventory.addLogChange(change);
         
         assertThrows(IllegalArgumentException.class, () -> {
-			vm.getStartDateFilter(vm.getStartDate().get());
+			vm.getStartDateFilterForTime(vm.getStartDate().get());
 		});
 	}
 

@@ -30,7 +30,7 @@ class testConstructor {
         assertEquals(change.getUser(), user);
         assertEquals(change.getCompartment(), box);
         assertEquals(change.getStock(), stock);
-        assertEquals(change.getTime(), expectedDate);
+        assertEquals(change.getDate(), expectedDate);
 
 	}
 	
