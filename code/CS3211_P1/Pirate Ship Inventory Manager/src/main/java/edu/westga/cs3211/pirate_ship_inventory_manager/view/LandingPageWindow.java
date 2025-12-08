@@ -56,8 +56,8 @@ public class LandingPageWindow implements SessionSetter {
 	private void getInventoryPageWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			// add swap here like below.
-			ViewSwapper.loadPageFromStage(PageResources.VIEW_INVENTORY_PAGE, stage, PageResources.VIEW_INVENTORY_TITLE);
+			InventoryPageWindow inventoryPageController = ViewSwapper.loadPageFromStage(PageResources.VIEW_INVENTORY_PAGE, stage, PageResources.VIEW_INVENTORY_TITLE);
+			inventoryPageController.setSession(this.landingVM.getCurrentSession().getValue());
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load inventory page.");

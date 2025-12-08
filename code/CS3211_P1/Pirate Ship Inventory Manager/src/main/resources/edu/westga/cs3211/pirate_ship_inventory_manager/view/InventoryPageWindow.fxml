@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.pirate_ship_inventory_manager.view.InventoryPageWindow">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.pirate_ship_inventory_manager.view.InventoryPageWindow">
    <children>
       <Label layoutX="246.0" layoutY="38.0" text="Please Select a Food" />
       <ComboBox fx:id="stockTypeComboBox" layoutX="43.0" layoutY="142.0" prefWidth="150.0" />
@@ -21,5 +20,10 @@
       <Label layoutX="442.0" layoutY="55.0" text="Available Stocks" />
       <Label layoutX="400.0" layoutY="290.0" text="Please specify a Quantity to take" />
       <Label layoutX="362.0" layoutY="311.0" text="Quantity:" />
+      <Button layoutX="530.0" layoutY="14.0" mnemonicParsing="false" onAction="#onHomeClick" text="Home">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

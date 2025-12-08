@@ -13,6 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 /**
  * The codebehind for InventoryPageWindow
@@ -40,8 +43,30 @@ public class InventoryPageWindow implements SessionSetter {
 	private InventoryPageWindowViewModel inventoryVM;
 	
 	@FXML
+	private AnchorPane pane;
+	
+	@FXML
 	void initialize() {
 		this.inventoryVM = new InventoryPageWindowViewModel();
+	}
+	
+	@FXML
+	private void onHomeClick(ActionEvent event) {
+		this.getLandingPage();
+	}
+	
+	private void getLandingPage() {
+		try {
+			Stage stage = (Stage) this.pane.getScene().getWindow();
+			LandingPageWindow landingController = ViewSwapper.loadPageFromStage(PageResources.LANDING_PAGE, stage,
+					PageResources.LANDING_PAGE_TITLE);
+			landingController.setSession(this.inventoryVM.getCurrentSession().getValue());
+		} catch (Exception exception) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Unable to load landing page.");
+			alert.showAndWait();
+			exception.printStackTrace();
+		}
 	}
 	
 	@FXML
