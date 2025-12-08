@@ -8,6 +8,7 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowV
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -154,6 +155,14 @@ public class AddStockWindow implements SessionSetter {
 		this.addStockVM.getIsLiquidProperty().bind(this.isLiquidcheckBox.selectedProperty());
 		this.addStockVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
 		this.typeComboBox.valueProperty().bindBidirectional(this.addStockVM.getStockTypeProperty());
+		this.quantityTextBox.textProperty().addListener((observable, oldValue, newText) -> {
+            try {
+            	var newValue = Integer.parseInt(newText);
+            	this.addStockVM.getStockQuantity().set(newValue);
+            } catch (NumberFormatException exc) {
+            	this.addStockVM.getStockQuantity().set(0);
+            }
+        });
 	}
 
 	private void fillInTypeComboBox() {
@@ -167,8 +176,9 @@ public class AddStockWindow implements SessionSetter {
 		this.expirationDatePicker.disableProperty().bind(this.isPerishableCheckBox.selectedProperty().not());
 		this.addStockButton.disableProperty()
 				.bind(this.nameTextBox.textProperty().isEmpty().or(this.quantityTextBox.textProperty().isEmpty())
-						.or(this.expirationDatePicker.disabledProperty().not()
-								.and(this.expirationDatePicker.valueProperty().isNull())));
+						.or(this.expirationDatePicker.disabledProperty().not().or(
+		    					Bindings.createBooleanBinding(() -> !this.addStockVM.isQuantityValid(), this.addStockVM.getStockQuantity()))
+		    	                .and(this.expirationDatePicker.valueProperty().isNull())));
 	}
 
 	private void initializeView() {
