@@ -59,7 +59,7 @@ public class LandingPageWindow implements SessionSetter {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
 			//add swap here like below.
-			ViewSwapper.loadOntoStage(PageResources.VIEW_INVENTORY_PAGE, stage, PageResources.VIEW_INVENTORY_TITLE);
+			ViewSwapper.loadPageFromStage(PageResources.VIEW_INVENTORY_PAGE, stage, PageResources.VIEW_INVENTORY_TITLE);
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load inventory page.");
@@ -74,10 +74,9 @@ public class LandingPageWindow implements SessionSetter {
 	}
 
 	private void getAddStockWindow() {
-		
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			AddStockWindow addStockController = ViewSwapper.loadOntoStage(PageResources.ADD_STOCK_PAGE, stage, PageResources.ADD_STOCK_PAGE_TITLE);
+			AddStockWindow addStockController = ViewSwapper.loadPageFromStage(PageResources.ADD_STOCK_PAGE, stage, PageResources.ADD_STOCK_PAGE_TITLE);
 			addStockController.setSession(this.landingVM.getCurrentSession().getValue());
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -90,7 +89,7 @@ public class LandingPageWindow implements SessionSetter {
 	private void getReviewStockChangesWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			ReviewStockChangesWindow reviewStockController = ViewSwapper.loadOntoStage(PageResources.REVIEW_STOCK_CHANGES_PAGE, stage, PageResources.REVIEW_STOCK_CHANGES_TITLE);
+			ReviewStockChangesWindow reviewStockController = ViewSwapper.loadPageFromStage(PageResources.REVIEW_STOCK_CHANGES_PAGE, stage, PageResources.REVIEW_STOCK_CHANGES_TITLE);
 			reviewStockController.setSession(this.landingVM.getCurrentSession().getValue());
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -103,7 +102,7 @@ public class LandingPageWindow implements SessionSetter {
 	private void getLoginPageWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			ViewSwapper.loadOntoStage(PageResources.LOGIN_PAGE, stage, PageResources.WINDOW_TITLE);
+			ViewSwapper.loadPageFromStage(PageResources.LOGIN_PAGE, stage, PageResources.WINDOW_TITLE);
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load login page");

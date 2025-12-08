@@ -45,5 +45,10 @@
             </ComboBox>
          </children>
       </HBox>
+      <Button layoutX="501.0" layoutY="14.0" mnemonicParsing="false" onAction="#onHomeClick" prefHeight="31.0" prefWidth="73.0" text="Home">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

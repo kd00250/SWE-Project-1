@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public final class ViewSwapper {
-	public static <T> T loadOntoStage(String fxmlPath, Stage stage, String title) throws IOException {
+	public static <T> T loadPageFromStage(String fxmlPath, Stage stage, String title) throws IOException {
 		if (fxmlPath == null) {
 			throw new IllegalArgumentException("FXML path must be non null");
 		}

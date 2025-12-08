@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PageResources;
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
@@ -81,6 +82,10 @@ public class AddStockWindow implements SessionSetter {
 	}
 
 	@FXML
+	private void onHomeClick(ActionEvent event) {
+		this.getLandingPage();
+	}
+	@FXML
 	void initialize() {
 		this.addStockVM = new AddStockWindowViewModel();
 	}
@@ -111,6 +116,19 @@ public class AddStockWindow implements SessionSetter {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
+		}
+	}
+	
+	private void getLandingPage() {
+		try {
+			Stage stage = (Stage) this.pane.getScene().getWindow();
+			LandingPageWindow landingController = ViewSwapper.loadPageFromStage(PageResources.LANDING_PAGE, stage, PageResources.LANDING_PAGE_TITLE);
+			landingController.setSession(this.addStockVM.getCurrentSession().getValue());
+		} catch (Exception exception) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Unable to load landing page.");
+			alert.showAndWait();
+		    exception.printStackTrace();
 		}
 	}
 

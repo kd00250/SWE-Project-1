@@ -7,7 +7,7 @@
 
 <AnchorPane fx:id="pane" minHeight="343.0" minWidth="255.0" prefHeight="410.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.pirate_ship_inventory_manager.view.LandingPageWindow">
    <children>
-      <VBox alignment="CENTER" layoutX="21.0" layoutY="70.0" prefHeight="200.0" prefWidth="316.0" spacing="30.0">
+      <VBox alignment="CENTER" layoutX="21.0" layoutY="138.0" prefHeight="200.0" prefWidth="316.0" spacing="30.0">
          <children>
             <Button fx:id="addStockButton" mnemonicParsing="false" onAction="#addStock" prefHeight="62.0" prefWidth="148.0" text="Add Stock">
                <font>
@@ -24,12 +24,12 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onLogoutClick" text="Logout">
-               <font>
-                  <Font size="23.0" />
-               </font>
-            </Button>
          </children>
       </VBox>
+      <Button layoutX="252.0" layoutY="14.0" mnemonicParsing="false" onAction="#onLogoutClick" prefHeight="35.0" prefWidth="85.0" text="Logout">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

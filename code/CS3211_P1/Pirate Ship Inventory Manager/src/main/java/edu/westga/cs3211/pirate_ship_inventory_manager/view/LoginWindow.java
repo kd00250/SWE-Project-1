@@ -92,7 +92,7 @@ public class LoginWindow {
     private void getLandingPageWindow() {
 		try {
 			Stage stage = (Stage) this.pane.getScene().getWindow();
-			LandingPageWindow landingController = ViewSwapper.loadOntoStage(PageResources.LANDING_PAGE, stage, PageResources.LANDING_PAGE_TITLE);
+			LandingPageWindow landingController = ViewSwapper.loadPageFromStage(PageResources.LANDING_PAGE, stage, PageResources.LANDING_PAGE_TITLE);
 			landingController.setSession(new CurrentSession(this.vm.getUser()));
 		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
