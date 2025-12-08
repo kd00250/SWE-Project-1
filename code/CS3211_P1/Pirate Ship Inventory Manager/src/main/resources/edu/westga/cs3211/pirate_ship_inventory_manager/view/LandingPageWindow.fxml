@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="343.0" minWidth="255.0" prefHeight="410.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.pirate_ship_inventory_manager.view.LandingPageWindow">
+<AnchorPane fx:id="pane" minHeight="343.0" minWidth="255.0" prefHeight="410.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.westga.cs3211.pirate_ship_inventory_manager.view.LandingPageWindow">
    <children>
       <VBox alignment="CENTER" layoutX="21.0" layoutY="70.0" prefHeight="200.0" prefWidth="316.0" spacing="30.0">
          <children>
@@ -24,7 +24,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="onLogoutClick" mnemonicParsing="false" text="Logout">
+            <Button mnemonicParsing="false" onAction="#onLogoutClick" text="Logout">
                <font>
                   <Font size="23.0" />
                </font>

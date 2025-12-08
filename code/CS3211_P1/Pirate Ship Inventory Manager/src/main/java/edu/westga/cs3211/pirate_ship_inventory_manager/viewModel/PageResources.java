@@ -16,6 +16,8 @@ public final class PageResources {
 	public static final String LANDING_PAGE_TITLE = "SWE 1 Project 1 - Landing Page";
 	public static final String LANDING_PAGE = "LandingPageWindow.fxml";
 	
-	public static final String WINDOW_TITLE = "SWE 1 Project 1";
+	public static final String WINDOW_TITLE = "SWE 1 Project 1 - Login page";
 	public static final String GUI_RESOURCE = "view/LoginWindow.fxml";
+	
+	public static final String LOGIN_PAGE = "LoginWindow.fxml";
 }

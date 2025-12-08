@@ -98,8 +98,6 @@ public class LoginWindow {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
-			System.out.println(exception.getMessage());
-			exception.printStackTrace();
 		}
     } 
     
