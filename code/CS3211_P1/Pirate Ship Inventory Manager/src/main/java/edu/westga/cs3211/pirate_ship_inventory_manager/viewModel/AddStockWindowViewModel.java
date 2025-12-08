@@ -15,8 +15,10 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -38,6 +40,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	private BooleanProperty isPerishable;
 	private BooleanProperty isLiquid;
 	private ObjectProperty<StockType> type;
+	private IntegerProperty stockQuantity;
 
 	/**
 	 * Creates a new instance of AddStockViewModel
@@ -57,6 +60,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		this.isLiquid = new SimpleBooleanProperty();
 		this.expirationDate = new SimpleStringProperty();
 		this.type = new SimpleObjectProperty<StockType>();
+		this.stockQuantity = new SimpleIntegerProperty();
 	}
 
 	/**
@@ -149,6 +153,42 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	 */
 	public ObjectProperty<StockType> getStockTypeProperty() {
 		return this.type;
+	}
+	
+	/**
+	 * gets the stock quantity
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the stock quantity
+	 */
+	public IntegerProperty getStockQuantity() {
+		return this.stockQuantity;
+	}
+	
+	/**
+	 * Checks if the quantity is > 0 and < Integer.MAX_NUMBER
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return true if stockQuantity.get() > 0 && stockQuantity.get() < Integer.MAX_NUMBER
+	 */
+	public boolean isQuantityValid() {
+		return (this.stockQuantity.get() > 0);
+	}
+	
+	/**
+	 * Checks if the name is blank
+	 *  
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return true if name is blank
+	 */
+	public boolean isNameBlank() {
+		return this.getName().get().isBlank();
 	}
 
 	/**
