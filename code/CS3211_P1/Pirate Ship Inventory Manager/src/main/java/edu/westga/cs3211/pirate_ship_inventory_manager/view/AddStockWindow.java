@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
 import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,6 +35,8 @@ public class AddStockWindow implements SessionSetter {
 	@FXML
 	private Button addStockButton;
 
+	@FXML
+	private ComboBox<StockType> typeComboBox;
 	@FXML
 	private ComboBox<String> conditionComboBox;
 
@@ -108,6 +111,7 @@ public class AddStockWindow implements SessionSetter {
     }
     
     private void setUpBindings() {
+    	this.fillInTypeComboBox();
     	String [] conditions = {"perfect", "usable", "unsuable"};
     	this.conditionComboBox.getItems().addAll(conditions); 
     	this.conditionComboBox.setValue(conditions[0]);
@@ -146,6 +150,12 @@ public class AddStockWindow implements SessionSetter {
     	this.addStockVM.getIsLiquidProperty().bind(this.isLiquidcheckBox.selectedProperty());
     	this.addStockVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
     } 
+    
+    
+    private void fillInTypeComboBox() {
+    	this.typeComboBox.getItems().addAll(StockType.values());
+    	this.typeComboBox.setValue(StockType.DEFAULT);
+    }
     
     private void setUpControls() {
     	this.expirationDatePicker.setEditable(false);
