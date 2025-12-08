@@ -2,6 +2,7 @@ package edu.westga.cs3211.pirate_ship_inventory_manager;
 
 import java.io.IOException;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PageResources;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -40,7 +41,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 
 			primaryStage.setScene(scene);
-			primaryStage.setTitle(WINDOW_TITLE);
+			primaryStage.setTitle(PageResources.WINDOW_TITLE);
 			primaryStage.show();
 		} catch (Exception exc) {
 			exc.printStackTrace();
@@ -49,7 +50,7 @@ public class Main extends Application {
 
 	private Pane loadGui() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getResource(GUI_RESOURCE));
+		loader.setLocation(getClass().getResource(PageResources.GUI_RESOURCE));
 		return (Pane) loader.load();
 	}
 

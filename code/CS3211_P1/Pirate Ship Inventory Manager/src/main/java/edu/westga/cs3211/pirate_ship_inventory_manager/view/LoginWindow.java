@@ -1,22 +1,16 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
-import java.io.IOException;
-
-import edu.westga.cs3211.pirate_ship_inventory_manager.Main;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.LoginWindowViewModel;
+import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.PageResources;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /** Codebehind for the Main Window of the application.
@@ -96,25 +90,16 @@ public class LoginWindow {
     }
     
     private void getLandingPageWindow() {
-    	FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource(Main.LANDING_PAGE));
 		try {
-			loader.load();
-			Parent parent = loader.getRoot();
-			Scene scene = new Scene(parent);
-			Stage setLandingPageStage = new Stage();
-			setLandingPageStage.setTitle(Main.LANDING_PAGE_TITLE);
-			setLandingPageStage.setScene(scene);
-			setLandingPageStage.initModality(Modality.APPLICATION_MODAL);
-
-			LandingPageWindow landingPageCodebehind = (LandingPageWindow) loader.getController();
-			landingPageCodebehind.setSession(new CurrentSession(this.vm.getUser()));
-
-			setLandingPageStage.showAndWait();
-		} catch (IOException error) {
+			Stage stage = (Stage) this.pane.getScene().getWindow();
+			LandingPageWindow landingController = ViewSwapper.loadOntoStage(PageResources.LANDING_PAGE, stage, PageResources.LANDING_PAGE_TITLE);
+			landingController.setSession(new CurrentSession(this.vm.getUser()));
+		} catch (Exception exception) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
+			System.out.println(exception.getMessage());
+			exception.printStackTrace();
 		}
     } 
     
