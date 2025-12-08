@@ -40,8 +40,8 @@ public class AddStockWindow implements SessionSetter {
 	@FXML
 	private ComboBox<String> conditionComboBox;
 
-    @FXML
-    private DatePicker expirationDatePicker;
+	@FXML
+	private DatePicker expirationDatePicker;
 
 	@FXML
 	private TextField nameTextBox;
@@ -55,33 +55,37 @@ public class AddStockWindow implements SessionSetter {
 	@FXML
 	private CheckBox isPerishableCheckBox;
 
-    @FXML
-    private AnchorPane pane;
+	@FXML
+	private AnchorPane pane;
 
 	@FXML
 	private TextField quantityTextBox;
 
 	private AddStockWindowViewModel addStockVM;
 
-    @FXML
-    void addStock(ActionEvent event) {
-    	if (this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.specialStorageHasFreeSpace(this.addStockVM.createStock())) {
-    		this.displayErrorPopup("There is no compartment currently available to store stock \n with indicated special quantity. "
-    				+ "\nPlease reassess the quantity entered and try again.");
-    	} else if (!this.addStockVM.createStock().getHasSpecialQualities() && !this.addStockVM.normalStorageHasFreeSpace(this.addStockVM.createStock())) {
-    		this.displayErrorPopup("There is no compartment currently available to store stock \n with indicated quantity. "
-    				+ "\nPlease reassess the quantity entered and try again.");
-    	} else {
-    	this.getPickStorageWindow();
-    	}
-    }
-    
+	@FXML
+	void addStock(ActionEvent event) {
+		if (this.addStockVM.createStock().getHasSpecialQualities()
+				&& !this.addStockVM.specialStorageHasFreeSpace(this.addStockVM.createStock())) {
+			this.displayErrorPopup(
+					"There is no compartment currently available to store stock \n with indicated special quantity. "
+							+ "\nPlease reassess the quantity entered and try again.");
+		} else if (!this.addStockVM.createStock().getHasSpecialQualities()
+				&& !this.addStockVM.normalStorageHasFreeSpace(this.addStockVM.createStock())) {
+			this.displayErrorPopup(
+					"There is no compartment currently available to store stock \n with indicated quantity. "
+							+ "\nPlease reassess the quantity entered and try again.");
+		} else {
+			this.getPickStorageWindow();
+		}
+	}
+
 	@FXML
 	void initialize() {
 		this.addStockVM = new AddStockWindowViewModel();
 	}
 
-    private void displayErrorPopup(String message) {
+	private void displayErrorPopup(String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
 		alert.setContentText(message);
 		alert.showAndWait();
@@ -108,64 +112,66 @@ public class AddStockWindow implements SessionSetter {
 			alert.setContentText("Unable to load properties window.");
 			alert.showAndWait();
 		}
-    }
-    
-    private void setUpBindings() {
-    	this.fillInTypeComboBox();
-    	String [] conditions = {"perfect", "usable", "unsuable"};
-    	this.conditionComboBox.getItems().addAll(conditions); 
-    	this.conditionComboBox.setValue(conditions[0]);
-    	this.addStockVM.getCondition().bind(this.conditionComboBox.valueProperty());
-    	this.addStockVM.getName().bind(this.nameTextBox.textProperty());
-    	this.quantityTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
-    	    if (!newValue.matches("^$|^[1-9][0-9]*$")) {
-    	        this.quantityTextBox.setText(oldValue);
-    	    }
-    	});
-    	
-    	this.isPerishableCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-    		if (!newValue) {
-    			this.expirationDatePicker.setValue(null);
-    		}
-    	});
-    	 
-    	this.expirationDatePicker.setDayCellFactory(param -> new DateCell() {
-    		@Override
-    		public void updateItem(LocalDate date, boolean empty) {
-    			super.updateItem(date, empty);
-    			setDisable(empty || date.compareTo(LocalDate.now()) < 0);
-    		}
-    	});
-    	this.expirationDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-                String dateString = newValue.format(formatter);
-                this.addStockVM.getExpirationDate().set(dateString);
-            } else {
-                this.addStockVM.getExpirationDate().set(""); 
-            }
-        });
-    	this.addStockVM.getQuantity().bind(this.quantityTextBox.textProperty());
-    	this.addStockVM.getIsFlammableProperty().bind(this.isFlammableCheckBox.selectedProperty());
-    	this.addStockVM.getIsLiquidProperty().bind(this.isLiquidcheckBox.selectedProperty());
-    	this.addStockVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
-    } 
-    
-    
-    private void fillInTypeComboBox() {
-    	this.typeComboBox.getItems().addAll(StockType.values());
-    	this.typeComboBox.setValue(StockType.DEFAULT);
-    }
-    
-    private void setUpControls() {
-    	this.expirationDatePicker.setEditable(false);
-    	this.expirationDatePicker.disableProperty().bind(this.isPerishableCheckBox.selectedProperty().not());
-    	this.addStockButton.disableProperty().bind(this.nameTextBox.textProperty().isEmpty()
-    			.or(this.quantityTextBox.textProperty().isEmpty()).or(this.expirationDatePicker.disabledProperty().not()
-    	                .and(this.expirationDatePicker.valueProperty().isNull())));
-    }
-    
-    private void initializeView() {
+	}
+
+	private void setUpBindings() {
+
+		String[] conditions = { "perfect", "usable", "unsuable" };
+		this.conditionComboBox.getItems().addAll(conditions);
+		this.conditionComboBox.setValue(conditions[0]);
+		this.addStockVM.getCondition().bind(this.conditionComboBox.valueProperty());
+		this.addStockVM.getName().bind(this.nameTextBox.textProperty());
+		this.quantityTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue.matches("^$|^[1-9][0-9]*$")) {
+				this.quantityTextBox.setText(oldValue);
+			}
+		});
+
+		this.isPerishableCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue) {
+				this.expirationDatePicker.setValue(null);
+			}
+		});
+
+		this.expirationDatePicker.setDayCellFactory(param -> new DateCell() {
+			@Override
+			public void updateItem(LocalDate date, boolean empty) {
+				super.updateItem(date, empty);
+				setDisable(empty || date.compareTo(LocalDate.now()) < 0);
+			}
+		});
+		this.expirationDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null) {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+				String dateString = newValue.format(formatter);
+				this.addStockVM.getExpirationDate().set(dateString);
+			} else {
+				this.addStockVM.getExpirationDate().set("");
+			}
+		});
+		this.addStockVM.getQuantity().bind(this.quantityTextBox.textProperty());
+		this.addStockVM.getIsFlammableProperty().bind(this.isFlammableCheckBox.selectedProperty());
+		this.addStockVM.getIsLiquidProperty().bind(this.isLiquidcheckBox.selectedProperty());
+		this.addStockVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
+		this.typeComboBox.valueProperty().bindBidirectional(this.addStockVM.getStockTypeProperty());
+	}
+
+	private void fillInTypeComboBox() {
+		this.typeComboBox.getItems().addAll(StockType.values());
+		this.typeComboBox.setValue(StockType.DEFAULT);
+	}
+
+	private void setUpControls() {
+		this.fillInTypeComboBox();
+		this.expirationDatePicker.setEditable(false);
+		this.expirationDatePicker.disableProperty().bind(this.isPerishableCheckBox.selectedProperty().not());
+		this.addStockButton.disableProperty()
+				.bind(this.nameTextBox.textProperty().isEmpty().or(this.quantityTextBox.textProperty().isEmpty())
+						.or(this.expirationDatePicker.disabledProperty().not()
+								.and(this.expirationDatePicker.valueProperty().isNull())));
+	}
+
+	private void initializeView() {
 		this.setUpBindings();
 		this.setUpControls();
 		this.addStockButton.setOnAction((event) -> {

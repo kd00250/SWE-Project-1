@@ -12,9 +12,12 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChangesInventory
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.SpecialQuality;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -34,6 +37,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	private BooleanProperty isFlammable;
 	private BooleanProperty isPerishable;
 	private BooleanProperty isLiquid;
+	private ObjectProperty<StockType> type;
 
 	/**
 	 * Creates a new instance of AddStockViewModel
@@ -52,6 +56,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		this.isPerishable = new SimpleBooleanProperty();
 		this.isLiquid = new SimpleBooleanProperty();
 		this.expirationDate = new SimpleStringProperty();
+		this.type = new SimpleObjectProperty<StockType>();
 	}
 
 	/**
@@ -137,6 +142,14 @@ public class AddStockWindowViewModel extends SessionViewModel {
 	public StringProperty getExpirationDate() {
 		return this.expirationDate;
 	}
+	
+	/**
+	 * Gets the stock type property.
+	 * @return the stock type property
+	 */
+	public ObjectProperty<StockType> getStockTypeProperty() {
+		return this.type;
+	}
 
 	/**
 	 * Creates stock from the user input
@@ -151,6 +164,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 		String condition = this.getCondition().get();
 		String expirationDate = this.getExpirationDate().get();
 		Integer quantity = Integer.parseInt(this.getQuantity().get());
+		StockType type = this.type.get();
 		Set<SpecialQuality> specialQualities = new HashSet<SpecialQuality>();
 		if (this.getIsFlammableProperty().get()) {
 			specialQualities.add(SpecialQuality.FLAMMABLE);
@@ -162,7 +176,7 @@ public class AddStockWindowViewModel extends SessionViewModel {
 			specialQualities.add(SpecialQuality.PERISHABLE);
 		}
 
-		Stock stock = new Stock(quantity, specialQualities, name, condition, expirationDate);
+		Stock stock = new Stock(quantity, specialQualities, name, condition, expirationDate, type);
 		return stock;
 	}
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Inventory;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
 
 class testNormalStorageHasFreeSpace {
@@ -25,6 +26,7 @@ class testNormalStorageHasFreeSpace {
 		vm.getIsLiquidProperty().set(false); 
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 	
 		
 		assertTrue(vm.normalStorageHasFreeSpace(vm.createStock()));
@@ -40,6 +42,7 @@ class testNormalStorageHasFreeSpace {
 		vm.getIsLiquidProperty().set(false); 
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("29");
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		inventory.getCompartments().get(0).addStock(vm.createStock());
 	
 		
@@ -55,6 +58,7 @@ class testNormalStorageHasFreeSpace {
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("35");
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 	
 		
 		assertFalse(vm.normalStorageHasFreeSpace(vm.createStock()));

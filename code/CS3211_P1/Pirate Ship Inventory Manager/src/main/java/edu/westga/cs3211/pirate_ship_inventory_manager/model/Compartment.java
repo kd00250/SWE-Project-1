@@ -193,6 +193,9 @@ public class Compartment {
 		 * @return A list of all stock items of given type
 		 */
 		public List<Stock> getStockOfType(StockType type) {
+			if (type == null) {
+				throw new IllegalArgumentException("Type cannot be null");
+			}
 			return this.storage.stream().filter(stock -> stock.getType() == type).collect(Collectors.toList());
 		}
 }
