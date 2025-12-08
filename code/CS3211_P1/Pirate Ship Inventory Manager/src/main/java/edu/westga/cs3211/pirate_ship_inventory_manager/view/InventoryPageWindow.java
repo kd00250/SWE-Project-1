@@ -4,6 +4,7 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.InventoryPageWindowViewModel;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -70,7 +71,11 @@ public class InventoryPageWindow implements SessionSetter {
 	
 	@FXML
 	void checkInventory(ActionEvent event) {
-		System.out.println(this.inventoryVM.isStockTypeInInventory());
+		if (!this.inventoryVM.isStockTypeInInventory()) {
+			this.displayErrorPopup("Inventory does not contain any Stock of Type" + this.inventoryVM.getStockTypeProperty());
+		} else {
+			this.availableStocksListView.getItems().addAll(this.inventoryVM.getStockInInventory());
+		}
     }
 	
 	@FXML
@@ -92,11 +97,25 @@ public class InventoryPageWindow implements SessionSetter {
 	
 	private void bindControls() {
 		this.inventoryVM.getStockTypeProperty().bind(this.stockTypeComboBox.valueProperty());
+		
+		this.quantityToTakeTextField.textProperty().addListener((observable, oldValue, newText) -> {
+            try {
+            	var newValue = Integer.parseInt(newText);
+            	this.inventoryVM.getQuantityToTake().set(newValue);
+            } catch (NumberFormatException exc) {
+            	this.inventoryVM.getQuantityToTake().set(0);
+            }
+        });
+		
+		this.availableStocksListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			this.inventoryVM.getSelectedStock().set(newValue);
+		});
 	}
 	
 	private void initializeControls() {
 		this.setUpStockTypeComboBox();
-		return;
+		this.setUpQuantityToTakeLimits();
+		this.disableTakeStockButton();
 	}
 	
 	private void setUpStockTypeComboBox() {
@@ -107,5 +126,17 @@ public class InventoryPageWindow implements SessionSetter {
 
 	private String getUserRole() {
 		return this.inventoryVM.getCurrentSession().get().getUser().getRole();
+	}
+	
+	private void setUpQuantityToTakeLimits() {
+		this.quantityToTakeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (!newValue.matches("^$|^[1-9][0-9]*$")) {
+				this.quantityToTakeTextField.setText(oldValue);
+			}
+		});
+	}
+	
+	private void disableTakeStockButton() {
+		this.takeStockButton.disableProperty().bind(Bindings.createBooleanBinding(() -> !this.inventoryVM.isQuantityToTakeValid(), this.inventoryVM.getQuantityToTake()));
 	}
 }
