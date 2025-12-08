@@ -98,13 +98,13 @@ public class AddStockWindow implements SessionSetter {
 
 	private void getPickStorageWindow() {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource(Main.PICK_STORAGE_PAGE));
+		loader.setLocation(Main.class.getResource(PageResources.PICK_STORAGE_PAGE));
 		try {
 			loader.load();
 			Parent parent = loader.getRoot();
 			Scene scene = new Scene(parent);
 			Stage setPickStorageStage = new Stage();
-			setPickStorageStage.setTitle(Main.PICK_STORAGE_PAGE_TITLE);
+			setPickStorageStage.setTitle(PageResources.PICK_STORAGE_PAGE_TITLE);
 			setPickStorageStage.setScene(scene);
 			setPickStorageStage.initModality(Modality.APPLICATION_MODAL);
 

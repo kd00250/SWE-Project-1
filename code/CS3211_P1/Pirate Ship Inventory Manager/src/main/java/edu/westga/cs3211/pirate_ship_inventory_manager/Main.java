@@ -16,24 +16,6 @@ import javafx.scene.layout.Pane;
  */
 public class Main extends Application {
 	
-	public static final String VIEW_INVENTORY_TITLE = "SWE 1 Project 1 - View Inventory Page";
-	public static final String VIEW_INVENTORY_PAGE = "view/InventoryPageWindow.fxml";
-	
-	public static final String REVIEW_STOCK_CHANGES_TITLE = "SWE 1 Project 1 - Review Stock Changes Page";
-	public static final String REVIEW_STOCK_CHANGES_PAGE = "view/ReviewStockChangesWindow.fxml";
-
-	public static final String PICK_STORAGE_PAGE_TITLE = "SWE 1 Project 1 - Pick Storage Page";
-	public static final String PICK_STORAGE_PAGE = "view/PickStorageWindow.fxml";
-	
-	public static final String ADD_STOCK_PAGE_TITLE = "SWE 1 Project 1 - Add Stock Page";
-	public static final String ADD_STOCK_PAGE = "view/AddStockWindow.fxml";
-	
-	public static final String LANDING_PAGE_TITLE = "SWE 1 Project 1 - Landing Page";
-	public static final String LANDING_PAGE = "view/LandingPageWindow.fxml";
-	
-	private static final String WINDOW_TITLE = "SWE 1 Project 1";
-	private static final String GUI_RESOURCE = "view/LoginWindow.fxml";
-
 	@Override
 	public void start(Stage primaryStage) {
 		try {
