@@ -1,3 +1,884 @@
+commit 0ecf3a7faa0e366c12c3fdd3f50956e12ba42b51
+Merge: 3ebefc9 b78f122
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 21:38:55 2025 -0500
+
+    Merge pull request #29 from kd00250/dev
+    
+    Merging dev into main
+
+commit b78f1226fb043685c389728c328046f752cb07e0
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Mon Dec 8 21:31:32 2025 -0500
+
+    Add Cook credentials to README
+
+commit d0fb901289b8e5396f1483327f5ca397fda8b878
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Mon Dec 8 21:30:25 2025 -0500
+
+    Delete code/CS3211_Project1 directory
+    
+    Deleted random files that were from Project1
+
+commit bc747e30536af50f3cbe327c654903a3532e03ba
+Merge: edea7be 861e65b
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Mon Dec 8 21:28:39 2025 -0500
+
+    Merge pull request #30 from kd00250/feature-ImplementingViewInventoryFXML
+    
+    Feature implementing view inventory fxml
+
+commit 861e65b55f57ce944625d6fca522e669203df1d6
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 20:21:32 2025 -0500
+
+    Finished Implementation of View Inventory
+    
+    Tested all methods in the InventoryPageWindowViewModel and got 100% Branch Coverage
+    Tested all new methods added into other classes and got 100% Branch Coverage
+    Have 0 CheckStyle issues.
+
+commit 14a8661f8c89f418f1c8be31b8b3baca14bb3a9c
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 17:53:16 2025 -0500
+
+    Enhanced Limitation for taking Stock
+    
+    Make it to where user can only take stock if they have a selected stock and a valid quantity to take.
+    Made Inventory have a Food Stock by Default.
+
+commit 6d7bb4981bfb6329f639c36e9d5ccde51c0fb2f9
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 16:40:39 2025 -0500
+
+    Can Check if StockType Exists
+    
+    Made method in Container to check if it contains a stock of a StockType.
+    Made isStockTypeInInventory to check all containers to see if it contains any StockType Selected by the User.
+    Currently outputs true or false in Console, but will be fixed.
+
+commit 48aa5b76b33c40a2724394652ac8ab86f5f02bbf
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 15:59:58 2025 -0500
+
+    Implemented Home Button and ComboBox
+    
+    Made Home Button in Inventory Page to go back to the Landing Page.
+    Made ComboBox properly add Food Choice.
+
+commit 5f5e803de7c01fb17df010b3a19e619a27973506
+Merge: f9f3ce4 edea7be
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 15:47:51 2025 -0500
+
+    Merge of Dev to feature-ImplementViewInventoryFXML
+    
+    Handled conflics from dev to branch and merged.
+
+commit f9f3ce461110a448d722a989d4794f59097fb938
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 15:42:48 2025 -0500
+
+    Set Up StockType ComboBox
+    
+    Made method to get the userRole.
+    If the userRole is a Cook, then it will add the StockType.FOOD to the ComboBox.
+
+commit edea7be008c362a097d40ec3dff375bf6cc7646e
+Merge: 754338d 8050c24
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Mon Dec 8 15:08:57 2025 -0500
+
+    Merge pull request #27 from kd00250/feature-FixEmptyStockNameBug
+    
+    Feature fix empty stock name bug and Quantity Bug
+
+commit 8050c24a94d43bd69bbde626fbb3fc636d515471
+Merge: 1ae7fea 754338d
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 14:58:13 2025 -0500
+
+    Merged dev to feature-FixEmptyStockNameBug
+    
+    Fixed all merge conflicts with dev.
+
+commit 754338d73f0c1972bb579662612f73860c668dc8
+Merge: 81e92f4 2bc3f93
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 14:40:42 2025 -0500
+
+    Merge pull request #28 from kd00250/feature-HomeAndLogoutButtons
+    
+    Feature home and logout buttons
+
+commit 2bc3f93e9c3f737032cdaf5766afc9ea85af7904
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Mon Dec 8 14:38:20 2025 -0500
+
+    Fix checkstyle
+    
+    Fix the checkstyle warning after removing main usage in the add stock window.
+
+commit ecd1ff49eb8e78248fcf68e7622e4f0af74ce749
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Mon Dec 8 14:34:19 2025 -0500
+
+    Fix pick storage swap
+    
+    Fix the error that occurs when adding stock and swapping to the pick storage window.
+
+commit dc9532e688ff932636fcaea30ea046139900eb27
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 14:28:21 2025 -0500
+
+    Made InventoryPageVM and fixed tests
+    Fixed tests because of the Addition of the Cook.
+    Implemented setSession in the InventoryPage Code behind.
+    Tested InventoryPageVM.
+
+commit c303af3e1365682d5ff5ee92e4bd0ec91e08d46a
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Mon Dec 8 13:22:44 2025 -0500
+
+    Remove extra constants
+    
+    Removes the page resource constants from the main page since they duplicate the ones in page resources.
+
+commit f1ae44d569d036961fc680a6e12606367572837d
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Mon Dec 8 13:08:05 2025 -0500
+
+    Fix test and checkstyle
+    
+    Moved constant class from viewmodel to view since it is only used in swapping.
+    Added documentation to clear checkstyle warnings.
+
+commit 1590bb342964a3e0e4c8e843c8b63b614a1c1504
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Mon Dec 8 12:53:19 2025 -0500
+
+    Implement home button on pages
+    
+    All pages except unimplemented inventory page have a home button to have to the landing page.
+
+commit fcee0579a9691f337d893e664e0ff74d00055c3e
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Mon Dec 8 12:39:47 2025 -0500
+
+    Swap landing page ui swap and add logout
+    
+    Landing page now uses new UI swap for all buttons.
+    Added a logout button to go back to login page from landing page.
+
+commit 802e114d208dc1306a35ca5a3abd5aae72811ccb
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Mon Dec 8 12:15:59 2025 -0500
+
+    Login page uses new swap logic
+    
+    Login page will now swap to the landing page using new switch methods.
+
+commit 915777c6a3d619a9db26bdac9a1d763b10a94472
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 03:09:51 2025 -0500
+
+    Implemented FXML and Code Behind of InventoryPage
+    Made the FXML page to have a ComboBox for StockType, Button to Check Inventory, ListView of Stock for all available Stocks, TextField for Quantity of Stock to take out, and Button to take Stock.
+    Made Code Behind with all FXML areas, and added checkInventory and takeStock events, but have TODO's
+    Made InventoryPageWindow implement SessionSetter, but did not implement because I am unsure how to.
+
+commit 1ae7feaf5941de3f442880fa6dc47d5cdd3320a3
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 02:27:00 2025 -0500
+
+    Fixed Blank Name Bug
+    Made isNameBlank method that checks if the name is blank.
+    Tested isNameBlank method with Valid name, name with a space, and empty name.
+    Binded the method to the addStockButton.disableProperty().
+    The button will be disables if only white space is inside of it.
+
+commit 452fd6aa9de15064193fcb3643c321d854bc3ab2
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Mon Dec 8 01:58:23 2025 -0500
+
+    Fixed Stock Quantity Bug
+    Made IntegerProperty stockQuantity to validate the number of stock.
+    Made isValidQuantity to make sure Quantity is > 0
+    Tested method, incapable to do > Integer.MAX_NUMBER
+    Binded the QuantityTextBox to stockQuantity and then binded it to the disable button in setupControls.
+    When user types any number greater than Max Integer, it disables the add stock button.
+
+commit 81e92f46ca75461a3d4a788b82a531be88f5874b
+Merge: bded70b f2b9aa1
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 22:33:56 2025 -0500
+
+    Merge pull request #25 from kd00250/feature-StockTypeRetrievalSystem
+    
+    Feature stock type retrieval system
+
+commit f2b9aa17d6a10758390e0ebff30c5bc987f860f4
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 22:00:08 2025 -0500
+
+    Finish implementing type combo box
+    
+    Type combo box is fully implemented in the add stock page.
+    Full test coverage and no checkstyle warnings.
+
+commit 1e8e9fae5cc92555f0fa97887fdaed55c3f7b0cd
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 20:58:00 2025 -0500
+
+    Add combo box with stock type
+    
+    The combo box is populated from the stock type enumeration, which has a constructor to define its display name.
+    Combo box was placed below the condition combo box.
+
+commit 5508fee242ccb5d910238209ee8e59262587dba8
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 20:56:44 2025 -0500
+
+    Add ability to get stock from system
+    
+    Compartments now have the ability to search their stock and return stock of a specified type.
+
+commit bded70bf12fd3a436d8ea3fc09f1e8bf6f88ddbf
+Merge: a929faf 859f654
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 20:18:32 2025 -0500
+
+    Merge pull request #24 from kd00250/feature-StockTypes
+    
+    Feature stock types
+
+commit 859f654e45cf481a32136ff7145027f7497074af
+Merge: c2940e9 a929faf
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sun Dec 7 20:18:02 2025 -0500
+
+    Merge branch 'dev' into feature-StockTypes
+
+commit a929faf5a4255732902c17ff970a82fa09bc0e95
+Merge: 1caabcf a6b5e8d
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sun Dec 7 20:10:10 2025 -0500
+
+    Merge pull request #23 from kd00250/feature-ChangeDateAndTimeFilter
+    
+    Feature change date and time filter
+
+commit a6b5e8d41fbebef34904f0c9439201166be55b07
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 18:34:10 2025 -0500
+
+    Refactor sorting calls
+    
+    -Refactor booleans so that you can better tell what is being compared while sorting
+
+commit c2940e922a72de921578a69c4b54e8effbf16274
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 17:41:23 2025 -0500
+
+    Add stock type
+    
+    Adds stock type enum to stock, this will help to catagorize stock further.
+    Adds test for full coverage and clears checkstyle warnings.
+
+commit 78f92cfc487cd7697cc3df08cc8dfd16bfa2c9c7
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 17:02:19 2025 -0500
+
+    Fixed session errors
+    
+    -Fixed session errors
+    -Added extra helper
+
+commit eeb6a414342eda352b6acb9a3ca9ef8b0bfbe07e
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 16:55:41 2025 -0500
+
+    Fixed some errors
+    
+    -Still need to fix session error
+
+commit 7f36ea51098b493d27cba1ba5e4e19923b6b6c41
+Merge: b742235 1caabcf
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sun Dec 7 16:38:02 2025 -0500
+
+    Merge branch 'dev' into feature-ChangeDateAndTimeFilter
+
+commit b742235a291833ff42b07b3c404fcb011b0b7f04
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 15:54:42 2025 -0500
+
+    Added more filters by time functionality
+    
+    -Added functionality to filter by end time and start date
+    -Added functionality to filter by start time and start and end date
+    -Added tests to test the view model functionality of the filters
+
+commit 0804309eb0778614b7657734f592d3eb3ae5f193
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 15:26:55 2025 -0500
+
+    Added more time filters
+    
+    -Added the ability to sort by the start and end dates and the start time
+
+commit ef3d8ea6e8e76170247eba2c35e914d3f411bac6
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 14:50:06 2025 -0500
+
+    Added logic to sort time
+    
+    -Added logic to sort by start time and end time with start date
+    -Add functionality to the gui to uphold that sort
+
+commit 40d3a0a6effdc391a26960cb3ef477892f06baf6
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 13:06:03 2025 -0500
+
+    Added functionality to gui
+    
+    -Added to sort but start date and time
+    -Started working on sorting by start date, start time, and end time
+
+commit 1caabcfe90aaeb5ac102b59f2e2d0981bc4d9736
+Merge: 6a69c63 eda86ae
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sun Dec 7 10:52:40 2025 -0500
+
+    Merge pull request #20 from kd00250/feature-DatePickerAddStock
+    
+    Added date picker
+
+commit eda86ae5145705437a3362b434920b02f2661366
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 10:45:22 2025 -0500
+
+    Fixed broken tests
+    
+    -Fixed various failing tests when testing from the src test folder
+
+commit e5c09b989fa39704791cb9f8fa874751a2bf42c4
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 10:08:30 2025 -0500
+
+    Fixed errors
+    
+    -Deleted line that made additional add stock view model
+
+commit c5992996de23281d4e7dd79858330e0a5d53606b
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 09:38:24 2025 -0500
+
+    Fixed errors
+    
+    -Corrected errors
+
+commit da3ef324f091aaddbe0e9da7473265b5ffa6f6b5
+Merge: 32e3f9e 6a69c63
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 02:33:40 2025 -0500
+
+    Fixed merge conflicts
+    
+    -had to accept all of my changes
+
+commit 32e3f9e0c0d1602ffa9b9058152ac3ec54c200c6
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 01:44:40 2025 -0500
+
+    Filed Changes
+
+commit b1af59b555fa47ccc8a93d3a242d22dbaa03551d
+Merge: 98399ed 6875c4d
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 01:31:34 2025 -0500
+
+    Fixed merge conflicts
+
+commit 6a69c6364a0eabf9a3ae18d3598e31ce526a5ed4
+Merge: 6875c4d 10d26b5
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sun Dec 7 01:19:24 2025 -0500
+
+    Merge pull request #22 from kd00250/feature-SessionContext
+    
+    Feature session context
+
+commit 10d26b51c4efb4e492270a9f6b5268feadc917f9
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 01:15:00 2025 -0500
+
+    Fix more checkstyle warnings
+    
+    Fixed more checkstyle warnings after changing where checkstyle was applied.
+
+commit 16e008fb2733bbec37f3f93dc7d189b3dcdca2f9
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 01:06:23 2025 -0500
+
+    Added time boxes to be disabled
+    
+    -Started adding gui functionality
+
+commit e7f39c1045e49808b592393b062e82438f951643
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 01:05:07 2025 -0500
+
+    Fix extra checkstyle after checkstyle fixed
+    
+    Fixes the remaining checkstyle errors in this feature branch after fixing checkstyle errors in local build.
+
+commit 79825e242c565e34268fe397209842a9c8905f6d
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Dec 7 00:56:20 2025 -0500
+
+    Pom file stuff
+    
+    -needed to commit or else I wouldnt be able to change branches
+
+commit 03e42c41f68f3c7155f3f15922830fd180d23ba8
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sun Dec 7 00:27:47 2025 -0500
+
+    Fix checkstyle warnings
+    
+    Fixes two check style warnings
+
+commit 2828cf055a9716ff16a163301c8eac1f90e02c1b
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Dec 6 23:55:38 2025 -0500
+
+    Added tests for time filter
+    
+    -Added Test coverage for time filter method in review stock changes view model
+
+commit f83345586eb4290074b5d5c2ee3ae8f874fd63f6
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Dec 6 23:10:59 2025 -0500
+
+    Added filter by start time
+    
+    -Added functionality to filter by start time
+    -Started testing for it
+
+commit af066c420c0f5bdac3d0686e35c428eb588363d1
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sat Dec 6 23:05:51 2025 -0500
+
+    Fix merge error
+    
+    Reinitialize the viewmodel in review stock changes.
+
+commit 933466790ca3adf9defe85d8b99325882b17c334
+Merge: 003dae7 6875c4d
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sat Dec 6 22:57:42 2025 -0500
+
+    Merge dev to feature branch
+    
+    Merges the dev branch onto the feature branch
+
+commit 003dae7b8c27d3fbb2f37621051087ee9e332ffa
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sat Dec 6 21:59:48 2025 -0500
+
+    Add test, formatting, and preconditions
+    
+    Added test for full coverage of branch features.
+    Added null precondition checks to session setters
+    Cleared checkstyle warnings.
+
+commit eddcbf4df4a532aab28b2e241e54a1b4d2546f91
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Dec 6 21:20:13 2025 -0500
+
+    Added time text boxes
+    
+    -Added time text boxes to reviewStockChanges view
+    -Added change listeners to not allow any input over the 60 for minutes and seconds and 24 for hours
+
+commit 1b4bdef92dc95b8d280d89946ecd8e966d46b42e
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sat Dec 6 19:55:24 2025 -0500
+
+    Further change VM bindings to session
+    
+    All VM and code behinds should utilize session setter when initializing their views rather than seperate bind to vm methods.
+
+commit e6877d93c0c1378b7be1247baf240d8894dd5fad
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sat Dec 6 19:26:30 2025 -0500
+
+    Connect pages through context
+    
+    The session instead of login page VM is passed through classes to store the user.
+    Swaps bindings for quartermaster button over to binding landing vm.
+    Change login page to use constant when checking role.
+
+commit eb2b45182c93316a7b852c6ed9852bf991908f1f
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Dec 6 19:21:17 2025 -0500
+
+    Added filtering by date added
+    
+    -Changed functionality to filter the dates by date added and not expiration date
+    -Added a setter for date for testing purposes only
+    -Added a getter time to store the time a change was made
+    -Added a getter date to get the date a change was made
+
+commit f64281f2525d8a3951e471cf91f78d2ecb704510
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Sat Dec 6 18:01:14 2025 -0500
+
+    Add base classes for session
+    
+    View controllers can now pass current session between windows.
+    Viewmodels all store a session contains user information currently.
+
+commit a1aca5c8119634fba5388368f223656018f1b4d5
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sat Dec 6 14:23:05 2025 -0500
+
+    Added time combo box
+    
+    -Added time combo box to the review stock changes page
+    -Added items to the time combo box
+
+commit 6875c4dc29b0276e7eb698b79a81c0061cff5913
+Merge: e7a499d 3a99d62
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Dec 6 12:15:05 2025 -0500
+
+    Merge pull request #1 from kd00250/feature-InventoryPageButton
+    
+    Added Button to Landing Page
+
+commit 3a99d62b8d2522160f2f64df8d4ab5c81bf28ae1
+Merge: 54387f4 e7a499d
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Dec 6 12:04:30 2025 -0500
+
+    Merge branch 'dev' into feature-InventoryPageButton
+
+commit e7a499d9c70dd2fb732f93a04b33602e65dd29fe
+Merge: 2510369 1865f71
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Dec 6 12:02:51 2025 -0500
+
+    Merge pull request #21 from kd00250/feature-DateInputAndFiltering
+    
+    Added datepicker to review stock
+
+commit 1865f716d9e1bba670f0b6f78d78a839493f748d
+Merge: 3452c9a 2510369
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Dec 6 11:37:03 2025 -0500
+
+    Merge branch 'dev' into feature-DateInputAndFiltering
+
+commit 25103698db05ba99a125ca2993f18f8c37369c38
+Merge: 3ebefc9 b9f968e
+Author: Kenneth Dearman <164975838+kd00250@users.noreply.github.com>
+Date:   Sat Dec 6 11:27:34 2025 -0500
+
+    Merge pull request #19 from kd00250/feature-RemoveStockAndLog
+    
+    Feature remove stock and log
+
+commit 3452c9a7870fbdfb6b8cfd7a9c54134835fe3e0a
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Dec 5 21:19:40 2025 -0500
+
+    Added datepicker to review stock
+    
+    -Added date pickers to the review stocks page
+    -Added functionality for the date pickers in the review stock changes window
+
+commit 98399edf9cafab3190d84fdd407e29ed936d2f62
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Dec 5 13:46:13 2025 -0500
+
+    Added date picker
+    
+    -Added date picker to add stock
+    -Added check to clear the date picker if the checkbox is unselected
+
+commit b9f968e3d3662884fa314bf199a1a664f49c3bad
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Dec 5 10:46:47 2025 -0500
+
+    Fixed errors in tests
+    
+    -Had to add import for assertions for tests to work
+
+commit b9224923045504d92d92034513ded71fd4255bd7
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Fri Dec 5 00:05:09 2025 -0500
+
+    Added functionality to remove stock
+    
+    -Added remove stock method to compartment that allows the stock to be removed by a given quantity
+    -If quantity is not all the stock remains in the system
+    -Added fucntionality to tell the difference between logs if they were added or removed
+    -Added tests for remove stock and display message for logs
+    -Added second constructor that must be called if you want to specify that the stock is being removed this was implemented so that we would not have to change all unit tests that used log changes class
+
+commit adaf5dd04dc66026df1c9ddd4cd9bca4003c3b99
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Thu Dec 4 19:03:29 2025 -0500
+
+    Fixed failing unit test
+    
+    -Added resetInstance call before each unit test for testing getInstance fo log manager
+
+commit 54387f42ff7af1b1812361a1d4bf545aeefdf5eb
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Mon Dec 1 21:36:17 2025 -0500
+
+    Added Button to Landing Page
+    
+    -Added view Inventory Button to landing page
+    -Added view invntory fxml window as a blank for mark to add to when he starts the gui
+    -Added view inventory title name and page resources to main file so that it could be referenced in the landin page view in order to change scenes
+
+commit 3ebefc956756848784c71b600d45685ce31cb103
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Sat Nov 22 00:25:03 2025 -0500
+
+    Add files via upload
+    
+    This is the Updated Wireframe that Includes the Cook User Stories.
+
+commit 66b27e7c6657e3d6da6f18f904adca182bdd3f6e
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Sat Nov 22 00:24:22 2025 -0500
+
+    Delete documentation/Pirate Ship Inventory Manager Wireframe.png
+    
+    Removed to add the Updated Pirate Ship Inventory Manager Wireframe.png
+
+commit d8b6bede04d49f35485fb94e0e72ef5fca9cb22d
+Author: Mark Rockers <mrocker1@my.westga.edu>
+Date:   Sat Nov 22 00:01:19 2025 -0500
+
+    Add files via upload
+    
+    This is the Wireframe to Implement the Cook User stories.
+
+commit be06c10f45fd2a2c8e1c8fccad50617b9d401f5f
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Fri Nov 21 18:39:15 2025 -0500
+
+    Restructure documentation folder
+
+commit 5f9994cf4a8ae56c66032378ce84b5661ca2fb37
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 18:37:40 2025 -0500
+
+    Delete documentation/Use Case Scenarios.pdf
+
+commit 02ccddefe862b6f096eab1e4a06ce132b08bfc95
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 18:37:23 2025 -0500
+
+    Delete documentation/Partial Class Diagram.jpg
+
+commit 9e78a1f85e0d6fb013f4f35214b049f538993a91
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 18:37:08 2025 -0500
+
+    Delete documentation/Product Backlog.xlsx
+
+commit 47a9acb5925771d1e0ba8aaa18d6361c43d863f4
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 18:36:49 2025 -0500
+
+    Delete documentation/UI - Wireframe.jpg
+
+commit c1bddb8a0f61f480403392ea65fdcfe656827126
+Author: Matthew Shirley <mshirle5@my.westga.edu>
+Date:   Fri Nov 21 18:11:23 2025 -0500
+
+    Add use case scenario documentation
+
+commit 7b754019569a3b29ca3349a26463e4709fde7caf
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 17:33:54 2025 -0500
+
+    Added Class Diagram
+    
+    Added class diagram
+
+commit 532903ddcb7c5d82ab766dfdb6de124f9938f2c2
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:18:20 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+    
+    needed to make change
+
+commit 3c0e62d9a254f9f4fef788a46e515de7c18121bb
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:14:00 2025 -0500
+
+    Added Updated Class Diagram
+    
+    -Added Class Diagram for Project 2
+
+commit 2b4a9e7fb6d47d68f028390f9f4ec61174d30c5e
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:13:20 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+
+commit 94429c641aa709fd6a75b2cc3f24d9a89519f086
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:08:58 2025 -0500
+
+    Added Class Diagram
+    
+    Added Class Diagram
+
+commit 80fedc40269c0cf60ed672e4a4d7a6300f778857
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:08:10 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+    
+    didnt update
+
+commit 50b37eb965b80cd1c76da4793b630435a2a3dbdf
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:07:44 2025 -0500
+
+    Added Class Diagram
+    
+    Added Class Diagram for project 2
+
+commit 41bb2015ceef2ae7f2d6e3f9dceebccab5b662e2
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:07:05 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+    
+    didnt update
+
+commit 50f434897eac1f8bc9d35a44ab6e259ad5b1dd55
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:05:17 2025 -0500
+
+    Added Updated Class Diagram
+    
+    -Added Class Diagram for Project 2
+
+commit 2633ff581b099e1a58f285ffc77144f7321bf8f8
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 16:04:15 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+
+commit 3d40db70f996109a2a85ab1641903234af57579a
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:59:00 2025 -0500
+
+    Added Class Diagram
+
+commit 4474bb663e5e94a104f6ffbdda87523e71ff1bbf
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:58:25 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+
+commit 70aa63c1438f988eff649f1baf48dcc07a873d50
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:57:02 2025 -0500
+
+    Added Updated Class Diagram
+    
+    -Fixed aggregation relation for enum to stock
+
+commit a64fb57e1935417881f1876b2710a1232b258d51
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:56:20 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+
+commit 74befbb887fc61d8d6343ebd78aff6b807faae8b
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:54:24 2025 -0500
+
+    Added Class Diagram
+    
+    -Add Class diagram for project 2 system
+
+commit e68ad87c35f78fc11ecc43fb0f596ad02df9d4ca
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:53:52 2025 -0500
+
+    Delete documentation/Project2 documentation/CS3211_P2_UML_CLASS_DIAGRAM.png
+
+commit 7b95435fbb930abbcabc23c7d5609d58332b4b54
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:41:56 2025 -0500
+
+    Added Sprint Backlog
+    
+    -Add Sprint Backlog for the sprint
+
+commit 68d27450519de67a814aa9f0417fd7c210ca201e
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:40:42 2025 -0500
+
+    Delete documentation/Project2 documentation/Sprint Backlog  Project 2 SWE.xlsx
+
+commit fa56c789d53a98c1df921596fc02c2cb8423214c
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:37:07 2025 -0500
+
+    Add Sprint Backlog
+    
+    -Added Sprint backlog for project 2
+
+commit 82e24e905c4a573480f3f52e026f45ae2f0f9fed
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:30:53 2025 -0500
+
+    Delete documentation/Project2 documentation/a
+    
+    -Deleted placeholder file for the project2 documentation folder
+
+commit 562a546eee90ade30b24e71e11736171bd43343b
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:30:10 2025 -0500
+
+    Added the class Diagram for Project 2
+    
+    -Added PNG file of the class diagram for project 2
+
+commit 04e15ad9bfdb44c8e2333a31b594feb249190bd1
+Author: kd00250 <164975838+kd00250@users.noreply.github.com>
+Date:   Fri Nov 21 15:29:14 2025 -0500
+
+    Created the Project 2 documentation
+    
+    -Added the project 2 documentation folder
+    -Added a placeholder for the folder
+
+commit 379c880724ef62dc423681ece2e15207dc014116
+Author: Kenneth R Dearman <kd00250@my.westga.edu>
+Date:   Sun Nov 16 00:39:44 2025 -0500
+
+    Added Log file
+    
+    -Added commit history in log file
+
 commit a77899bc8869f3e3dd4ff17390b7644f4a342630
 Author: kd00250 <164975838+kd00250@users.noreply.github.com>
 Date:   Sun Nov 16 00:32:49 2025 -0500
