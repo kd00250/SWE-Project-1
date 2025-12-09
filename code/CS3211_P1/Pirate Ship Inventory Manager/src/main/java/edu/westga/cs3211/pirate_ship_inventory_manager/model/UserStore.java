@@ -18,8 +18,10 @@ public class UserStore {
 		this.userList = new ArrayList<User>();
 		User crewmate = new User("PirateBob", "password123", "Crewmate");
 		User quartermaster = new User("Obi", "beens12", "Quartermaster");
+		User cook = new User("Walter", "Need2Cook", "Cook");
 		this.userList.add(crewmate);
 		this.userList.add(quartermaster);
+		this.userList.add(cook);
 	}
 	
 	/**

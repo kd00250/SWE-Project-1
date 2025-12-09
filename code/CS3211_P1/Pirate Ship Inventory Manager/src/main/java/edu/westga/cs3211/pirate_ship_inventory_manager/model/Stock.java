@@ -211,4 +211,9 @@ public class Stock {
 		}
 		this.quantity = quantity;
 	}
+	
+	@Override
+	public String toString() {
+		return (this.getName() + " Quantity: " + this.getQuantity());
+	}
 }

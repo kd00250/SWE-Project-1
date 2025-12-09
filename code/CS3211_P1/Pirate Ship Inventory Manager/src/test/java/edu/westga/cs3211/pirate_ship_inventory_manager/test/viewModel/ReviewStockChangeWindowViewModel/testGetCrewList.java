@@ -12,9 +12,10 @@ class testGetCrewList {
 	void testGetCrewListValid() {
 		ReviewStockChangesViewModel vm = new ReviewStockChangesViewModel();
 		
-		assertEquals(vm.getCrewList().size(), 2);
+		assertEquals(vm.getCrewList().size(), 3);
 		assertEquals(vm.getCrewList().get(0), "PirateBob");
 		assertEquals(vm.getCrewList().get(1), "Obi");
+		assertEquals(vm.getCrewList().get(2), "Walter");
 	}
 
 }

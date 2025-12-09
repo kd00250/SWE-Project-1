@@ -23,9 +23,9 @@ class testAddUser {
 		User user = new User("bill", "bob", "Crewmate");
 		store.addUser(user);
 		
-		assertEquals(user.getUsername(), store.getUserList().get(2).getUsername());
-		assertEquals(user.getPassword(), store.getUserList().get(2).getPassword());
-		assertEquals(user.getRole(), store.getUserList().get(2).getRole());	
+		assertEquals(user.getUsername(), store.getUserList().getLast().getUsername());
+		assertEquals(user.getPassword(), store.getUserList().getLast().getPassword());
+		assertEquals(user.getRole(), store.getUserList().getLast().getRole());	
 	}
 
 }
