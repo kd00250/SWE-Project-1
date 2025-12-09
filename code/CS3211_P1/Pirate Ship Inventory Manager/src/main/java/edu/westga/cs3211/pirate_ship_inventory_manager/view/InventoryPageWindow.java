@@ -4,7 +4,6 @@ import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.InventoryPageWindowViewModel;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -72,19 +71,44 @@ public class InventoryPageWindow implements SessionSetter {
 	@FXML
 	void checkInventory(ActionEvent event) {
 		if (!this.inventoryVM.isStockTypeInInventory()) {
-			this.displayErrorPopup("Inventory does not contain any Stock of Type" + this.inventoryVM.getStockTypeProperty());
+			this.availableStocksListView.getItems().clear();
+			if (this.inventoryVM.getStockTypeProperty() == null) {
+				this.displayErrorPopup("You do not have any StockType Selected. Please Select One.");
+			} else {
+				this.displayErrorPopup("Inventory does not contain any Stock of Type" + this.inventoryVM.getStockTypeProperty());
+			}
 		} else {
-			this.availableStocksListView.getItems().addAll(this.inventoryVM.getStockInInventory());
+			this.availableStocksListView.getItems().setAll(this.inventoryVM.getStockInInventory());
 		}
     }
 	
 	@FXML
 	void takeStock(ActionEvent event) {
-				// TODO Check Inventory if StockType Exists
+		if (this.inventoryVM.takeStockFromInventory(this.inventoryVM.getCurrentSession().get().getUser())) {
+			this.updateAvailableStocksListView();
+			this.clearQuantityToTakeText();
+			this.displaySuccessPopup(this.inventoryVM.getSummaryMessage());
+		} else {
+			this.displayErrorPopup("Error when taking Stock from the Inventory, please Try Again.");
+		}
     }
+	
+	private void updateAvailableStocksListView() {
+		if (!this.inventoryVM.isStockTypeInInventory()) {
+			this.availableStocksListView.getItems().clear();
+		} else {
+			this.availableStocksListView.getItems().setAll(this.inventoryVM.getStockInInventory());
+		}
+	}
 	
 	private void displayErrorPopup(String message) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+	
+	private void displaySuccessPopup(String message) {  
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
@@ -107,20 +131,23 @@ public class InventoryPageWindow implements SessionSetter {
             }
         });
 		
-		this.availableStocksListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			this.inventoryVM.getSelectedStock().set(newValue);
+		this.availableStocksListView.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
+			this.inventoryVM.getSelectedStock().set(newSelection);
+			this.inventoryVM.isQuantityToTakeValid();
 		});
+		
+		this.takeStockButton.disableProperty().bind(this.inventoryVM.getShouldDisableTakeStock());
 	}
 	
 	private void initializeControls() {
 		this.setUpStockTypeComboBox();
 		this.setUpQuantityToTakeLimits();
-		this.disableTakeStockButton();
 	}
 	
 	private void setUpStockTypeComboBox() {
 		if (this.getUserRole().equals("Cook")) {
 			this.stockTypeComboBox.getItems().add(StockType.FOOD);
+			this.stockTypeComboBox.setValue(this.stockTypeComboBox.getItems().getFirst());
 		}
 	}
 
@@ -130,13 +157,14 @@ public class InventoryPageWindow implements SessionSetter {
 	
 	private void setUpQuantityToTakeLimits() {
 		this.quantityToTakeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			this.inventoryVM.isQuantityToTakeValid();
 			if (!newValue.matches("^$|^[1-9][0-9]*$")) {
-				this.quantityToTakeTextField.setText(oldValue);
+				this.quantityToTakeTextField.setText("");
 			}
 		});
 	}
 	
-	private void disableTakeStockButton() {
-		this.takeStockButton.disableProperty().bind(Bindings.createBooleanBinding(() -> !this.inventoryVM.isQuantityToTakeValid(), this.inventoryVM.getQuantityToTake()));
+	private void clearQuantityToTakeText() {
+		this.quantityToTakeTextField.clear();
 	}
 }

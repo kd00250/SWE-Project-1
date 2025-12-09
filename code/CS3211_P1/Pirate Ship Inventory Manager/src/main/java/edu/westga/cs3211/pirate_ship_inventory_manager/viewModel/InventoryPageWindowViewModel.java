@@ -2,15 +2,20 @@ package edu.westga.cs3211.pirate_ship_inventory_manager.viewModel;
 
 import java.util.ArrayList;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.ChangeAction;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Compartment;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Inventory;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChange;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogChangesInventory;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.LogManager;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.Stock;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -27,6 +32,7 @@ public class InventoryPageWindowViewModel extends SessionViewModel {
 	private ObjectProperty<StockType> stockTypeProperty;
 	private ObjectProperty<Stock> selectedStock;
 	private IntegerProperty quantityToTake;
+	private BooleanProperty shouldDisableTakeStock;
 	
 	/**
 	 * The viewmodel the InventoryPageWindowViewModel
@@ -40,6 +46,7 @@ public class InventoryPageWindowViewModel extends SessionViewModel {
 		this.stockTypeProperty = new SimpleObjectProperty<StockType>();
 		this.selectedStock = new SimpleObjectProperty<Stock>();
 		this.quantityToTake = new SimpleIntegerProperty();
+		this.shouldDisableTakeStock = new SimpleBooleanProperty(true);
 	}
 	
 	/**
@@ -77,6 +84,18 @@ public class InventoryPageWindowViewModel extends SessionViewModel {
 	public IntegerProperty getQuantityToTake() {
 		return this.quantityToTake;
 	}
+	
+	/**
+	 * Gets the shouldDisableTakeStockProperty.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the shouldDisableTakeStockProperty
+	 */
+	public BooleanProperty getShouldDisableTakeStock() {
+		return this.shouldDisableTakeStock;
+	}
 
 	/**
 	 * Checks each Container in Inventory and sees if it contains a Stock of StockType.
@@ -113,7 +132,17 @@ public class InventoryPageWindowViewModel extends SessionViewModel {
 		return stockInInventory;
 	}
 	
-	public boolean takeStockFromInventory() {
+	/**
+	 * Takes the selected Stock from the Inventory
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param user the User
+	 * 
+	 * @return true if the Stock was removed, false otherwise.
+	 */
+	public boolean takeStockFromInventory(User user) {
 		var result = false;
 		
 		var stockToTake = this.selectedStock.get();
@@ -126,16 +155,46 @@ public class InventoryPageWindowViewModel extends SessionViewModel {
 				break;
 			}
 		}
-		if (compartmentToTakeFrom != null && compartmentToTakeFrom.removeStock(stockToTake, quantityToTake)) {
-			result = true;
+		if (compartmentToTakeFrom != null) {
+			if (compartmentToTakeFrom.removeStock(stockToTake, quantityToTake)) {
+				var logChange = new LogChange(user, stockToTake, compartmentToTakeFrom, ChangeAction.REMOVED);
+				this.logInventory.addLogChange(logChange);
+				this.selectedStock.set(null);
+				result = true;
+			}
 		}
 		return result;
 	}
 	
-	public boolean isQuantityToTakeValid() {
+	/**
+	 * Checks if the quantityToTake is <= the selectedStock quantity
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 */
+	public void isQuantityToTakeValid() {
 		if (this.selectedStock.get() == null) {
-			return false;
+			this.shouldDisableTakeStock.set(true);
+		} else if (this.quantityToTake.get() == 0) {
+			this.shouldDisableTakeStock.set(true);
+		} else if (this.quantityToTake.get() <= this.selectedStock.get().getQuantity()) {
+			this.shouldDisableTakeStock.set(false);
+		} else {
+			this.shouldDisableTakeStock.set(true);
 		}
-		return this.quantityToTake.get() <= this.selectedStock.get().getQuantity();
+	}
+	
+	/**
+	 * Gets the summary message
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the summary string
+	 */
+	public String getSummaryMessage() {
+		LogChange change = this.logInventory.getLogChanges().getLast();
+		return change.toString();
 	}
 }
