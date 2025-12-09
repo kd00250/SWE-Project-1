@@ -1,10 +1,10 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.view;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.session.CurrentSession;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.ReviewStockChangesViewModel;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -13,10 +13,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * The codebehind for ReviewStockChangesWindow
@@ -24,7 +27,7 @@ import javafx.scene.layout.AnchorPane;
  * @author CS 1302
  * @version Fall 2024
  */
-public class ReviewStockChangesWindow {
+public class ReviewStockChangesWindow implements SessionSetter {
 	@FXML
     private ListView<String> changeResultsListView;
 
@@ -33,12 +36,33 @@ public class ReviewStockChangesWindow {
 
     @FXML
     private ListView<String> crewmateListView;
+    
+    @FXML
+    private DatePicker endDatePicker;
+    
+    @FXML
+    private TextField hoursEndTextBox;
 
     @FXML
-    private TextField endDateTextBox;
+    private TextField hoursStartTextBox;
+    
+    @FXML
+    private TextField minutesEndTextBox;
+
+    @FXML
+    private TextField minutesStartTextBox;
+    
+    @FXML
+    private TextField secondsEndTextBox;
+
+    @FXML
+    private TextField secondsStartTextBox;
 
     @FXML
     private Button filterButton;
+    
+    @FXML
+    private Button clearDateButton;
     
     @FXML
     private Button displayAllLogsButton;
@@ -56,14 +80,30 @@ public class ReviewStockChangesWindow {
     private AnchorPane pane;
 
     @FXML
-    private TextField startDateTextBox;
+    private DatePicker startDatePicker;
     
     private ReviewStockChangesViewModel reviewVM;
+    
+    @FXML
+    private void onHomeClick(ActionEvent event) {
+    	this.getLandingPage();
+    }
     
     @FXML
     void displayAllLogs(ActionEvent event) {
     	this.changeResultsListView.getItems().setAll(
     			FXCollections.observableArrayList(this.reviewVM.getLogChanges()));
+    }
+    
+    @FXML
+    void clearDates(ActionEvent event) {
+    	this.startDatePicker.setValue(null);
+    	this.endDatePicker.setValue(null);
+    }
+    
+    @FXML
+    void initialize() {
+    	this.reviewVM = new ReviewStockChangesViewModel();
     }
 
     @FXML
@@ -78,36 +118,209 @@ public class ReviewStockChangesWindow {
 	        this.changeResultsListView.getItems().setAll(
 	            FXCollections.observableArrayList(this.reviewVM.getSpecialQuantityFilter(this.reviewVM.getIsFlammableProperty().getValue(), this.reviewVM.getIsLiquidProperty().getValue(), this.reviewVM.getIsPerishableProperty().getValue())));
     	}
-    	if (this.chooseSortComboBox.getValue().equals("Date") && this.endDateTextBox.getText().isEmpty()) {
-    		if (!this.startDateTextBox.textProperty().get().matches("\\d{2}/\\d{2}/\\d{4}")) {
-    			this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
-    		} else {
-	        this.changeResultsListView.getItems().setAll(
-	            FXCollections.observableArrayList(this.reviewVM.getStartDateFilter(this.startDateTextBox.textProperty().getValue())));
+    	if (this.isFilterSelectedDate() && this.isEndDateNull() && this.isAllTimeEntriesEmpty()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartDateFilter(startDateString)));
     		}
     	}
-    	if (this.chooseSortComboBox.getValue().equals("Date") && !this.endDateTextBox.getText().isEmpty()) {
-    	    String startDate = this.startDateTextBox.getText();
-    	    String endDate = this.endDateTextBox.getText();
-    	    
-    	    try {
-    	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-    	        dateFormat.setLenient(false);
-    	        Date parsedStartDate = dateFormat.parse(startDate);
-    	        Date parsedEndDate = dateFormat.parse(endDate);
-    	        
-    	        if (!startDate.matches("\\d{2}/\\d{2}/\\d{4}") || !endDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
-    	            this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
-    	        } else if (parsedEndDate.before(parsedStartDate)) {
-    	            this.displayErrorPopup("End date cannot be before start date");
-    	        } else {
-    	            this.changeResultsListView.getItems().setAll(
-    	                FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(startDate, endDate)));
+    	if (this.isFilterSelectedDate() && this.isEndDateNonNull() && this.isAllTimeEntriesEmpty()) {
+    	    LocalDate startDate = this.startDatePicker.getValue();
+    	    LocalDate endDate = this.endDatePicker.getValue();
+    	    if (endDate.isBefore(startDate)) {
+    	          this.displayErrorPopup("End date cannot be before start date");
+    	    } else {
+    	          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    	          String startDateString = startDate.format(formatter);
+    	          String endDateString = endDate.format(formatter);
+    	          this.changeResultsListView.getItems().setAll(
+    	              FXCollections.observableArrayList(this.reviewVM.getStartAndEndDateFilter(startDateString, endDateString)));
     	        }
-    	    } catch (ParseException ex) {
-    	        this.displayErrorPopup("Date entered is in the wrong format, it needs to be ##/##/####");
-    	    }
     	}
+    	this.timeFiltersCall();
+    	this.moreTimeFilters();
+    }
+    
+    private void getLandingPage() {
+		try {
+			Stage stage = (Stage) this.pane.getScene().getWindow();
+			LandingPageWindow landingController = ViewSwapper.loadPageFromStage(PageResources.LANDING_PAGE, stage, PageResources.LANDING_PAGE_TITLE);
+			landingController.setSession(this.reviewVM.getCurrentSession().getValue());
+		} catch (Exception exception) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText("Unable to load landing page.");
+			alert.showAndWait();
+		    exception.printStackTrace();
+		}
+    }
+    
+    private void timeFiltersCall() {
+    	if (this.isFilterSelectedDate() && this.isEndDateNull() && this.isTimeStartTimeBoxesFullAndEndTimeBoxesEmpty()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartDateFilterForTime(startDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
+    		}
+    	}
+    	if (this.isFilterSelectedDate() && this.isEndDateNull() && this.isStartTimeBoxesEmptyAndEndTimeBoxesFull()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChangesForEndTime(this.reviewVM.getStartDateFilterForTime(startDateString), this.reviewVM.getHoursEndDate().get(), this.reviewVM.getMinutesEndDate().get(), this.reviewVM.getSecondsEndDate().get())));
+    		}
+    	}
+    	if (this.isFilterSelectedDate() && this.isEndDateNonNull() && this.isStartTimeBoxesEmptyAndEndTimeBoxesFull()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		LocalDate endDate = this.endDatePicker.getValue();
+    		if  (endDate.isBefore(startDate)) {
+    	          this.displayErrorPopup("End date cannot be before start date"); 
+      		}  else {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String endDateString = endDate.format(formatter); 
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChangesForEndTime(this.reviewVM.getStartAndEndDateFilterForTime(startDateString, endDateString), this.reviewVM.getHoursEndDate().get(), this.reviewVM.getMinutesEndDate().get(), this.reviewVM.getSecondsEndDate().get())));
+    		}
+    	}
+    	if (this.isFilterSelectedDate() && this.isEndDateNonNull() && this.isTimeStartTimeBoxesFullAndEndTimeBoxesEmpty()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		LocalDate endDate = this.endDatePicker.getValue();
+    		if  (endDate.isBefore(startDate)) {
+    	          this.displayErrorPopup("End date cannot be before start date"); 
+      		}  else {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String endDateString = endDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartAndEndDateFilterForTime(startDateString, endDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
+    		}
+    	}
+    	if (this.isFilterSelectedDate() && this.isEndDateNonNull() && this.isStartTimeBoxesEmptyAndEndTimeBoxesFull()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		LocalDate endDate = this.endDatePicker.getValue();
+    		if  (endDate.isBefore(startDate)) {
+  	          this.displayErrorPopup("End date cannot be before start date"); 
+    		}  else {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy"); 
+    			String startDateString = startDate.format(formatter);
+    			String endDateString = endDate.format(formatter);
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartTimeChanges(this.reviewVM.getStartAndEndDateFilterForTime(startDateString, endDateString), this.reviewVM.getHoursStartDate().get(), this.reviewVM.getMinutesStartDate().get(), this.reviewVM.getSecondsStartDate().get())));
+  	          
+  	         }
+    	}
+    }
+    
+    private boolean isAllTimeEntriesEmpty() {
+    	return this.hoursStartTextBox.getText().isEmpty() && this.minutesStartTextBox.getText().isEmpty() && this.secondsStartTextBox.getText().isEmpty() && this.hoursEndTextBox.getText().isEmpty() && this.minutesEndTextBox.getText().isEmpty() && this.secondsEndTextBox.getText().isEmpty();
+    }
+    
+    private boolean bothStartAndEndTimeFull() {
+    	return (!this.hoursStartTextBox.getText().isEmpty() || !this.minutesStartTextBox.getText().isEmpty() || !this.secondsStartTextBox.getText().isEmpty()) && (!this.hoursEndTextBox.getText().isEmpty() || !this.minutesEndTextBox.getText().isEmpty() || !this.secondsEndTextBox.getText().isEmpty());
+    }
+    
+    private boolean isTimeStartTimeBoxesFullAndEndTimeBoxesEmpty() {
+    	return (!this.hoursStartTextBox.getText().isEmpty() || !this.minutesStartTextBox.getText().isEmpty() || !this.secondsStartTextBox.getText().isEmpty()) && (this.hoursEndTextBox.getText().isEmpty() && this.minutesEndTextBox.getText().isEmpty() && this.secondsEndTextBox.getText().isEmpty());
+    }
+    
+    private boolean isStartTimeBoxesEmptyAndEndTimeBoxesFull() {
+    	return (this.hoursStartTextBox.getText().isEmpty() && this.minutesStartTextBox.getText().isEmpty() && this.secondsStartTextBox.getText().isEmpty()) && (!this.hoursEndTextBox.getText().isEmpty() || !this.minutesEndTextBox.getText().isEmpty() || !this.secondsEndTextBox.getText().isEmpty());
+    }
+    
+    private boolean isFilterSelectedDate() {
+    	return this.chooseSortComboBox.getValue().equals("Date");
+    }
+    
+    private boolean isEndDateNonNull() {
+    	return this.endDatePicker.getValue() != null;
+    }
+    
+    private boolean isEndDateNull() {
+    	return this.endDatePicker.getValue() == null;
+    }
+    
+    private void moreTimeFilters() {
+    	if (this.isFilterSelectedDate() && this.isEndDateNull() && this.isStartTimeBoxesEmptyAndEndTimeBoxesFull()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String startTimeValues = this.reviewVM.getHoursStartDate().get() + "," + this.reviewVM.getMinutesStartDate().get() + "," + this.reviewVM.getSecondsStartDate().get();
+    			String endTimeValues = this.reviewVM.getHoursEndDate().get() + "," + this.reviewVM.getMinutesEndDate().get() + "," + this.reviewVM.getSecondsEndDate().get();
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartAndEndTimeChanges(this.reviewVM.getStartDateFilterForTime(startDateString), startTimeValues, endTimeValues)));
+    		}
+    	}
+    	if (this.isFilterSelectedDate() && this.isEndDateNull() && this.bothStartAndEndTimeFull()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String startTimeValues = this.reviewVM.getHoursStartDate().get() + "," + this.reviewVM.getMinutesStartDate().get() + "," + this.reviewVM.getSecondsStartDate().get();
+    			String endTimeValues = this.reviewVM.getHoursEndDate().get() + "," + this.reviewVM.getMinutesEndDate().get() + "," + this.reviewVM.getSecondsEndDate().get();
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartAndEndTimeChanges(this.reviewVM.getStartDateFilterForTime(startDateString), startTimeValues, endTimeValues)));
+    		}
+    	}
+    	if (this.isFilterSelectedDate() && this.isEndDateNull() && this.isTimeStartTimeBoxesFullAndEndTimeBoxesEmpty()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		if (startDate != null) {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String startTimeValues = this.reviewVM.getHoursStartDate().get() + "," + this.reviewVM.getMinutesStartDate().get() + "," + this.reviewVM.getSecondsStartDate().get();
+    			String endTimeValues = this.reviewVM.getHoursEndDate().get() + "," + this.reviewVM.getMinutesEndDate().get() + "," + this.reviewVM.getSecondsEndDate().get();
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartAndEndTimeChanges(this.reviewVM.getStartDateFilterForTime(startDateString), startTimeValues, endTimeValues)));
+    		}
+    	}
+    	if (this.isFilterSelectedDate() && this.isEndDateNonNull() && this.bothStartAndEndTimeFull()) {
+    		LocalDate startDate = this.startDatePicker.getValue();
+    		LocalDate endDate = this.endDatePicker.getValue();
+    		if  (endDate.isBefore(startDate)) {
+    	          this.displayErrorPopup("End date cannot be before start date"); 
+      		}  else {
+    			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    			String startDateString = startDate.format(formatter);
+    			String endDateString = endDate.format(formatter);
+    			String startTimeValues = this.reviewVM.getHoursStartDate().get() + "," + this.reviewVM.getMinutesStartDate().get() + "," + this.reviewVM.getSecondsStartDate().get();
+    			String endTimeValues = this.reviewVM.getHoursEndDate().get() + "," + this.reviewVM.getMinutesEndDate().get() + "," + this.reviewVM.getSecondsEndDate().get();
+		        this.changeResultsListView.getItems().setAll(
+		            FXCollections.observableArrayList(this.reviewVM.getStartAndEndTimeChanges(this.reviewVM.getStartAndEndDateFilterForTime(startDateString, endDateString), startTimeValues, endTimeValues)));
+    		}
+    	}
+    }
+    
+    private void setUpTimeFilters() {
+    	this.startDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                this.hoursStartTextBox.setDisable(false);
+                this.minutesStartTextBox.setDisable(false);
+                this.secondsStartTextBox.setDisable(false);
+                this.hoursEndTextBox.setDisable(false);
+                this.minutesEndTextBox.setDisable(false);
+                this.secondsEndTextBox.setDisable(false);
+            } else {
+                this.hoursStartTextBox.setDisable(true);
+                this.minutesStartTextBox.setDisable(true);
+                this.secondsStartTextBox.setDisable(true);
+                this.hoursStartTextBox.clear();
+                this.minutesStartTextBox.clear();
+                this.secondsStartTextBox.clear();
+                this.hoursEndTextBox.setDisable(true);
+                this.minutesEndTextBox.setDisable(true);
+                this.secondsEndTextBox.setDisable(true);
+                this.hoursEndTextBox.clear();
+                this.minutesEndTextBox.clear();
+                this.secondsEndTextBox.clear();
+            }
+        });
     }
     
     private void displayErrorPopup(String message) { 
@@ -117,13 +330,17 @@ public class ReviewStockChangesWindow {
 	}
     
     private void setUpControls() {
-    	this.reviewVM = new ReviewStockChangesViewModel();
     	String[] filters = {"Special Quantity", "Crewmate", "Date"};
     	this.chooseSortComboBox.getItems().addAll(filters);
     	this.changeResultsListView.getItems().addAll(this.reviewVM.getLogChanges());
     	this.chooseSortComboBox.setValue(filters[0]);
     	this.crewmateListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     	this.crewmateListView.getItems().addAll(this.reviewVM.getCrewList());
+    	this.setupStartTimeBoxes();
+    	this.setupEndTimeBoxes();
+    	this.startDatePicker.setEditable(false);
+    	this.endDatePicker.setEditable(false);
+    	this.setUpTimeFilters();
     	
         this.disableAllFilterControls();
         
@@ -131,27 +348,118 @@ public class ReviewStockChangesWindow {
             this.updateControlStates(newValue);
         });
         
-        this.startDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
-        	 if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
-                 this.startDateTextBox.setText(oldValue);
-             }
-             if (newValue.length() > 10) {
-                 this.startDateTextBox.setText(oldValue); 
-             }
-            boolean isComplete = newValue != null && newValue.matches("\\d{2}/\\d{2}/\\d{4}");
-            this.endDateTextBox.setDisable(!isComplete || !this.chooseSortComboBox.getValue().equals("Date"));
-        });
-        
-        this.endDateTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,2}/?\\d{0,2}/?\\d{0,4}")) {
-                this.endDateTextBox.setText(oldValue);
+        this.startDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
+        	boolean hasStartDate = newValue != null;
+        	this.endDatePicker.setDisable(!hasStartDate || !this.chooseSortComboBox.getValue().equals("Date"));
+        	
+        	if (newValue == null) {
+                this.endDatePicker.setValue(null);
             }
-            if (newValue.length() > 10) {
-                this.endDateTextBox.setText(oldValue);
-            }
-        });
+        }); 
         this.updateControlStates(this.chooseSortComboBox.getValue());
     	
+    }
+    
+    private void setupStartTimeBoxes() {
+    	this.hoursStartTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.hoursStartTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 24) {
+                        this.hoursStartTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.hoursStartTextBox.setText(oldValue);
+                }
+            }
+        }); 
+        this.minutesStartTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.minutesStartTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.minutesStartTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.minutesStartTextBox.setText(oldValue);
+                }
+            }
+        }); 
+        this.secondsStartTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.secondsStartTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.secondsStartTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.secondsStartTextBox.setText(oldValue);
+                }
+            }
+        });
+    }
+    
+    private void setupEndTimeBoxes() {
+    	this.hoursEndTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.hoursEndTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 24) {
+                        this.hoursEndTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.hoursEndTextBox.setText(oldValue);
+                }
+            }
+        });
+        this.minutesEndTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.minutesEndTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.minutesEndTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.minutesEndTextBox.setText(oldValue);
+                }
+            }
+        });
+        this.secondsEndTextBox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                this.secondsEndTextBox.setText(oldValue);
+                return;
+            }
+            if (!newValue.isEmpty()) {
+                try {
+                    int value = Integer.parseInt(newValue);
+                    if (value > 60) {
+                        this.secondsEndTextBox.setText(oldValue);
+                    }
+                } catch (NumberFormatException ex) {
+                    this.secondsEndTextBox.setText(oldValue);
+                }
+            }
+        });
     }
     
     private void disableAllFilterControls() {
@@ -159,8 +467,14 @@ public class ReviewStockChangesWindow {
         this.isLiquidCheckBox.setDisable(true);
         this.isPerishableCheckBox.setDisable(true);
         this.crewmateListView.setDisable(true);
-        this.startDateTextBox.setDisable(true);
-        this.endDateTextBox.setDisable(true);
+        this.startDatePicker.setDisable(true);
+        this.endDatePicker.setDisable(true);
+        this.hoursStartTextBox.setDisable(true);
+        this.minutesStartTextBox.setDisable(true);
+        this.secondsStartTextBox.setDisable(true);
+        this.hoursEndTextBox.setDisable(true);
+        this.minutesEndTextBox.setDisable(true);
+        this.secondsEndTextBox.setDisable(true);
     }
 
     private void updateControlStates(String selectedFilter) {
@@ -178,12 +492,18 @@ public class ReviewStockChangesWindow {
                 break;
                 
             case "Date":
-                this.startDateTextBox.setDisable(false);
-                this.endDateTextBox.setDisable(true);
+            	this.startDatePicker.setDisable(false);
+            	this.endDatePicker.setDisable(true);
+
                 break;
                 
             default:
                 break;
+        }
+        
+        if (!selectedFilter.equals("Date")) {
+        	this.startDatePicker.setValue(null);
+        	this.endDatePicker.setValue(null);
         }
     }
     
@@ -191,13 +511,19 @@ public class ReviewStockChangesWindow {
     	this.reviewVM.getIsFlammableProperty().bind(this.isFlammableCheckBox.selectedProperty());
     	this.reviewVM.getIsLiquidProperty().bind(this.isLiquidCheckBox.selectedProperty());
     	this.reviewVM.getIsPerishableProperty().bind(this.isPerishableCheckBox.selectedProperty());
+    	this.reviewVM.getHoursStartDate().bind(this.hoursStartTextBox.textProperty());
+    	this.reviewVM.getMinutesStartDate().bind(this.minutesStartTextBox.textProperty());
+    	this.reviewVM.getSecondsStartDate().bind(this.secondsStartTextBox.textProperty());
+    	this.reviewVM.getHoursEndDate().bind(this.hoursEndTextBox.textProperty());
+    	this.reviewVM.getMinutesEndDate().bind(this.minutesEndTextBox.textProperty());
+    	this.reviewVM.getSecondsEndDate().bind(this.secondsEndTextBox.textProperty());
     }
     
        /**
    	   * Provides bindings for the functionality
    	   * 
    	   */
-       public void bindToReviewStockChangesVM() {
+       private void initalizeControls() {
        	this.setUpControls();
        	this.setUpBinds();
        	this.displayAllLogsButton.setOnAction((event) -> {
@@ -207,4 +533,10 @@ public class ReviewStockChangesWindow {
        		this.filterResultsListView(event);
        	});
        }
+
+	   @Override
+	   public void setSession(CurrentSession context) {
+		   this.reviewVM.setCurrentSession(context);
+		   this.initalizeControls();
+	   }
 }

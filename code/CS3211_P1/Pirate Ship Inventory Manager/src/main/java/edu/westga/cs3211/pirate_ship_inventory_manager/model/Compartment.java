@@ -1,6 +1,8 @@
 package edu.westga.cs3211.pirate_ship_inventory_manager.model;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The compartment class
@@ -140,5 +142,78 @@ public class Compartment {
 			}
 			this.storage.add(stock);
 			return true;
+		}
+		
+		/**
+		 * removes the desired quantity from the compartment
+		 * 
+		 * @precondition stock != null || quantityToRemove > 0
+		 * @postcondition none
+		 * 
+		 * @param stock the stock to be removed
+		 * @param quantityToRemove quantity of the stock to be removed
+		 * @return true/false depending on if the stock was removed
+		 * 
+		 */
+		public boolean removeStock(Stock stock, int quantityToRemove) {
+			if (stock == null) {
+				throw new IllegalArgumentException("Stock cannot be null");
+			}
+			if (quantityToRemove <= 0) {
+				throw new IllegalArgumentException("Quantity must be greater than 0");
+			}
+			
+			Stock stockToRemove = null;
+			for (Stock currentStock : this.getStorage()) {
+				if (currentStock.getName().equals(stock.getName())) {
+					stockToRemove = currentStock;
+				}
+			}
+			
+			if (stockToRemove == null) {
+				return false;
+			}
+			
+			if (stockToRemove.getQuantity() < quantityToRemove) {
+				return false;
+			}
+			
+			if (quantityToRemove == stockToRemove.getQuantity()) {
+				this.storage.remove(stockToRemove);
+			} else {
+				stockToRemove.setQuantity(stockToRemove.getQuantity() - quantityToRemove);
+			}
+			
+			return true;	
+		}
+		
+		/**
+		 * Gets the stock of given type.
+		 * @param type the type
+		 * @return A list of all stock items of given type
+		 */
+		public List<Stock> getStockOfType(StockType type) {
+			if (type == null) {
+				throw new IllegalArgumentException("Type cannot be null");
+			}
+			return this.storage.stream().filter(stock -> stock.getType() == type).collect(Collectors.toList());
+		}
+		
+		/**
+		 * Checks if container contains StockType
+		 * 
+		 * @precondition none
+		 * @postcondition none
+		 * 
+		 * @param type the StockType
+		 * @return True if contains Stock of StockType, false otherwise.
+		 */
+		public boolean doesContainStockOfType(StockType type) {
+			for (var currStock : this.storage) {
+				if (currStock.getType().equals(type)) {
+					return true;
+				}
+			}
+			return false;
 		}
 }

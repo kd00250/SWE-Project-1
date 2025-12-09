@@ -22,12 +22,14 @@ public class Inventory {
 		qualities.add(SpecialQuality.LIQUID);
         Stock stock = new Stock(1, new HashSet<>(), "Paper", "perfect", null);
         Stock stock2 = new Stock(1, qualities, "Oil", "perfect", null); 
+        Stock stock3 = new Stock(2, new HashSet<>(), "Apple", "perfect", null, StockType.FOOD);
 		Compartment regular1 = new Compartment("Boxes", 30, false);
 		Compartment regular2 = new Compartment("Shelves", 30, false);
 		Compartment special1 = new Compartment("Flammable Storage", 25, true);
 		Compartment special2 = new Compartment("Liquid Storage", 25, true);
 		Compartment special3 = new Compartment("Perishable Storage", 25, true);
 		regular1.addStock(stock);
+		regular2.addStock(stock3);
 		special2.addStock(stock2);
 		
 		this.compartments.add(regular1);

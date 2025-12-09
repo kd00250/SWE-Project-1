@@ -5,4 +5,6 @@ Crewmate credentials: Username: PirateBob    Password: password123
 
 Quartermaster credentials: Username: Obi     Password: beens12
 
-(No spaces before or after the username or password for both)
+Cook credentials: Username: Walter           Password: Need2Cook
+
+(No spaces before or after the username or password for all)

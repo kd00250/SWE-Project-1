@@ -35,6 +35,7 @@ class testGetStartDateFilter {
         Inventory stockInventory = InventoryManager.getInstance().getInventory();
         LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
         LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
+        inventory.getLogChanges().clear();
         inventory.addLogChange(change);
         
         assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).get(0), change.getDisplayString());
@@ -44,7 +45,7 @@ class testGetStartDateFilter {
 	@Test
 	void testGetStartFilterNone() {
 		ReviewStockChangesViewModel vm = new ReviewStockChangesViewModel();
-		vm.getStartDate().set("12/11/2024");
+		vm.getStartDate().set("12/11/2030");
 		User user = new User("bill", "nye", "Crewmate");
 		Set<SpecialQuality> qualities = new HashSet<>();
         Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2004");
@@ -55,6 +56,24 @@ class testGetStartDateFilter {
         
         assertTrue(vm.getStartDateFilter(vm.getStartDate().get()).isEmpty());
         assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).size(), 0);
+	}
+	
+	@Test
+	void testGetStartFilterEqualsStartDate() {
+		ReviewStockChangesViewModel vm = new ReviewStockChangesViewModel();
+		vm.getStartDate().set("12/11/2030");
+		User user = new User("bill", "nye", "Crewmate");
+		Set<SpecialQuality> qualities = new HashSet<>();
+        Stock stock = new Stock(5, qualities, "Milk", "perfect", "12/12/2004");
+        Inventory stockInventory = InventoryManager.getInstance().getInventory();
+        LogChange change = new LogChange(user, stock, stockInventory.getCompartments().get(0)); 
+        LogChangesInventory inventory = LogManager.getInstance().getLogChangesInventory();
+        change.setDate("12/11/2030");
+        inventory.getLogChanges().clear();
+        inventory.addLogChange(change);
+        
+        assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).get(0), change.getDisplayString());
+        assertEquals(vm.getStartDateFilter(vm.getStartDate().get()).size(), 1);
 	}
 	
 	@Test

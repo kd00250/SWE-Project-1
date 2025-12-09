@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.InventoryManager;
+import edu.westga.cs3211.pirate_ship_inventory_manager.model.StockType;
 import edu.westga.cs3211.pirate_ship_inventory_manager.model.User;
 import edu.westga.cs3211.pirate_ship_inventory_manager.viewModel.AddStockWindowViewModel;
 
@@ -26,7 +27,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("1"); 
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		assertTrue(vm.addStockToCompartment(user, "Boxes", vm.createStock()));
 	}
 	
@@ -40,7 +41,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(true);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertFalse(vm.addStockToCompartment(user, "Boxes", vm.createStock()));
 	}
@@ -55,7 +56,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Shelves", vm.createStock()));
 	}
@@ -70,7 +71,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(true);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertFalse(vm.addStockToCompartment(user, "Shelves",vm.createStock()));
 	}
@@ -86,7 +87,7 @@ class testAddStockToCompartment {
 		vm.getIsPerishableProperty().set(false);
 		vm.getExpirationDate().set("12/12/2004");
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Flammable Storage", vm.createStock()));
 	}
@@ -102,7 +103,7 @@ class testAddStockToCompartment {
 		vm.getIsPerishableProperty().set(false);
 		//vm.getExpirationDate().set("12/12/2004");
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertFalse(vm.addStockToCompartment(user, "Flammmable Storage", vm.createStock()));
 	}
@@ -117,7 +118,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(true);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Liquid Storage", vm.createStock()));
 	}
@@ -133,7 +134,7 @@ class testAddStockToCompartment {
 		vm.getIsPerishableProperty().set(false);
 		vm.getExpirationDate().set("12/12/2004");
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Liquid Storage", vm.createStock()));
 	}
@@ -149,7 +150,7 @@ class testAddStockToCompartment {
 		vm.getIsPerishableProperty().set(true);
 		vm.getExpirationDate().set("12/12/2004");
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Liquid Storage", vm.createStock()));
 	}
@@ -164,7 +165,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-	
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertFalse(vm.addStockToCompartment(user, "Liquid Storage", vm.createStock()));
 	}
@@ -179,7 +180,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(true);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Perishable Storage", vm.createStock()));
 	}
@@ -195,7 +196,7 @@ class testAddStockToCompartment {
 		vm.getIsPerishableProperty().set(false);
 		vm.getExpirationDate().set("12/12/2004");
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Perishable Storage", vm.createStock()));
 	}
@@ -211,7 +212,7 @@ class testAddStockToCompartment {
 		vm.getIsPerishableProperty().set(true);
 		vm.getExpirationDate().set("12/12/2004");
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertTrue(vm.addStockToCompartment(user, "Perishable Storage", vm.createStock()));
 	}
@@ -226,7 +227,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		assertFalse(vm.addStockToCompartment(user, "Perishable Storage", vm.createStock()));
 	}
 	
@@ -240,7 +241,7 @@ class testAddStockToCompartment {
 		vm.getIsLiquidProperty().set(false);
 		vm.getIsPerishableProperty().set(false);
 		vm.getQuantity().set("3");
-		
+		vm.getStockTypeProperty().set(StockType.DEFAULT);
 		
 		assertFalse(vm.addStockToCompartment(user, "Pockets", vm.createStock()));
 	}
